@@ -77,13 +77,13 @@ export function ProductsPage() {
                     </p>
 
                     {specs.length > 0 && (
-                      <dl className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border bg-border">
+                      <dl className="mt-4 grid grid-cols-2 gap-1 overflow-hidden rounded-xl border border-amber-200/80 bg-amber-50/40 p-1">
                         {specs.map((s) => (
-                          <div key={s.label} className="bg-secondary/60 px-2 py-2">
-                            <dt className="text-[9px] uppercase tracking-wide text-muted-foreground truncate" style={{ fontFamily: "var(--font-mono)" }}>
+                          <div key={s.label} className="rounded-lg bg-white p-2 border border-amber-100 shadow-2xs">
+                            <dt className="text-[9px] font-bold uppercase tracking-wider text-amber-900/80 truncate font-mono">
                               {s.label}
                             </dt>
-                            <dd className="mt-0.5 text-[11px] font-semibold text-foreground truncate">{s.value}</dd>
+                            <dd className="mt-0.5 text-[11px] font-extrabold text-primary truncate font-mono">{s.value}</dd>
                           </div>
                         ))}
                       </dl>

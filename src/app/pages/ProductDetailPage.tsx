@@ -174,18 +174,34 @@ export function ProductDetailPage() {
               {/* Specs table */}
               {specs.length > 0 && (
                 <Reveal delay={0.1}>
-                  <div className="mt-8">
-                    <h2 className="mb-4 text-[13px] font-semibold uppercase tracking-widest text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
-                      Thông số kỹ thuật
-                    </h2>
-                    <div className="overflow-hidden rounded-2xl border border-border">
+                  <div className="mt-8 rounded-2xl border-2 border-amber-500/30 bg-gradient-to-b from-amber-50/60 via-white to-amber-50/40 p-5 shadow-lg shadow-amber-500/5 ring-1 ring-black/5">
+                    <div className="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-amber-200/80">
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
+                        <h2 className="text-[13px] font-bold uppercase tracking-wider text-amber-900 font-mono">
+                          Thông Số Kỹ Thuật Chi Tiết
+                        </h2>
+                      </div>
+                      <span className="rounded-full bg-amber-500/15 px-2.5 py-0.5 text-[10px] font-extrabold text-amber-800 font-mono">
+                        QCVN 16:2023
+                      </span>
+                    </div>
+
+                    <div className="divide-y divide-amber-100/80 rounded-xl overflow-hidden border border-amber-200/80 bg-white shadow-xs">
                       {specs.map((s, i) => (
                         <div
                           key={s.label}
-                          className={`flex items-center justify-between gap-4 px-5 py-3.5 ${i % 2 === 0 ? "bg-secondary/40" : "bg-white"}`}
+                          className={`flex items-center justify-between gap-4 px-4 py-3.5 transition-colors hover:bg-amber-50/60 ${
+                            i % 2 === 0 ? "bg-amber-50/30" : "bg-white"
+                          }`}
                         >
-                          <span className="text-[14px] text-muted-foreground">{s.label}</span>
-                          <span className="text-[14px] font-semibold text-foreground">{s.value}</span>
+                          <span className="text-[14px] font-semibold text-foreground/85 flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+                            {s.label}
+                          </span>
+                          <span className="text-[14px] font-extrabold font-mono text-primary bg-primary/10 px-3 py-1 rounded-lg border border-primary/25 shadow-xs">
+                            {s.value}
+                          </span>
                         </div>
                       ))}
                     </div>
