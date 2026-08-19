@@ -8,11 +8,9 @@ import {
   Check, 
   Clock, 
   User, 
-  Printer, 
   PhoneCall, 
   MessageSquare, 
-  ChevronRight,
-  Bookmark
+  ChevronRight
 } from "lucide-react";
 import { useStore, getImageUrl } from "../lib/store";
 import { LogoMarquee } from "../components/site/LogoMarquee";
@@ -135,7 +133,7 @@ export function NewsDetailPage() {
             <Reveal>
               <div className="flex flex-wrap items-center gap-3.5 mb-4">
                 <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-[12px] font-bold text-primary tracking-wide uppercase">
-                  TIN TỨC SẢN XUẤT
+                  TIN TỨC
                 </span>
                 {article.publishedAt && (
                   <span className="inline-flex items-center gap-1.5 text-[13px] text-muted-foreground font-medium">
@@ -163,7 +161,7 @@ export function NewsDetailPage() {
               </h1>
             </Reveal>
 
-            {/* Share & Print Utility Bar */}
+            {/* Share Utility Bar */}
             <Reveal delay={0.1}>
               <div className="flex flex-wrap items-center justify-between gap-4 py-3.5 border-y border-border/40 text-[13px]">
                 <div className="flex items-center gap-3">
@@ -187,12 +185,6 @@ export function NewsDetailPage() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <button 
-                    onClick={() => window.print()} 
-                    className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors font-medium cursor-pointer"
-                  >
-                    <Printer className="h-4 w-4" /> In trang
-                  </button>
                   <Link to="/tin-tuc" className="inline-flex items-center gap-1.5 text-primary hover:underline font-semibold">
                     <ArrowLeft className="h-4 w-4" /> Tất cả tin tức
                   </Link>
@@ -223,19 +215,16 @@ export function NewsDetailPage() {
                   </Reveal>
                 )}
 
-                {/* Main Article Image with Caption (<figure> + <figcaption>) */}
+                {/* Main Article Image */}
                 {article.thumbnailPath && (
                   <Reveal delay={0.16}>
-                    <figure className="my-8 overflow-hidden rounded-2xl border border-border/60 bg-slate-50/80 p-2.5 shadow-sm">
+                    <div className="my-8 overflow-hidden rounded-2xl border border-border/60 bg-slate-50/80 p-2 shadow-sm">
                       <ImageWithFallback
                         src={article.thumbnailPath}
                         alt={article.title}
                         className="h-auto w-full max-h-[520px] object-cover rounded-xl"
                       />
-                      <figcaption className="mt-3 text-center text-sm font-medium italic text-muted-foreground px-4 pb-1">
-                        Hình 1: {article.title} - Sản phẩm & dây chuyền nhà máy Gạch Thuận Lợi
-                      </figcaption>
-                    </figure>
+                    </div>
                   </Reveal>
                 )}
 
@@ -246,16 +235,6 @@ export function NewsDetailPage() {
                     dangerouslySetInnerHTML={{ __html: article.content }}
                   />
                 </Reveal>
-
-                {/* End of article footer / copyright info */}
-                <div className="mt-12 rounded-2xl border border-border/50 bg-secondary/15 p-6 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2 font-bold text-foreground mb-1">
-                    <Bookmark className="h-4 w-4 text-primary" /> Bản quyền nội dung
-                  </div>
-                  <p className="text-[13px] leading-relaxed">
-                    Bài viết thuộc bản quyền thông tin truyền thông của <strong>Công ty TNHH Gạch Thuận Lợi</strong>. Vui lòng ghi rõ nguồn khi phát hành lại thông tin.
-                  </p>
-                </div>
               </article>
             </main>
 
@@ -303,8 +282,8 @@ export function NewsDetailPage() {
                       >
                         {item.thumbnailPath && (
                           <div className="h-16 w-20 shrink-0 overflow-hidden rounded-lg bg-secondary">
-                            <img 
-                              src={getImageUrl(item.thumbnailPath)} 
+                            <ImageWithFallback 
+                              src={item.thumbnailPath} 
                               alt={item.title} 
                               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" 
                             />

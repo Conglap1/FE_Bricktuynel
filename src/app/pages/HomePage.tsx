@@ -64,7 +64,7 @@ function NewsTeaser() {
               >
                 {n.thumbnailPath && (
                   <div className="h-20 w-28 shrink-0 overflow-hidden rounded-xl bg-secondary">
-                    <img src={n.thumbnailPath} alt={n.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <ImageWithFallback src={n.thumbnailPath} alt={n.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   </div>
                 )}
                 <div className="flex min-w-0 flex-col">

@@ -7,6 +7,7 @@ import { LogoMarquee } from "../components/site/LogoMarquee";
 import { useStore } from "../lib/store";
 import { IMAGES } from "../lib/data";
 import { Reveal, Stagger, staggerItem, motion } from "../lib/motion";
+import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
 function formatDate(iso: string) {
   try {
@@ -44,7 +45,7 @@ export function NewsPage() {
               >
                 {featured.thumbnailPath && (
                   <div className="aspect-[16/9] w-full overflow-hidden bg-secondary lg:aspect-auto lg:w-[44%] lg:shrink-0">
-                    <img
+                    <ImageWithFallback
                       src={featured.thumbnailPath}
                       alt={featured.title}
                       className="h-full w-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
@@ -85,7 +86,7 @@ export function NewsPage() {
                   >
                     {n.thumbnailPath && (
                       <div className="aspect-[16/9] overflow-hidden bg-secondary">
-                        <img
+                        <ImageWithFallback
                           src={n.thumbnailPath}
                           alt={n.title}
                           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
