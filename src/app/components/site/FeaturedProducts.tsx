@@ -31,7 +31,7 @@ export function FeaturedProducts() {
 
   return (
     <section id="products" className="relative bg-white py-24 md:py-32">
-      <div className="mx-auto max-w-[1240px] px-6">
+      <div className="mx-auto max-w-[1500px] px-4 sm:px-6">
         <SectionHeading
           eyebrow="Dòng sản phẩm chủ lực"
           title={<>{featuredProducts.length > 0 ? `${featuredProducts.length} loại gạch` : "Gạch"} nung Tuynel nổi bật<br />cho mọi hạng mục công trình</>}
@@ -39,7 +39,7 @@ export function FeaturedProducts() {
           align="center"
         />
 
-        <Stagger className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" gap={0.10}>
+        <Stagger className="mt-16 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5" gap={0.08}>
           {featuredProducts.map((p) => {
             const specs = buildSpecs(p);
             return (
@@ -59,43 +59,43 @@ export function FeaturedProducts() {
                   />
                 </Link>
 
-                <div className="flex flex-1 flex-col p-6">
+                <div className="flex flex-1 flex-col p-4 sm:p-5">
                   <Link to={`/san-pham/${p.slug}`}>
-                    <h3 className="text-foreground hover:text-primary transition-colors" style={{ fontSize: "1.15rem", fontWeight: 700 }}>
+                    <h3 className="text-foreground hover:text-primary transition-colors line-clamp-1" style={{ fontSize: "1.05rem", fontWeight: 700 }}>
                       {p.name}
                     </h3>
                   </Link>
-                  <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground line-clamp-3">
+                  <p className="mt-1.5 text-[12px] leading-relaxed text-muted-foreground line-clamp-2">
                     {p.shortDescription}
                   </p>
 
                   {specs.length > 0 && (
-                    <dl className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border bg-border">
+                    <dl className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border bg-border">
                       {specs.map((s) => (
-                        <div key={s.label} className="bg-secondary/60 px-3 py-3">
-                          <dt className="text-[10px] uppercase tracking-wide text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
+                        <div key={s.label} className="bg-secondary/60 px-2 py-2">
+                          <dt className="text-[9px] uppercase tracking-wide text-muted-foreground truncate" style={{ fontFamily: "var(--font-mono)" }}>
                             {s.label}
                           </dt>
-                          <dd className="mt-0.5 text-[13px] font-semibold text-foreground">{s.value}</dd>
+                          <dd className="mt-0.5 text-[11px] font-semibold text-foreground truncate">{s.value}</dd>
                         </div>
                       ))}
                     </dl>
                   )}
 
-                  <div className="mt-5 flex-1" />
+                  <div className="mt-4 flex-1" />
 
                   <Link
                     to={`/san-pham/${p.slug}`}
-                    className="mb-3 inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary hover:gap-2.5 transition-all"
+                    className="mb-2.5 inline-flex items-center gap-1 text-[12px] font-semibold text-primary hover:gap-2 transition-all"
                   >
                     Xem chi tiết <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
 
                   <Link
                     to="/lien-he"
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-[14px] font-semibold text-primary-foreground shadow-[0_8px_24px_rgba(0,0,0,0.14)] transition-shadow hover:shadow-[0_12px_32px_rgba(0,0,0,0.22)]"
+                    className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-primary px-3.5 py-2.5 text-[13px] font-semibold text-primary-foreground shadow-[0_8px_24px_rgba(0,0,0,0.14)] transition-shadow hover:shadow-[0_12px_32px_rgba(0,0,0,0.22)]"
                   >
-                    <Phone className="h-4 w-4" />
+                    <Phone className="h-3.5 w-3.5" />
                     Liên hệ báo giá
                   </Link>
                 </div>
