@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Trophy, ZoomIn, X, FileText, Download, Eye } from "lucide-react";
+import { Trophy, ZoomIn, X } from "lucide-react";
 import { Stagger, staggerItem, motion } from "../../lib/motion";
 import { SectionHeading } from "./SectionHeading";
 
@@ -10,7 +10,6 @@ export type AwardCardItem = {
   year: string;
   badgeText: string;
   image: string;
-  pdfUrl?: string;
 };
 
 const AWARDS: AwardCardItem[] = [
@@ -29,7 +28,6 @@ const AWARDS: AwardCardItem[] = [
     year: "2018",
     badgeText: "GIẤY KHEN CỤC THUẾ",
     image: "/images/bang_khen_thue_2018.jpg",
-    pdfUrl: "/images/giayto/bang_khen_thue_2018.pdf",
   },
 ];
 
@@ -52,27 +50,27 @@ export function Awards() {
           align="center"
         />
 
-        <Stagger className="mt-16 grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
+        <Stagger className="mt-16 flex flex-col items-center gap-12 max-w-3xl mx-auto">
           {AWARDS.map((award) => (
             <motion.div
               key={award.id}
               variants={staggerItem}
               whileHover={{ y: -6 }}
-              className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-white p-5 shadow-sm transition-all duration-300 hover:border-amber-400/60 hover:shadow-xl"
+              className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-white p-6 shadow-sm transition-all duration-300 hover:border-amber-400/60 hover:shadow-xl w-full"
             >
               <div>
                 {/* Header Badge */}
-                <div className="flex items-center justify-between gap-1.5 mb-3">
-                  <span className="inline-flex items-center gap-1 rounded-lg bg-amber-400/15 px-2.5 py-1 text-[11px] font-bold text-amber-800 font-mono truncate">
-                    <Trophy className="h-3.5 w-3.5 shrink-0 text-amber-600" />
+                <div className="flex items-center justify-between gap-1.5 mb-4">
+                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-amber-400/15 px-3 py-1 text-[12px] font-bold text-amber-800 font-mono truncate">
+                    <Trophy className="h-4 w-4 shrink-0 text-amber-600" />
                     {award.badgeText}
                   </span>
-                  <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 border border-emerald-200 shrink-0">
+                  <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 border border-emerald-200 shrink-0">
                     Năm {award.year}
                   </span>
                 </div>
 
-                {/* Ảnh bằng khen — nằm ngang */}
+                {/* Ảnh bằng khen — nằm ngang kích thước lớn */}
                 <div
                   onClick={() => setActiveItem(award)}
                   className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border bg-neutral-100 cursor-pointer group-hover:border-amber-400/50 transition-colors flex items-center justify-center"
@@ -83,42 +81,20 @@ export function Awards() {
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-white backdrop-blur-[2px]">
-                    <div className="inline-flex items-center gap-1.5 rounded-full bg-black/80 px-3.5 py-1.5 text-[12px] font-semibold backdrop-blur-sm shadow-md">
-                      <ZoomIn className="h-4 w-4" /> Phóng to
+                    <div className="inline-flex items-center gap-1.5 rounded-full bg-black/80 px-4 py-2 text-[13px] font-semibold backdrop-blur-sm shadow-md">
+                      <ZoomIn className="h-4 w-4" /> Phóng to toàn màn hình
                     </div>
                   </div>
                 </div>
 
                 {/* Title & Info */}
-                <h3 className="mt-4 text-foreground leading-snug font-bold text-[15px] line-clamp-2">
+                <h3 className="mt-5 text-foreground leading-snug font-bold text-[17px]">
                   {award.title}
                 </h3>
-                <div className="mt-2 text-[12px] text-muted-foreground font-medium">
-                  <div className="line-clamp-1">{award.issuer}</div>
+                <div className="mt-2 text-[13px] text-muted-foreground font-medium">
+                  <div>{award.issuer}</div>
                 </div>
               </div>
-
-              {/* PDF Download/View if present */}
-              {award.pdfUrl && (
-                <div className="mt-4 pt-3 border-t border-border flex items-center justify-between gap-2 text-[11px]">
-                  <a
-                    href={award.pdfUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-semibold text-amber-700 hover:underline truncate"
-                  >
-                    <FileText className="h-3.5 w-3.5 shrink-0" /> Xem tệp PDF
-                  </a>
-                  <a
-                    href={award.pdfUrl}
-                    download
-                    className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors font-medium shrink-0"
-                    title="Tải về file PDF"
-                  >
-                    <Download className="h-3.5 w-3.5" /> Tải
-                  </a>
-                </div>
-              )}
             </motion.div>
           ))}
         </Stagger>
@@ -131,18 +107,18 @@ export function Awards() {
           onClick={() => setActiveItem(null)}
         >
           <div
-            className="relative max-h-[92vh] w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-2xl flex flex-col"
+            className="relative max-h-[92vh] w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-border px-5 py-3.5 bg-secondary/40">
-              <div className="flex items-center gap-2.5">
-                <Trophy className="h-5 w-5 text-amber-500" />
+            <div className="flex items-center justify-between border-b border-border px-6 py-4 bg-secondary/40">
+              <div className="flex items-center gap-3">
+                <Trophy className="h-6 w-6 text-amber-500" />
                 <div>
-                  <span className="font-bold text-foreground text-[15px] block leading-tight">
+                  <span className="font-bold text-foreground text-[16px] block leading-tight">
                     {activeItem.title}
                   </span>
-                  <span className="text-[11px] text-muted-foreground">
+                  <span className="text-[12px] text-muted-foreground">
                     {activeItem.issuer} · Năm {activeItem.year}
                   </span>
                 </div>
@@ -150,50 +126,25 @@ export function Awards() {
               <button
                 type="button"
                 onClick={() => setActiveItem(null)}
-                className="rounded-lg p-1.5 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+                className="rounded-lg p-2 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
             {/* Image Content */}
-            <div className="overflow-auto p-4 bg-neutral-900 flex items-center justify-center" style={{ maxHeight: "72vh" }}>
+            <div className="overflow-auto p-4 bg-neutral-900 flex items-center justify-center" style={{ maxHeight: "80vh" }}>
               <img
                 src={activeItem.image}
                 alt={activeItem.title}
-                className="max-h-[68vh] w-auto object-contain rounded bg-white p-2 shadow-lg"
+                className="max-h-[76vh] w-auto object-contain rounded bg-white p-2 shadow-lg"
               />
             </div>
-
-            {/* Footer Toolbar if PDF exists */}
-            {activeItem.pdfUrl && (
-              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-3 bg-white text-xs">
-                <div className="text-muted-foreground font-medium">
-                  Đơn vị cấp: <span className="text-foreground font-semibold">{activeItem.issuer}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <a
-                    href={activeItem.pdfUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-secondary px-3.5 py-2 font-semibold text-foreground hover:bg-secondary/80 transition-colors"
-                  >
-                    <Eye className="h-3.5 w-3.5 text-amber-600" /> Mở Tệp PDF Gốc
-                  </a>
-                  <a
-                    href={activeItem.pdfUrl}
-                    download
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-amber-600 px-4 py-2 font-semibold text-white hover:bg-amber-700 transition-colors"
-                  >
-                    <Download className="h-3.5 w-3.5" /> Tải PDF Về Máy
-                  </a>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       )}
     </section>
   );
 }
+
 
