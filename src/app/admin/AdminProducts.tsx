@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { Plus, Pencil, Trash2, X, Save, Upload, Star, Loader2, Image as ImageIcon, Check } from "lucide-react";
 import { toast } from "sonner";
-import { useStore, API_BASE_URL, getAuthHeaders, getImageUrl } from "../lib/store";
+import { useStore, API_BASE_URL, getAuthHeaders, getImageUrl, FALLBACK_IMAGE } from "../lib/store";
 import { compressImageFile } from "../lib/imageCompressor";
 import type { Product } from "../lib/data";
 
@@ -293,6 +293,9 @@ export function AdminProducts() {
                           src={getImageUrl(displayImg)}
                           alt={p.name}
                           className="h-10 w-14 rounded-lg object-cover bg-[#C76B86]/15"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
+                          }}
                         />
                       )}
                       <div>
@@ -415,7 +418,10 @@ export function AdminProducts() {
                             <img
                               src={fullUrl}
                               alt={`Product image ${idx + 1}`}
-                              className="h-20 w-full rounded-lg object-cover"
+                              className="h-20 w-full rounded-lg object-cover bg-[#C76B86]/15"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
+                              }}
                             />
                             <div className="mt-1 flex items-center justify-between px-1">
                               <button

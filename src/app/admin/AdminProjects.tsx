@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { Plus, Pencil, Trash2, X, Save, MapPin, Upload, Star, Loader2, Link as LinkIcon } from "lucide-react";
 import { toast } from "sonner";
-import { useStore, API_BASE_URL, getAuthHeaders, getImageUrl } from "../lib/store";
+import { useStore, API_BASE_URL, getAuthHeaders, getImageUrl, FALLBACK_IMAGE } from "../lib/store";
 import { compressImageFile } from "../lib/imageCompressor";
 import type { ProjectItem } from "../lib/store";
 
@@ -291,6 +291,9 @@ export function AdminProjects() {
                           src={getImageUrl(displayImg)}
                           alt={p.name}
                           className="h-10 w-16 rounded-lg object-cover bg-[#C76B86]/15"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
+                          }}
                         />
                       )}
                       <div>
@@ -416,9 +419,9 @@ export function AdminProjects() {
                             <img
                               src={fullUrl}
                               alt={`Project image ${idx + 1}`}
-                              className="h-20 w-full rounded-lg object-cover"
+                              className="h-20 w-full rounded-lg object-cover bg-[#C76B86]/15"
                               onError={(e) => {
-                                (e.target as HTMLImageElement).src = imgUrl;
+                                (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
                               }}
                             />
                             <div className="mt-1 flex items-center justify-between px-1">

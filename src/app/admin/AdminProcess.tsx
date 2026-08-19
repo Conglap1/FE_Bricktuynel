@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Plus, Pencil, Trash2, X, Save, ArrowUp, ArrowDown } from "lucide-react";
 import { toast } from "sonner";
-import { useStore } from "../lib/store";
+import { useStore, getImageUrl, FALLBACK_IMAGE } from "../lib/store";
 import type { ProcessStep } from "../lib/store";
 
 const EMPTY: ProcessStep = { step: "", title: "", desc: "", image: "" };
@@ -78,7 +78,14 @@ export function AdminProcess() {
               {s.step}
             </span>
             {s.image && (
-              <img src={s.image} alt={s.title} className="h-14 w-20 rounded-xl object-cover bg-[#C76B86]/15 shrink-0" />
+              <img
+                src={getImageUrl(s.image)}
+                alt={s.title}
+                className="h-14 w-20 rounded-xl object-cover bg-[#C76B86]/15 shrink-0"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
+                }}
+              />
             )}
             <div className="flex-1 min-w-0">
               <div className="font-semibold text-[#560213] truncate">{s.title}</div>

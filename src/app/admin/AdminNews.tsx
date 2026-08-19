@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Plus, Pencil, Trash2, X, Save } from "lucide-react";
 import { toast } from "sonner";
-import { useStore, API_BASE_URL, getAuthHeaders, getImageUrl } from "../lib/store";
+import { useStore, API_BASE_URL, getAuthHeaders, getImageUrl, FALLBACK_IMAGE } from "../lib/store";
 import type { NewsItem } from "../lib/store";
 import { ImageUploadInput } from "./ImageUploadInput";
 
@@ -149,6 +149,9 @@ export function AdminNews() {
                         src={getImageUrl(n.thumbnailPath)}
                         alt={n.title}
                         className="h-10 w-16 rounded-lg object-cover bg-[#C76B86]/15"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
+                        }}
                       />
                     )}
                     <div>

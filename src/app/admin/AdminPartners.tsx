@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Plus, Pencil, Trash2, X, Save, Globe } from "lucide-react";
 import { toast } from "sonner";
-import { useStore, API_BASE_URL, getAuthHeaders, getImageUrl } from "../lib/store";
+import { useStore, API_BASE_URL, getAuthHeaders, getImageUrl, FALLBACK_IMAGE } from "../lib/store";
 import type { Partner } from "../lib/store";
 import { ImageUploadInput } from "./ImageUploadInput";
 
@@ -118,7 +118,16 @@ export function AdminPartners() {
               <tr key={p.id} className={`transition-colors hover:bg-[#C76B86]/5 ${!p.isActive ? "opacity-40" : ""}`}>
                 <td className="px-5 py-4">
                   <div className="flex items-center gap-3">
-                    {p.logoPath && <img src={getImageUrl(p.logoPath)} alt={p.name} className="h-10 w-16 rounded-lg object-contain bg-[#C76B86]/15" />}
+                    {p.logoPath && (
+                      <img
+                        src={getImageUrl(p.logoPath)}
+                        alt={p.name}
+                        className="h-10 w-16 rounded-lg object-contain bg-[#C76B86]/15"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
+                        }}
+                      />
+                    )}
                     <div className="font-semibold text-[#560213] leading-snug">{p.name}</div>
                   </div>
                 </td>
