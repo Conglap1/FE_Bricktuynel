@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Upload, Image as ImageIcon, X, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { API_BASE_URL, getAuthHeaders, getImageUrl } from "../lib/store";
+import { compressImageFile } from "../lib/imageCompressor";
 
 interface ImageUploadInputProps {
   label: string;
@@ -25,17 +26,18 @@ export function ImageUploadInput({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate size (max 10MB)
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error("File ảnh quá lớn (tối đa 10MB).");
+    // Validate size (max 50MB)
+    if (file.size > 50 * 1024 * 1024) {
+      toast.error("File ảnh quá lớn (tối đa 50MB).");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("file", file);
-
     setUploading(true);
     try {
+      const fileToUpload = await compressImageFile(file);
+      const formData = new FormData();
+      formData.append("file", fileToUpload);
+
       const res = await fetch(`${API_BASE_URL}/uploads/image/${folder}`, {
         method: "POST",
         headers: getAuthHeaders(),

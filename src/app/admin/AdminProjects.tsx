@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Plus, Pencil, Trash2, X, Save, MapPin, Upload, Star, Loader2, Link as LinkIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useStore, API_BASE_URL, getAuthHeaders, getImageUrl } from "../lib/store";
+import { compressImageFile } from "../lib/imageCompressor";
 import type { ProjectItem } from "../lib/store";
 
 type ProjectForm = Omit<ProjectItem, "id">;
@@ -167,13 +168,14 @@ export function AdminProjects() {
     try {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        if (file.size > 10 * 1024 * 1024) {
-          toast.error(`File ${file.name} quá lớn (tối đa 10MB).`);
+        if (file.size > 50 * 1024 * 1024) {
+          toast.error(`File ${file.name} quá lớn (tối đa 50MB).`);
           continue;
         }
 
+        const compressedFile = await compressImageFile(file);
         const formData = new FormData();
-        formData.append("file", file);
+        formData.append("file", compressedFile);
 
         const res = await fetch(`${API_BASE_URL}/uploads/image/projects`, {
           method: "POST",
@@ -286,7 +288,7 @@ export function AdminProjects() {
                     <div className="flex items-center gap-3">
                       {displayImg && (
                         <img
-                          src={displayImg.startsWith("http") ? displayImg : `http://localhost:5247${displayImg.startsWith("/") ? "" : "/"}${displayImg}`}
+                          src={getImageUrl(displayImg)}
                           alt={p.name}
                           className="h-10 w-16 rounded-lg object-cover bg-[#C76B86]/15"
                         />
@@ -407,7 +409,7 @@ export function AdminProjects() {
                   {(form.images || []).length > 0 ? (
                     <div className="grid grid-cols-4 gap-3 pt-2">
                       {(form.images || []).map((imgUrl, idx) => {
-                        const fullUrl = imgUrl.startsWith("http") ? imgUrl : `http://localhost:5247${imgUrl.startsWith("/") ? "" : "/"}${imgUrl}`;
+                        const fullUrl = getImageUrl(imgUrl);
                         const isPrimary = form.image === imgUrl || (!form.image && idx === 0);
                         return (
                           <div key={idx} className={`relative rounded-xl border p-1 bg-white transition-all ${isPrimary ? "ring-2 ring-[#810C00] border-[#810C00]" : "border-slate-200"}`}>
