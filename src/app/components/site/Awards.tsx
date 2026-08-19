@@ -50,7 +50,7 @@ export function Awards() {
           align="center"
         />
 
-        <Stagger className="mt-16 flex flex-col items-center gap-12 max-w-3xl mx-auto">
+        <Stagger className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {AWARDS.map((award) => (
             <motion.div
               key={award.id}
