@@ -1,0 +1,53 @@
+
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Corporate Showcase Website Design</title>
+      <link id="favicon" rel="icon" type="image/png" href="/images/logo/icon-light-theme.png?v=2" />
+      <script>
+        (function() {
+          function updateFavicon() {
+            var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            var oldFav = document.getElementById('favicon');
+            var href = (isDark ? '/images/logo/icon-dark-theme.png' : '/images/logo/icon-light-theme.png') + '?v=2';
+            if (oldFav) {
+              oldFav.remove();
+            }
+            var newFav = document.createElement('link');
+            newFav.id = 'favicon';
+            newFav.rel = 'icon';
+            newFav.type = 'image/png';
+            newFav.href = href;
+            document.head.appendChild(newFav);
+          }
+          updateFavicon();
+          if (window.matchMedia) {
+            var matcher = window.matchMedia('(prefers-color-scheme: dark)');
+            if (matcher.addEventListener) {
+              matcher.addEventListener('change', updateFavicon);
+            } else if (matcher.addListener) {
+              matcher.addListener(updateFavicon);
+            }
+          }
+        })();
+      </script>
+      <meta name="description" content="Showcases a Vietnamese brick manufacturer&#39;s products and projects with detailed specs and contact options, targeting construction professionals and homeowners." />
+      <meta name="robots" content="noindex, nofollow" />
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+      <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
+      
+    </head>
+
+    <body>
+      
+      <div id="root"></div>
+      <script type="module" src="/src/main.tsx"></script>
+      
+    </body>
+  </html>
+  

@@ -1,0 +1,267 @@
+CREATE DATABASE BrickCompanyDB;
+GO
+
+USE BrickCompanyDB;
+GO
+
+/*==========================================================
+1. AdminUser
+==========================================================*/
+CREATE TABLE AdminUser
+(
+    Id INT IDENTITY(1,1),
+
+    Username NVARCHAR(50) NOT NULL,
+
+    PasswordHash NVARCHAR(255) NOT NULL,
+
+    CONSTRAINT PK_AdminUser
+        PRIMARY KEY (Id),
+
+    CONSTRAINT UQ_AdminUser_Username
+        UNIQUE (Username)
+);
+GO
+
+/*==========================================================
+2. Product
+==========================================================*/
+CREATE TABLE Product
+(
+    Id INT IDENTITY(1,1),
+
+    Name NVARCHAR(150) NOT NULL,
+
+    Slug NVARCHAR(150) NOT NULL,
+
+    ShortDescription NVARCHAR(500),
+
+    Description NVARCHAR(MAX),
+
+    Length DECIMAL(10,2),
+
+    Width DECIMAL(10,2),
+
+    Height DECIMAL(10,2),
+
+    Weight DECIMAL(10,2),
+
+    HoleCount INT,
+
+    CompressionStrength DECIMAL(10,2),
+
+    WaterAbsorption DECIMAL(5,2),
+
+    IsFeatured BIT NOT NULL DEFAULT(0),
+
+    DisplayOrder INT NOT NULL DEFAULT(0),
+
+    IsActive BIT NOT NULL DEFAULT(1),
+
+    CreatedAt DATETIME2 NOT NULL DEFAULT(GETDATE()),
+
+    UpdatedAt DATETIME2,
+
+    CONSTRAINT PK_Product
+        PRIMARY KEY(Id),
+
+    CONSTRAINT UQ_Product_Slug
+        UNIQUE(Slug)
+);
+GO
+
+/*==========================================================
+3. ProductImage
+==========================================================*/
+CREATE TABLE ProductImage
+(
+    Id INT IDENTITY(1,1),
+
+    ProductId INT NOT NULL,
+
+    ImagePath NVARCHAR(500) NOT NULL,
+
+    IsThumbnail BIT NOT NULL DEFAULT(0),
+
+    AltText NVARCHAR(255),
+
+    DisplayOrder INT NOT NULL DEFAULT(0),
+
+    CONSTRAINT PK_ProductImage
+        PRIMARY KEY(Id),
+
+    CONSTRAINT FK_ProductImage_Product
+        FOREIGN KEY(ProductId)
+        REFERENCES Product(Id)
+        ON DELETE CASCADE
+);
+GO
+
+/*==========================================================
+4. Project
+==========================================================*/
+CREATE TABLE Project
+(
+    Id INT IDENTITY(1,1),
+
+    Name NVARCHAR(255) NOT NULL,
+
+    Slug NVARCHAR(255) NOT NULL,
+
+    ShortDescription NVARCHAR(500),
+
+    Description NVARCHAR(MAX),
+
+    Location NVARCHAR(255),
+
+    CompletedDate DATE,
+
+    DisplayOrder INT NOT NULL DEFAULT(0),
+
+    IsFeatured BIT NOT NULL DEFAULT(0),
+
+    IsActive BIT NOT NULL DEFAULT(1),
+
+    CreatedAt DATETIME2 NOT NULL DEFAULT(GETDATE()),
+
+    UpdatedAt DATETIME2,
+
+    CONSTRAINT PK_Project
+        PRIMARY KEY(Id),
+
+    CONSTRAINT UQ_Project_Slug
+        UNIQUE(Slug)
+);
+GO
+
+/*==========================================================
+5. ProjectImage
+==========================================================*/
+CREATE TABLE ProjectImage
+(
+    Id INT IDENTITY(1,1),
+
+    ProjectId INT NOT NULL,
+
+    ImagePath NVARCHAR(500) NOT NULL,
+
+    IsThumbnail BIT NOT NULL DEFAULT(0),
+
+    DisplayOrder INT NOT NULL DEFAULT(0),
+
+    CONSTRAINT PK_ProjectImage
+        PRIMARY KEY(Id),
+
+    CONSTRAINT FK_ProjectImage_Project
+        FOREIGN KEY(ProjectId)
+        REFERENCES Project(Id)
+        ON DELETE CASCADE
+);
+GO
+
+/*==========================================================
+6. News
+==========================================================*/
+CREATE TABLE News
+(
+    Id INT IDENTITY(1,1),
+
+    Title NVARCHAR(250) NOT NULL,
+
+    Slug NVARCHAR(250) NOT NULL,
+
+    ThumbnailPath NVARCHAR(500),
+
+    Summary NVARCHAR(MAX),
+
+    Content NVARCHAR(MAX),
+
+    PublishedAt DATETIME2,
+
+    IsActive BIT NOT NULL DEFAULT(1),
+
+    CreatedAt DATETIME2 NOT NULL DEFAULT(GETDATE()),
+
+    UpdatedAt DATETIME2,
+
+    CONSTRAINT PK_News
+        PRIMARY KEY(Id),
+
+    CONSTRAINT UQ_News_Slug
+        UNIQUE(Slug)
+);
+GO
+
+/*==========================================================
+7. Partner
+==========================================================*/
+CREATE TABLE Partner
+(
+    Id INT IDENTITY(1,1),
+
+    Name NVARCHAR(150) NOT NULL,
+
+    DisplayOrder INT NOT NULL DEFAULT(0),
+
+    IsActive BIT NOT NULL DEFAULT(1),
+
+    CONSTRAINT PK_Partner
+        PRIMARY KEY(Id)
+);
+GO
+
+/*==========================================================
+8. ContactInfo
+==========================================================*/
+CREATE TABLE ContactInfo
+(
+    Id INT IDENTITY(1,1),
+
+    CompanyName NVARCHAR(255) NOT NULL,
+
+    Address NVARCHAR(500),
+
+    Phone NVARCHAR(20),
+
+    Hotline NVARCHAR(20),
+
+    Email NVARCHAR(100),
+
+    Facebook NVARCHAR(255),
+
+    Zalo NVARCHAR(255),
+
+    Youtube NVARCHAR(255),
+
+    GoogleMapEmbed NVARCHAR(MAX),
+
+    WorkingHours NVARCHAR(255),
+
+    CONSTRAINT PK_ContactInfo
+        PRIMARY KEY(Id)
+);
+GO
+
+/*==========================================================
+9. ContactRequest
+==========================================================*/
+CREATE TABLE ContactRequest
+(
+    Id INT IDENTITY(1,1),
+
+    FullName NVARCHAR(100) NOT NULL,
+
+    Phone NVARCHAR(20) NOT NULL,
+
+    Email NVARCHAR(100),
+
+    Content NVARCHAR(MAX) NOT NULL,
+
+    IsRead BIT NOT NULL DEFAULT(0),
+
+    CreatedAt DATETIME2 NOT NULL DEFAULT(GETDATE()),
+
+    CONSTRAINT PK_ContactRequest
+        PRIMARY KEY(Id)
+);
+GO
