@@ -1,12 +1,4 @@
 import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-  type ReactNode,
-} from "react";
-import {
   CATEGORIES,
   PROCESS,
   type Product,
@@ -132,6 +124,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [process, setProcessRaw] = useState<ProcessStep[]>(PROCESS);
   const [projects, setProjectsRaw] = useState<ProjectItem[]>([]);
   const [news, setNewsRaw] = useState<NewsItem[]>([]);
+
   const [about, setAboutRaw] = useState<AboutData>(DEFAULT_ABOUT);
   const [contact, setContactRaw] = useState<ContactInfo>(DEFAULT_CONTACT);
   const [partners, setPartnersRaw] = useState<Partner[]>([]);

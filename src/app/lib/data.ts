@@ -172,8 +172,10 @@ export type NewsItem = {
   isActive: boolean;
 };
 
-/* ── NEWS (No mock data -> empty array) ───────────────────── */
+/* ── NEWS (No mock seed data -> 100% from DB API) ─────────── */
 export const NEWS: NewsItem[] = [];
+
+
 
 /* ── PARTNER TYPE — maps to DB: Partner ────────────────────── */
 export type Partner = {

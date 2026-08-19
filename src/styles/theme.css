@@ -244,10 +244,106 @@
   will-change: transform;
 }
 
+
 html { scroll-behavior: smooth; }
 
 /* GPU layer hint cho animated elements */
 .animate-marquee-track {
   will-change: transform;
 }
+
+/* ── ARTICLE CONTENT & FIGURE CAPTION STYLING ── */
+.prose-article {
+  color: #334155;
+  font-size: 1.0625rem;
+  line-height: 1.85;
+}
+
+.prose-article h2 {
+  color: #560213;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.35;
+  font-family: var(--font-display) !important;
+}
+
+.prose-article h3 {
+  color: #810C00;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+  font-family: var(--font-display) !important;
+}
+
+.prose-article p {
+  margin-bottom: 1.35rem;
+  text-align: justify;
+}
+
+.prose-article figure, 
+.prose-article .article-figure {
+  margin: 2rem 0;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background-color: #f8fafc;
+  border: 1px solid rgba(129, 12, 0, 0.12);
+  padding: 0.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.prose-article figure img,
+.prose-article .article-figure img,
+.prose-article img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.875rem;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+}
+
+.prose-article figcaption,
+.prose-article .article-caption {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-style: italic;
+  color: #64748b;
+  text-align: center;
+  line-height: 1.5;
+  padding: 0 0.75rem 0.35rem;
+}
+
+.prose-article blockquote {
+  border-left: 4px solid #810C00;
+  background-color: rgba(199, 107, 134, 0.08);
+  padding: 1rem 1.25rem;
+  border-radius: 0 0.75rem 0.75rem 0;
+  margin: 1.75rem 0;
+  font-style: italic;
+  font-weight: 500;
+  color: #560213;
+}
+
+.prose-article ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.35rem;
+}
+
+.prose-article ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1.35rem;
+}
+
+.prose-article li {
+  margin-bottom: 0.5rem;
+}
+
 
