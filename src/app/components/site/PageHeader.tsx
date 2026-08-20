@@ -13,7 +13,7 @@ export function PageHeader({
   imagePosition = "object-center",
   className = "",
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   desc?: string;
   crumb: string;
@@ -25,43 +25,33 @@ export function PageHeader({
 
   return (
     <section className={`relative overflow-hidden bg-[#560213] pb-20 pt-32 md:pb-24 md:pt-36 ${className}`}>
-      {/* Background image */}
+      {/* Background image & Dark Overlay */}
       <div className="absolute inset-0">
         <img src={bg} alt="" className={`h-full w-full object-cover ${imagePosition}`} aria-hidden />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
       </div>
 
       <div className="relative mx-auto max-w-[1240px] px-6 w-full text-left">
+        {/* Nổi bật thanh breadcrumb trên cùng */}
         <motion.nav
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-1.5 text-[13px] text-white/70"
+          className="inline-flex items-center gap-2 text-[13px] font-semibold rounded-full bg-black/40 backdrop-blur-md px-4 py-1.5 border border-white/20 text-white shadow-lg"
         >
-          <Link to="/" className="transition-colors hover:text-white">
+          <Link to="/" className="text-white/80 transition-colors hover:text-white">
             Trang chủ
           </Link>
-          <ChevronRight className="h-3.5 w-3.5" />
-          <span className="text-white/90 font-medium">{crumb}</span>
+          <ChevronRight className="h-3.5 w-3.5 text-white/60" />
+          <span className="text-white font-bold">{crumb}</span>
         </motion.nav>
-
-        <motion.span
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.05 }}
-          className="mt-6 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.22em] text-[#C76B86]"
-          style={{ fontFamily: "var(--font-mono)" }}
-        >
-          <span className="h-px w-6 bg-[#C76B86]" />
-          {eyebrow}
-        </motion.span>
 
         <motion.h1
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mt-4 max-w-3xl text-white"
-          style={{ fontSize: "clamp(2.2rem, 5vw, 3.6rem)", lineHeight: 1.05, fontWeight: 800 }}
+          className="mt-6 max-w-3xl text-white font-extrabold drop-shadow-md"
+          style={{ fontSize: "clamp(2.2rem, 5vw, 3.6rem)", lineHeight: 1.08, fontWeight: 800 }}
         >
           {title}
         </motion.h1>
@@ -71,7 +61,7 @@ export function PageHeader({
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.16 }}
-            className="mt-5 max-w-2xl text-[17px] leading-relaxed text-white/80"
+            className="mt-5 max-w-2xl text-[17px] leading-relaxed text-white/90 drop-shadow-sm"
           >
             {desc}
           </motion.p>

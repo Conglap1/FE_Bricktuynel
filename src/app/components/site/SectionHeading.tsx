@@ -21,13 +21,13 @@ export function SectionHeading({
       <Reveal>
         <span
           className={`inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.22em] ${
-            dark ? "text-[#C76B86]" : "text-primary"
+            dark ? "text-amber-400" : "text-primary"
           }`}
           style={{ fontFamily: "var(--font-mono)" }}
         >
-          <span className={`h-px w-6 ${dark ? "bg-[#C76B86]" : "bg-primary"}`} />
+          <span className={`h-px w-6 ${dark ? "bg-amber-400" : "bg-primary"}`} />
           {eyebrow}
-          {align === "center" && <span className={`h-px w-6 ${dark ? "bg-[#C76B86]" : "bg-primary"}`} />}
+          {align === "center" && <span className={`h-px w-6 ${dark ? "bg-amber-400" : "bg-primary"}`} />}
         </span>
       </Reveal>
       <Reveal delay={0.08}>
