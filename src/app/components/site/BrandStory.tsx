@@ -19,14 +19,16 @@ export function BrandStory() {
 
             <div className="relative z-10 max-w-3xl">
               <h3
-                className="text-white leading-tight"
+                className="text-white"
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "clamp(1.9rem, 4vw, 3.2rem)",
+                  fontSize: "clamp(1.3rem, 3.8vw, 3.2rem)",
                   fontWeight: 900,
+                  lineHeight: 1.25,
                 }}
               >
-                &ldquo;Vững bước dựng xây — Nâng tầm công trình Việt&rdquo;
+                <span className="inline-block whitespace-nowrap">&ldquo;Vững bước dựng xây —</span>{" "}
+                <span className="inline-block whitespace-nowrap">Nâng tầm công trình Việt&rdquo;</span>
               </h3>
               <p className="mt-4 text-[16px] text-white/85 leading-relaxed max-w-2xl">
                 Mỗi viên gạch ra lò không chỉ mang sức mạnh của công nghệ hiện đại, mà còn gắn liền với niềm tự hào được đồng hành cùng hàng ngàn công trình lớn nhỏ trên khắp cả nước.
