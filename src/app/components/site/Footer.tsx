@@ -102,17 +102,16 @@ export function Footer() {
                   </span>
                 </li>
               )}
-              {(contact.hotline || contact.phone) && (
+              {contact.phone && (
                 <li className="flex items-start gap-3">
                   <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md bg-white/10 text-white/80">
                     <Phone className="h-3.5 w-3.5" />
                   </span>
                   <span>
-                    <strong className="text-white/90">Hotline / Kinh doanh:</strong>{" "}
-                    <a href={`tel:${(contact.hotline || "").replace(/\s/g, "")}`} className="font-semibold text-white hover:text-[#C76B86] transition-colors">
-                      {contact.hotline ? `${contact.hotline}` : ""}
-                    </a>{" "}
-                    {contact.phone ? `(${contact.phone})` : ""}
+                    <strong className="text-white/90">Số điện thoại:</strong>{" "}
+                    <a href={`tel:${contact.phone.replace(/\s/g, "")}`} className="font-semibold text-white hover:text-[#C76B86] transition-colors">
+                      {contact.phone}
+                    </a>
                   </span>
                 </li>
               )}

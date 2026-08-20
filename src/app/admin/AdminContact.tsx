@@ -107,34 +107,18 @@ export function AdminContact() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="mb-1.5 block text-sm font-semibold text-slate-700 flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-slate-400" />
-                  Điện thoại bàn
-                </label>
-                <input
-                  type="text"
-                  value={form.phone}
-                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  placeholder="0908 555 888"
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm font-medium text-slate-900 outline-none transition-colors focus:border-[#810C00] focus:bg-white focus:ring-1 focus:ring-[#810C00]"
-                />
-              </div>
-
-              <div>
-                <label className="mb-1.5 block text-sm font-semibold text-slate-700 flex items-center gap-2">
-                  <PhoneCall className="h-4 w-4 text-slate-400" />
-                  Hotline kinh doanh
-                </label>
-                <input
-                  type="text"
-                  value={form.hotline}
-                  onChange={(e) => setForm({ ...form, hotline: e.target.value })}
-                  placeholder="1900 1234"
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm font-medium text-slate-900 outline-none transition-colors focus:border-[#810C00] focus:bg-white focus:ring-1 focus:ring-[#810C00]"
-                />
-              </div>
+            <div>
+              <label className="mb-1.5 block text-sm font-semibold text-slate-700 flex items-center gap-2">
+                <Phone className="h-4 w-4 text-slate-400" />
+                Số điện thoại liên hệ / Hotline
+              </label>
+              <input
+                type="text"
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                placeholder="0918 701 472"
+                className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm font-medium text-slate-900 outline-none transition-colors focus:border-[#810C00] focus:bg-white focus:ring-1 focus:ring-[#810C00]"
+              />
             </div>
 
             <div className="grid grid-cols-2 gap-4">

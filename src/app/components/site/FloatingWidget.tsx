@@ -39,7 +39,7 @@ export function FloatingWidget() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const phoneNum = contact.hotline || contact.phone || "0908 555 888";
+  const phoneNum = contact.phone || "0918 701 472";
   const telUrl = `tel:${phoneNum.replace(/\s+/g, "")}`;
 
   const zaloUrl = contact.zalo

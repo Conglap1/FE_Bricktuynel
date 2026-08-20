@@ -68,7 +68,6 @@ export type ContactInfo = {
   companyName: string;
   address: string;
   phone: string;
-  hotline: string;
   email: string;
   facebook: string;
   zalo: string;
@@ -124,7 +123,6 @@ export const DEFAULT_CONTACT: ContactInfo = {
   companyName: "CTTNHH 1TV Thuận Lợi Mộc Hóa",
   address: "Ấp Mới, Xã Bình Tân, Thị xã Kiến Tường, Tỉnh Long An",
   phone: "0918 701 472",
-  hotline: "0918 701 472",
   email: "kinhdoanh@gachthuanloi.vn",
   facebook: "https://facebook.com",
   zalo: "0918701472",

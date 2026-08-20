@@ -52,11 +52,10 @@ export function Contact() {
   const INFO_CARDS = [
     {
       icon: Phone,
-      label: "HOTLINE TƯ VẤN 24/7",
-      value: contact.hotline ? `${contact.hotline} · ${contact.phone}` : "1900 1234 · 0908 555 888",
-
+      label: "SỐ ĐIỆN THOẠI TƯ VẤN",
+      value: contact.phone || "0918 701 472",
       actionText: "Gọi ngay",
-      actionHref: `tel:${(contact.hotline || "19001234").replace(/\s/g, "")}`,
+      actionHref: `tel:${(contact.phone || "0918701472").replace(/\s/g, "")}`,
       gradient: "from-[#800A23] to-[#560213]",
       badge: (
         <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-700 border border-emerald-500/20">

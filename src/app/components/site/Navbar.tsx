@@ -120,7 +120,7 @@ export function Navbar() {
         {/* Phone CTA */}
         <div className="hidden items-center lg:flex">
           <a
-            href={`tel:${contact.hotline.replace(/\s/g, '')}`}
+            href={`tel:${contact.phone.replace(/\s/g, '')}`}
             className={`group relative flex items-center gap-3 overflow-hidden rounded-full border px-5 py-2 transition-all duration-300 hover:scale-105 active:scale-95 ${
               light
                 ? "border-white/40 bg-white/10 text-white shadow-[0_0_15px_rgba(255,255,255,0.15)] hover:bg-white/20 hover:border-white/70 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
@@ -156,7 +156,7 @@ export function Navbar() {
                   <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-emerald-400 opacity-75" style={{ willChange: "transform, opacity" }} />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
                 </span>
-                Hotline 24/7
+                Tư vấn trực tiếp
               </span>
               <span
                 className={`mt-0.5 text-[16px] font-extrabold tracking-tight transition-colors ${
@@ -164,7 +164,7 @@ export function Navbar() {
                 }`}
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                {contact.hotline}
+                {contact.phone}
               </span>
             </div>
           </a>
