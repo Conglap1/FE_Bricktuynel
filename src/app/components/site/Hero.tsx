@@ -39,11 +39,11 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.7 }}
-          className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 backdrop-blur-md"
+          className="mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 backdrop-blur-md"
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-[#C76B86]" />
-          <span className="text-[12px] font-medium uppercase tracking-[0.2em] text-white/90">
-            Nhà sản xuất gạch đất nung Tuynel · Từ 1988
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#C76B86]" />
+          <span className="text-[11px] sm:text-[12px] font-medium uppercase tracking-[0.1em] sm:tracking-[0.2em] text-white/90 whitespace-nowrap">
+            Nhà sản xuất gạch Tuynel · Từ 1988
           </span>
         </motion.div>
 

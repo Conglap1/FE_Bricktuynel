@@ -29,7 +29,7 @@ export function NewsPage() {
         crumb="Tin tức"
         eyebrow="Tin tức & Sự kiện"
         title="Cập nhật mới nhất từ Thuận Lợi"
-        desc="Thông tin về hoạt động sản xuất, sản phẩm mới và các chứng nhận chất lượng của chúng tôi."
+        desc="Thông tin về hoạt động sản xuất, sản phẩm mới và chứng nhận chất lượng của chúng tôi."
         image={IMAGES.newsBanner}
       />
 
