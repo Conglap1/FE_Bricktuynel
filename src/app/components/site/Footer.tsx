@@ -93,12 +93,37 @@ export function Footer() {
           {/* Column 2: Detailed Company Information */}
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm shadow-inner transition-all hover:border-white/20">
             <div>
-              <h4 className="flex items-center gap-2.5 text-white overflow-hidden" style={{ fontSize: "clamp(0.8rem, 1.15vw, 0.98rem)", fontWeight: 700 }}>
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#C76B86]/20 text-[#C76B86]">
-                  <Building2 className="h-4 w-4" />
+              <h4 className="flex items-start gap-3 text-white">
+                <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#C76B86]/20 text-[#C76B86]">
+                  <Building2 className="h-5 w-5" />
                 </span>
-                <span className="whitespace-nowrap overflow-hidden text-ellipsis tracking-tight" title={contact.companyName || "Công ty TNHH MTV Thuận Lợi Mộc Hóa"}>
-                  {contact.companyName || "Công ty TNHH MTV Thuận Lợi Mộc Hóa"}
+                <span
+                  className="leading-snug text-white font-extrabold text-[15px] sm:text-[16px] md:text-[17px]"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {contact.companyName ? (
+                    contact.companyName.includes(" - ") ? (
+                      <>
+                        {contact.companyName.split(" - ")[0]}
+                        <br />
+                        <span className="text-[#C76B86]">{contact.companyName.split(" - ")[1]}</span>
+                      </>
+                    ) : contact.companyName.includes("Thuận Lợi") ? (
+                      <>
+                        {contact.companyName.slice(0, contact.companyName.indexOf("Thuận Lợi")).trim()}
+                        <br />
+                        <span className="text-[#C76B86]">{contact.companyName.slice(contact.companyName.indexOf("Thuận Lợi"))}</span>
+                      </>
+                    ) : (
+                      contact.companyName
+                    )
+                  ) : (
+                    <>
+                      Công ty TNHH Một Thành Viên
+                      <br />
+                      <span className="text-[#C76B86]">Thuận Lợi - Mộc Hóa</span>
+                    </>
+                  )}
                 </span>
               </h4>
             </div>
