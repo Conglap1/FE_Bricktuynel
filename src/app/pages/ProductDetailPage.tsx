@@ -15,10 +15,10 @@ function buildAllSpecs(p: ReturnType<typeof useStore>["products"][number]) {
     { label: "Chiều rộng", value: `${p.width} mm`, unit: "W" },
     { label: "Chiều cao", value: `${p.height} mm`, unit: "H" },
     p.brickGrade ? { label: "Mác gạch", value: p.brickGrade, unit: "M" } : null,
-    p.compressionStrength != null ? { label: "Cường độ nén (TB)", value: `${p.compressionStrength} MPa`, unit: "Rn" } : null,
-    p.flexuralStrength != null ? { label: "Cường độ uốn (TB)", value: `${p.flexuralStrength} MPa`, unit: "Ru" } : null,
-    p.bulkDensity != null ? { label: "Khối lượng thể tích (TB)", value: `${p.bulkDensity} g/cm³`, unit: "γ" } : null,
-    p.waterAbsorption != null ? { label: "Độ hút nước (TB)", value: `${p.waterAbsorption}%`, unit: "W%" } : null,
+    p.compressionStrength != null ? { label: "Cường độ nén (AVG)", value: `${p.compressionStrength} MPa`, unit: "Rn" } : null,
+    p.flexuralStrength != null ? { label: "Cường độ uốn (AVG)", value: `${p.flexuralStrength} MPa`, unit: "Ru" } : null,
+    p.bulkDensity != null ? { label: "Khối lượng thể tích (AVG)", value: `${p.bulkDensity} g/cm³`, unit: "γ" } : null,
+    p.waterAbsorption != null ? { label: "Độ hút nước (AVG)", value: `${p.waterAbsorption}%`, unit: "W%" } : null,
   ].filter((s): s is { label: string; value: string; unit: string } => s !== null);
 }
 

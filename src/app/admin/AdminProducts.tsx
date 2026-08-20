@@ -278,9 +278,9 @@ export function AdminProducts() {
               <th className="px-5 py-4">Sản phẩm</th>
               <th className="px-5 py-4">Kích thước (mm)</th>
               <th className="px-5 py-4">Mác gạch</th>
-              <th className="px-5 py-4">Nén (MPa)</th>
-              <th className="px-5 py-4">Uốn (MPa)</th>
-              <th className="px-5 py-4">Hút nước (%)</th>
+              <th className="px-5 py-4">Nén AVG (MPa)</th>
+              <th className="px-5 py-4">Uốn AVG (MPa)</th>
+              <th className="px-5 py-4">Hút nước AVG (%)</th>
               <th className="px-5 py-4 text-right">Thao tác</th>
             </tr>
           </thead>
@@ -477,14 +477,14 @@ export function AdminProducts() {
 
               {/* Thông số kỹ thuật */}
               <div>
-                <div className="mb-2 text-[12px] font-semibold uppercase tracking-wider text-[#810C00]">Thông số kỹ thuật & Thí nghiệm</div>
+                <div className="mb-2 text-[12px] font-semibold uppercase tracking-wider text-[#810C00]">Thông số kỹ thuật & Thí nghiệm (Kèm giá trị AVG)</div>
                 <div className="grid grid-cols-3 gap-3">
-                  <F label="Cường độ nén (MPa)"><input type="number" step="0.1" value={form.compressionStrength ?? ""} onChange={(e) => set("compressionStrength", num(e.target.value))} placeholder="7.9" className={inp} /></F>
-                  <F label="Cường độ uốn (MPa)"><input type="number" step="0.1" value={form.flexuralStrength ?? ""} onChange={(e) => set("flexuralStrength", num(e.target.value))} placeholder="1.9" className={inp} /></F>
-                  <F label="Khối lượng thể tích (g/cm³)"><input type="number" step="0.01" value={form.bulkDensity ?? ""} onChange={(e) => set("bulkDensity", num(e.target.value))} placeholder="1.49" className={inp} /></F>
+                  <F label="Cường độ nén trung bình - AVG (MPa)"><input type="number" step="0.1" value={form.compressionStrength ?? ""} onChange={(e) => set("compressionStrength", num(e.target.value))} placeholder="7.9" className={inp} /></F>
+                  <F label="Cường độ uốn trung bình - AVG (MPa)"><input type="number" step="0.1" value={form.flexuralStrength ?? ""} onChange={(e) => set("flexuralStrength", num(e.target.value))} placeholder="1.9" className={inp} /></F>
+                  <F label="Khối lượng thể tích trung bình - AVG (g/cm³)"><input type="number" step="0.01" value={form.bulkDensity ?? ""} onChange={(e) => set("bulkDensity", num(e.target.value))} placeholder="1.49" className={inp} /></F>
                 </div>
                 <div className="mt-3">
-                  <F label="Độ hút nước (%)"><input type="number" step="0.1" value={form.waterAbsorption ?? ""} onChange={(e) => set("waterAbsorption", num(e.target.value))} placeholder="11.3" className={inp} /></F>
+                  <F label="Độ hút nước trung bình - AVG (%)"><input type="number" step="0.1" value={form.waterAbsorption ?? ""} onChange={(e) => set("waterAbsorption", num(e.target.value))} placeholder="11.3" className={inp} /></F>
                 </div>
               </div>
 

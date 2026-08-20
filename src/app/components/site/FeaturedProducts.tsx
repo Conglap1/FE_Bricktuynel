@@ -10,10 +10,10 @@ function buildSpecs(p: Product) {
   return [
     { label: "Kích thước", value: `${p.length}×${p.width}×${p.height} mm` },
     p.brickGrade ? { label: "Mác gạch", value: p.brickGrade } : null,
-    p.compressionStrength != null ? { label: "Nén (TB)", value: `${p.compressionStrength} MPa` } : null,
-    p.flexuralStrength != null ? { label: "Uốn (TB)", value: `${p.flexuralStrength} MPa` } : null,
-    p.bulkDensity != null ? { label: "Thể tích", value: `${p.bulkDensity} g/cm³` } : null,
-    p.waterAbsorption != null ? { label: "Hút nước", value: `${p.waterAbsorption}%` } : null,
+    p.compressionStrength != null ? { label: "Nén (AVG)", value: `${p.compressionStrength} MPa` } : null,
+    p.flexuralStrength != null ? { label: "Uốn (AVG)", value: `${p.flexuralStrength} MPa` } : null,
+    p.bulkDensity != null ? { label: "Thể tích (AVG)", value: `${p.bulkDensity} g/cm³` } : null,
+    p.waterAbsorption != null ? { label: "Hút nước (AVG)", value: `${p.waterAbsorption}%` } : null,
   ].filter((s): s is { label: string; value: string } => s !== null);
 }
 
