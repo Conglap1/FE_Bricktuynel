@@ -22,7 +22,7 @@ export function LogoMarquee() {
         <ImageWithFallback
           src={logoUrl}
           alt={p.name}
-          className="h-9 w-auto max-w-[140px] object-contain grayscale opacity-80 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105"
+          className="h-9 w-auto max-w-[140px] object-contain transition-all duration-300 group-hover:scale-105"
         />
       </div>
     ) : (
@@ -62,15 +62,15 @@ export function LogoMarquee() {
           Đối tác & Nhà thầu tin tưởng
         </p>
       </div>
-      <div className="group/marquee relative flex overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)] select-none">
+      <div className="relative flex overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)] select-none">
         <div
-          className="flex shrink-0 items-center gap-10 pr-10 animate-[marquee_35s_linear_infinite] group-hover/marquee:[animation-play-state:paused]"
+          className="flex shrink-0 items-center gap-10 pr-10 animate-[marquee_35s_linear_infinite]"
           style={{ willChange: "transform" }}
         >
           {displayList.map((p, i) => renderPartnerItem(p, "track1", i))}
         </div>
         <div
-          className="flex shrink-0 items-center gap-10 pr-10 animate-[marquee_35s_linear_infinite] group-hover/marquee:[animation-play-state:paused]"
+          className="flex shrink-0 items-center gap-10 pr-10 animate-[marquee_35s_linear_infinite]"
           aria-hidden="true"
           style={{ willChange: "transform" }}
         >
