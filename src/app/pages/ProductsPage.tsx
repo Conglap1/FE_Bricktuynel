@@ -11,19 +11,11 @@ import type { Product } from "../lib/data";
 function buildSpecs(p: Product) {
   return [
     { label: "Kích thước", value: `${p.length}×${p.width}×${p.height} mm` },
-    p.holeCount != null
-      ? { label: "Số lỗ", value: `${p.holeCount} lỗ` }
-      : p.weight != null
-      ? { label: "Trọng lượng", value: `${p.weight} kg/viên` }
-      : null,
-    p.compressionStrength != null
-      ? { label: "Cường độ nén", value: `≥ ${p.compressionStrength} kG/cm²` }
-      : null,
-    p.waterAbsorption != null
-      ? { label: "Độ hút nước", value: `≤ ${p.waterAbsorption}%` }
-      : p.weight != null && p.holeCount != null
-      ? { label: "Trọng lượng", value: `${p.weight} kg/viên` }
-      : null,
+    p.brickGrade ? { label: "Mác gạch", value: p.brickGrade } : null,
+    p.compressionStrength != null ? { label: "Nén (TB)", value: `${p.compressionStrength} MPa` } : null,
+    p.flexuralStrength != null ? { label: "Uốn (TB)", value: `${p.flexuralStrength} MPa` } : null,
+    p.bulkDensity != null ? { label: "Thể tích", value: `${p.bulkDensity} g/cm³` } : null,
+    p.waterAbsorption != null ? { label: "Hút nước", value: `${p.waterAbsorption}%` } : null,
   ].filter((s): s is { label: string; value: string } => s !== null);
 }
 

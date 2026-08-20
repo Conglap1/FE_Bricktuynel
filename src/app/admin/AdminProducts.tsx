@@ -317,9 +317,9 @@ export function AdminProducts() {
                   </td>
                   <td className="px-5 py-4 text-[#560213]/80">{p.length}×{p.width}×{p.height}</td>
                   <td className="px-5 py-4 text-[#560213]/80 font-medium">{p.brickGrade ?? "—"}</td>
-                  <td className="px-5 py-4 text-[#560213]/80">{p.compressionStrength != null ? `≥ ${p.compressionStrength}` : "—"}</td>
-                  <td className="px-5 py-4 text-[#560213]/80">{p.flexuralStrength != null ? `≥ ${p.flexuralStrength}` : "—"}</td>
-                  <td className="px-5 py-4 text-[#560213]/80">{p.waterAbsorption != null ? `≤ ${p.waterAbsorption}%` : "—"}</td>
+                  <td className="px-5 py-4 text-[#560213]/80">{p.compressionStrength != null ? p.compressionStrength : "—"}</td>
+                  <td className="px-5 py-4 text-[#560213]/80">{p.flexuralStrength != null ? p.flexuralStrength : "—"}</td>
+                  <td className="px-5 py-4 text-[#560213]/80">{p.waterAbsorption != null ? `${p.waterAbsorption}%` : "—"}</td>
                   <td className="px-5 py-4">
                     <div className="flex items-center justify-end gap-2">
                       <button onClick={() => openEdit(p)} className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]">
