@@ -8,7 +8,7 @@ export function ProjectsPage() {
     <>
       <PageHeader
         crumb="Dự án"
-        eyebrow="CTTNHH 1TV Thuận Lợi Mộc Hóa"
+        eyebrow="Dự án tiêu biểu"
         title="Những công trình được xây bằng niềm tin"
         desc="Hơn 1.200 công trình dân dụng, công nghiệp và công cộng trên khắp cả nước đã tin dùng sản phẩm của CTTNHH 1TV Thuận Lợi Mộc Hóa."
       />

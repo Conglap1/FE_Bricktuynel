@@ -48,9 +48,9 @@ export function ContactPage() {
     <>
       <PageHeader
         crumb="Liên hệ"
-        eyebrow="CTTNHH 1TV Thuận Lợi Mộc Hóa"
+        eyebrow="Liên hệ & Báo giá"
         title="Bắt đầu công trình của bạn hôm nay"
-        desc="Để lại thông tin, chúng tôi sẽ liên hệ tư vấn và gửi báo giá cho bạn trong thời gian sớm nhất."
+        desc="Để lại thông tin, CTTNHH 1TV Thuận Lợi Mộc Hóa sẽ liên hệ tư vấn và gửi báo giá cho bạn trong thời gian sớm nhất."
         image={IMAGES.contactBanner}
         imagePosition="object-[center_92%]"
         className="!pb-36 md:!pb-52 min-h-[500px] md:min-h-[580px]"

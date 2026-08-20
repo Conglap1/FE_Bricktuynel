@@ -81,7 +81,7 @@ export function ProjectDetailPage() {
     <>
       <PageHeader
         crumb={project.name}
-        eyebrow="CTTNHH 1TV Thuận Lợi Mộc Hóa"
+        eyebrow="Chi tiết công trình"
         title={project.name}
         desc={project.shortDescription || `Công trình tại ${project.location}${project.completedDate ? `, hoàn thành ${project.completedDate}` : ""}.`}
       />

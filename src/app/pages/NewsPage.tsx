@@ -27,8 +27,8 @@ export function NewsPage() {
     <>
       <PageHeader
         crumb="Tin tức"
-        eyebrow="CTTNHH 1TV Thuận Lợi Mộc Hóa"
-        title="Cập nhật mới nhất từ Thuận Lợi Mộc Hóa"
+        eyebrow="Tin tức & Sự kiện"
+        title="Cập nhật mới nhất từ CTTNHH 1TV Thuận Lợi Mộc Hóa"
         desc="Thông tin về hoạt động sản xuất, sản phẩm mới và các chứng nhận chất lượng của công ty."
         image={IMAGES.newsBanner}
       />

@@ -12,7 +12,7 @@ export function CapacityPage() {
     <>
       <PageHeader
         crumb="Năng lực & Thành Tựu"
-        eyebrow="CTTNHH 1TV Thuận Lợi Mộc Hóa"
+        eyebrow="Năng lực & Thành Tựu"
         title="Năng Lực & Thành Tựu"
         desc="Giấy khen, chứng nhận ISO và hệ thống công nghệ sản xuất hiện đại — minh chứng cho cam kết chất lượng của CTTNHH 1TV Thuận Lợi Mộc Hóa."
         image={IMAGES.aboutBanner}

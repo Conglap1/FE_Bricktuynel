@@ -8,7 +8,7 @@ export function ProcessPage() {
     <>
       <PageHeader
         crumb="Quy trình"
-        eyebrow="CTTNHH 1TV Thuận Lợi Mộc Hóa"
+        eyebrow="Quy trình sản xuất"
         title="Từ đất sét đến viên gạch hoàn thiện"
         desc="Quy trình khép kín 9 bước chuyên nghiệp với công nghệ lò Tuynel hiện đại và kiểm soát chất lượng nghiêm ngặt."
       />

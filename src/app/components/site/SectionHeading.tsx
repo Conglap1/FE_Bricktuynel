@@ -40,7 +40,7 @@ export function SectionHeading({
       </Reveal>
       {desc && (
         <Reveal delay={0.16}>
-          <p className={`mt-5 text-[17px] leading-relaxed ${dark ? "text-white/70" : "text-muted-foreground"}`}>
+          <p className={`mt-5 text-[17px] leading-relaxed ${dark ? "text-white/90" : "text-slate-700"}`}>
             {desc}
           </p>
         </Reveal>
