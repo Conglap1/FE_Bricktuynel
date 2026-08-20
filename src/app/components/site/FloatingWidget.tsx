@@ -6,9 +6,7 @@ import { useStore } from "../../lib/store";
 
 function ZaloIcon({ className = "h-5 w-5" }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.5 5.43 3.86 7.18L4.5 22l4.23-1.69c1.02.28 2.11.44 3.27.44 5.52 0 10-4.03 10-9s-4.48-9-10-9zm3.85 12.75h-5.2c-.41 0-.68-.45-.45-.81l4.03-6.69H9.85c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h5.2c.41 0 .68.45.45.81l-4.03 6.69h4.4c.41 0 .75.34.75.75s-.34.75-.75.75z" />
-    </svg>
+    <img src="/images/zalo.png" alt="Zalo" className={`${className} object-contain rounded-full bg-white p-0.5`} />
   );
 }
 
