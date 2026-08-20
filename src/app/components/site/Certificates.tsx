@@ -89,7 +89,7 @@ export function Certificates() {
       <div className="mx-auto max-w-[1280px] px-6">
         <SectionHeading
           eyebrow="Giấy tờ ISO & Chứng nhận thực tế"
-          title={<>Giấy Chứng Nhận ISO & Kết Quả Kiểm Định<br />Bản Scan Thực Tế</>}
+          title={<><span className="inline-block whitespace-nowrap">Giấy Chứng Nhận ISO &amp;</span> <span className="inline-block whitespace-nowrap">Kết Quả Kiểm Định</span></>}
           desc="Bản scan giấy chứng nhận hệ thống quản lý ISO 9001:2015, hợp quy QCVN 16:2023/BXD, Quatest 3 và kết quả thử nghiệm chất lượng gạch xây thực tế."
           align="center"
         />

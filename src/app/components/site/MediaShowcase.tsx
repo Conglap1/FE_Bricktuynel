@@ -16,12 +16,12 @@ export function MediaShowcase() {
           eyebrow="Truyền thông & Báo chí"
           title={
             <>
-              Ứng Dụng Robot Xếp Gạch
+              <span className="inline-block whitespace-nowrap">Ứng Dụng Robot Xếp Gạch</span>
               <br />
-              Trong Dây Chuyền Sản Xuất
+              <span className="inline-block whitespace-nowrap">Trong Dây Chuyền Sản Xuất</span>
             </>
           }
-          desc="Phóng sự của đài truyền hình Long An TV ghi lại quá trình ứng dụng robot vào dây chuyền sản xuất hiện đại tại nhà máy Thuận Lợi Mộc Hóa."
+          desc="Phóng sự đài truyền hình Long An TV về quá trình ứng dụng robot tự động hóa trong dây chuyền sản xuất tại nhà máy Thuận Lợi Mộc Hóa."
           align="center"
         />
 

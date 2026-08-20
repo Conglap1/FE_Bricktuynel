@@ -14,7 +14,7 @@ export function PageHeader({
   className = "",
 }: {
   eyebrow?: string;
-  title: string;
+  title: React.ReactNode;
   desc?: string;
   crumb: string;
   image?: string;
@@ -51,7 +51,7 @@ export function PageHeader({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           className="mt-6 max-w-3xl text-white font-extrabold drop-shadow-md"
-          style={{ fontSize: "clamp(2.2rem, 5vw, 3.6rem)", lineHeight: 1.08, fontWeight: 800 }}
+          style={{ fontSize: "clamp(1.75rem, 5vw, 3.6rem)", lineHeight: 1.08, fontWeight: 800 }}
         >
           {title}
         </motion.h1>
