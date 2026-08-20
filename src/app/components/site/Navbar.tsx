@@ -204,7 +204,7 @@ export function Navbar() {
             ))}
             {/* Phone in mobile */}
             <a
-              href={`tel:${contact.hotline.replace(/\s/g, '')}`}
+              href={`tel:${(contact.phone || "").replace(/\s/g, '')}`}
               className="relative mt-3 flex items-center justify-center gap-3 overflow-hidden rounded-full border border-primary/30 bg-primary/5 px-5 py-3 shadow-sm active:scale-95 transition-all"
             >
               <span className="relative flex h-7 w-7 items-center justify-center">
@@ -214,7 +214,7 @@ export function Navbar() {
                 </span>
               </span>
               <span className="text-[17px] font-extrabold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
-                {contact.hotline}
+                {contact.phone}
               </span>
             </a>
           </div>
