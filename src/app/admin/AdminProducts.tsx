@@ -17,8 +17,6 @@ const EMPTY: ProductForm = {
   height: 80,
   compressionStrength: undefined,
   flexuralStrength: undefined,
-  bulkDensity: undefined,
-  waterAbsorption: undefined,
   brickGrade: "Mác 75",
   isFeatured: true,
   displayOrder: 0,
@@ -59,7 +57,7 @@ export function AdminProducts() {
       name: p.name, slug: p.slug, shortDescription: p.shortDescription, description: p.description,
       length: p.length, width: p.width, height: p.height,
       compressionStrength: p.compressionStrength,
-      flexuralStrength: p.flexuralStrength, bulkDensity: p.bulkDensity, waterAbsorption: p.waterAbsorption,
+      flexuralStrength: p.flexuralStrength,
       brickGrade: p.brickGrade,
       isFeatured: p.isFeatured, displayOrder: p.displayOrder, isActive: p.isActive,
       image: p.image || existingImgs[0] || "",
@@ -278,9 +276,8 @@ export function AdminProducts() {
               <th className="px-5 py-4">Sản phẩm</th>
               <th className="px-5 py-4">Kích thước (mm)</th>
               <th className="px-5 py-4">Mác gạch</th>
-              <th className="px-5 py-4">Nén AVG (MPa)</th>
-              <th className="px-5 py-4">Uốn AVG (MPa)</th>
-              <th className="px-5 py-4">Hút nước AVG (%)</th>
+              <th className="px-5 py-4">Cường độ nén (AVG)</th>
+              <th className="px-5 py-4">Cường độ uốn (AVG)</th>
               <th className="px-5 py-4 text-right">Thao tác</th>
             </tr>
           </thead>
@@ -317,9 +314,8 @@ export function AdminProducts() {
                   </td>
                   <td className="px-5 py-4 text-[#560213]/80">{p.length}×{p.width}×{p.height}</td>
                   <td className="px-5 py-4 text-[#560213]/80 font-medium">{p.brickGrade ?? "—"}</td>
-                  <td className="px-5 py-4 text-[#560213]/80">{p.compressionStrength != null ? p.compressionStrength : "—"}</td>
-                  <td className="px-5 py-4 text-[#560213]/80">{p.flexuralStrength != null ? p.flexuralStrength : "—"}</td>
-                  <td className="px-5 py-4 text-[#560213]/80">{p.waterAbsorption != null ? `${p.waterAbsorption}%` : "—"}</td>
+                  <td className="px-5 py-4 text-[#560213]/80">{p.compressionStrength != null ? `${p.compressionStrength} MPa` : "—"}</td>
+                  <td className="px-5 py-4 text-[#560213]/80">{p.flexuralStrength != null ? `${p.flexuralStrength} MPa` : "—"}</td>
                   <td className="px-5 py-4">
                     <div className="flex items-center justify-end gap-2">
                       <button onClick={() => openEdit(p)} className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]">
@@ -334,7 +330,7 @@ export function AdminProducts() {
               );
             })}
             {products.length === 0 && (
-              <tr><td colSpan={7} className="py-12 text-center text-[#810C00]">Chưa có sản phẩm nào</td></tr>
+              <tr><td colSpan={6} className="py-12 text-center text-[#810C00]">Chưa có sản phẩm nào</td></tr>
             )}
           </tbody>
         </table>
@@ -477,14 +473,10 @@ export function AdminProducts() {
 
               {/* Thông số kỹ thuật */}
               <div>
-                <div className="mb-2 text-[12px] font-semibold uppercase tracking-wider text-[#810C00]">Thông số kỹ thuật & Thí nghiệm (Kèm giá trị AVG)</div>
-                <div className="grid grid-cols-3 gap-3">
-                  <F label="Cường độ nén trung bình - AVG (MPa)"><input type="number" step="0.1" value={form.compressionStrength ?? ""} onChange={(e) => set("compressionStrength", num(e.target.value))} placeholder="7.9" className={inp} /></F>
-                  <F label="Cường độ uốn trung bình - AVG (MPa)"><input type="number" step="0.1" value={form.flexuralStrength ?? ""} onChange={(e) => set("flexuralStrength", num(e.target.value))} placeholder="1.9" className={inp} /></F>
-                  <F label="Khối lượng thể tích trung bình - AVG (g/cm³)"><input type="number" step="0.01" value={form.bulkDensity ?? ""} onChange={(e) => set("bulkDensity", num(e.target.value))} placeholder="1.49" className={inp} /></F>
-                </div>
-                <div className="mt-3">
-                  <F label="Độ hút nước trung bình - AVG (%)"><input type="number" step="0.1" value={form.waterAbsorption ?? ""} onChange={(e) => set("waterAbsorption", num(e.target.value))} placeholder="11.3" className={inp} /></F>
+                <div className="mb-2 text-[12px] font-semibold uppercase tracking-wider text-[#810C00]">Thông số kỹ thuật & Thí nghiệm</div>
+                <div className="grid grid-cols-2 gap-3">
+                  <F label="Cường độ nén (AVG) (MPa)"><input type="number" step="0.1" value={form.compressionStrength ?? ""} onChange={(e) => set("compressionStrength", num(e.target.value))} placeholder="7.9" className={inp} /></F>
+                  <F label="Cường độ uốn (AVG) (MPa)"><input type="number" step="0.1" value={form.flexuralStrength ?? ""} onChange={(e) => set("flexuralStrength", num(e.target.value))} placeholder="1.9" className={inp} /></F>
                 </div>
               </div>
 
