@@ -205,7 +205,7 @@ function ProjectsTeaser() {
     <section className="bg-secondary/40 py-20 md:py-28">
       <div className="mx-auto max-w-[1240px] px-6">
         <div className="flex items-end justify-between gap-4 mb-12">
-          <SectionHeading eyebrow="Dự án tiêu biểu" title={<>Những công trình<br />đã tin dùng Thuận Lợi</>} />
+          <SectionHeading eyebrow="Dự án tiêu biểu" title={<><span className="inline-block whitespace-nowrap">Những công trình</span><br /><span className="inline-block whitespace-nowrap">đã tin dùng Thuận Lợi</span></>} />
           <Link to="/du-an" className="group hidden shrink-0 items-center gap-2 text-[13px] font-semibold text-primary sm:inline-flex">
             Tất cả dự án <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>

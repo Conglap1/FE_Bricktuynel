@@ -47,12 +47,17 @@ export function Hero() {
           </span>
         </motion.div>
 
-        <h1 className="max-w-[16ch] text-white" style={{ fontSize: "clamp(2.6rem, 6.2vw, 5.4rem)", lineHeight: 1.02, fontWeight: 800 }}>
-          Nền móng vững chắc
-          <br />
-          cho{" "}
-          <span className="bg-gradient-to-r from-[#C76B86] to-[#e8a0b4] bg-clip-text text-transparent">
-            mọi công trình
+        <h1
+          className="max-w-4xl text-white"
+          style={{ fontSize: "clamp(1.85rem, 5.5vw, 5.2rem)", lineHeight: 1.12, fontWeight: 800 }}
+        >
+          <span className="inline-block whitespace-nowrap">Nền móng vững chắc</span>{" "}
+          <br className="hidden sm:block" />
+          <span className="inline-block whitespace-nowrap">
+            cho{" "}
+            <span className="bg-gradient-to-r from-[#C76B86] to-[#e8a0b4] bg-clip-text text-transparent">
+              mọi công trình
+            </span>
           </span>
         </h1>
 

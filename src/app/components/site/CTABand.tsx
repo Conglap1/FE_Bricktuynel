@@ -9,15 +9,16 @@ export function CTABand() {
     <section className="bg-white py-20">
       <div className="mx-auto max-w-[1240px] px-6">
         <Reveal>
-          <div className="relative overflow-hidden rounded-3xl bg-[#560213] px-8 py-14 text-center text-white md:px-16 md:py-20">
+          <div className="relative overflow-hidden rounded-3xl bg-[#560213] px-5 py-12 text-center text-white sm:px-12 md:px-16 md:py-20">
             {/* Background image */}
             <div className="absolute inset-0 rounded-3xl overflow-hidden">
               <img src={IMAGES.ctaBannerBg} alt="" className="h-full w-full object-cover" aria-hidden />
               <div className="absolute inset-0 bg-black/35" />
             </div>
             <div className="relative">
-              <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 800, lineHeight: 1.1 }}>
-                Sẵn sàng cho công trình tiếp theo của bạn?
+              <h2 style={{ fontSize: "clamp(1.35rem, 4.2vw, 2.8rem)", fontWeight: 800, lineHeight: 1.2 }}>
+                <span className="inline-block whitespace-nowrap">Sẵn sàng cho công trình</span>{" "}
+                <span className="inline-block whitespace-nowrap">tiếp theo của bạn?</span>
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-[17px] text-white/75">
                 Nhận tư vấn và báo giá chi tiết từ chúng tôi trong vòng 24h.

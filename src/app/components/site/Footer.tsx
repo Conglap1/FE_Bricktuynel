@@ -1,4 +1,4 @@
-import { Facebook, ArrowUp, MapPin, Phone, Mail, Clock, Building2 } from "lucide-react";
+import { Facebook, ArrowUp, MapPin, Phone, Mail, Clock, Building2, FileText } from "lucide-react";
 import { Link } from "react-router";
 import { IMAGES } from "../../lib/data";
 import { useStore } from "../../lib/store";
@@ -43,6 +43,13 @@ export function Footer() {
     { icon: TiktokIcon, label: "TikTok", href: tiktokUrl },
   ];
 
+  const rawAddr = contact.address || "Ấp Cải Đôi, Xã Bình Hiệp, TX. Kiến Tường, Long An";
+  const displayAddress = rawAddr
+    .replace(/^Số nhà \d+,\s*/i, "")
+    .replace("Tỉnh Tây Ninh, Bình Hiệp, ", "")
+    .replace("Thị xã Kiến Tường", "TX. Kiến Tường")
+    .replace("Tỉnh Long An", "Long An");
+
   return (
     <footer className="relative overflow-hidden bg-[#560213] text-white/70">
       {/* Background image */}
@@ -86,24 +93,32 @@ export function Footer() {
           {/* Column 2: Detailed Company Information */}
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm shadow-inner transition-all hover:border-white/20">
             <div>
-              <h4 className="flex items-center gap-2.5 text-white" style={{ fontSize: "1rem", fontWeight: 700 }}>
-                <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#C76B86]/20 text-[#C76B86]">
+              <h4 className="flex items-center gap-2.5 text-white overflow-hidden" style={{ fontSize: "clamp(0.8rem, 1.15vw, 0.98rem)", fontWeight: 700 }}>
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#C76B86]/20 text-[#C76B86]">
                   <Building2 className="h-4 w-4" />
                 </span>
-                {contact.companyName || "CTTNHH 1TV Thuận Lợi Mộc Hóa"}
+                <span className="whitespace-nowrap overflow-hidden text-ellipsis tracking-tight" title={contact.companyName || "Công ty TNHH MTV Thuận Lợi Mộc Hóa"}>
+                  {contact.companyName || "Công ty TNHH MTV Thuận Lợi Mộc Hóa"}
+                </span>
               </h4>
-              <p className="mt-1.5 ml-10 text-[13px] text-white/75 font-medium">
-                Mã số thuế: <span className="font-mono text-white/95 font-semibold">1100556321</span>
-              </p>
             </div>
-            <ul className="mt-5 space-y-3.5 text-[14px]">
-              {contact.address && (
+            <ul className="mt-4 space-y-3.5 text-[14px]">
+              <li className="flex items-start gap-3">
+                <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md bg-white/10 text-white/80">
+                  <FileText className="h-3.5 w-3.5 text-[#C76B86]" />
+                </span>
+                <span>
+                  <strong className="text-white/90">Mã số thuế:</strong>{" "}
+                  <span className="font-mono text-white font-semibold">1100556321</span>
+                </span>
+              </li>
+              {displayAddress && (
                 <li className="flex items-start gap-3">
                   <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md bg-white/10 text-white/80">
                     <MapPin className="h-3.5 w-3.5" />
                   </span>
                   <span>
-                    <strong className="text-white/90">Địa chỉ nhà máy:</strong> {contact.address}
+                    <strong className="text-white/90">Địa chỉ nhà máy:</strong> {displayAddress}
                   </span>
                 </li>
               )}
@@ -126,7 +141,7 @@ export function Footer() {
                     <Mail className="h-3.5 w-3.5" />
                   </span>
                   <span>
-                    <strong className="text-white/90">Email liên hệ:</strong>{" "}
+                    <strong className="text-white/90">Email:</strong>{" "}
                     <a href={`mailto:${contact.email}`} className="text-white/90 hover:text-[#C76B86] transition-colors">
                       {contact.email}
                     </a>

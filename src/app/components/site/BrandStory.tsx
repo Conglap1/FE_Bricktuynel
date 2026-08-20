@@ -41,7 +41,7 @@ export function BrandStory() {
           <div className="lg:col-span-7">
             <SectionHeading
               eyebrow="Hành trình phát triển"
-              title={<>Hành trình tôi luyện qua lửa đỏ<br />Gạch Thuận Lợi</>}
+              title={<><span className="inline-block whitespace-nowrap">Hành trình tôi luyện qua lửa đỏ</span><br /><span className="inline-block whitespace-nowrap">Gạch Thuận Lợi</span></>}
               desc="Bắt đầu từ năm 1988, vượt qua biến cố bão lũ nghiệt ngã để đứng dậy, không ngừng đổi mới công nghệ và vươn mình trở thành nhà sản xuất gạch Tuynel uy tín hàng đầu."
             />
 

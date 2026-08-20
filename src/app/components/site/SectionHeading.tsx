@@ -33,7 +33,7 @@ export function SectionHeading({
       <Reveal delay={0.08}>
         <h2
           className={`mt-4 ${dark ? "text-white" : "text-foreground"}`}
-          style={{ fontSize: "clamp(1.9rem, 3.6vw, 3rem)", lineHeight: 1.08, fontWeight: 800 }}
+          style={{ fontSize: "clamp(1.35rem, 3.6vw, 2.8rem)", lineHeight: 1.1, fontWeight: 800 }}
         >
           {title}
         </h2>

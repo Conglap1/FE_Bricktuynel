@@ -12,9 +12,9 @@ export function VisionMissionCore() {
           eyebrow="Định hướng & Giá trị cốt lõi"
           title={
             <>
-              <span className="inline-block">Tầm nhìn · Sứ mệnh · Giá trị cốt lõi</span>
+              <span className="inline-block whitespace-nowrap">Tầm nhìn · Sứ mệnh · Giá trị cốt lõi</span>
               <br />
-              <span className="inline-block mt-1">Tạo nên thương hiệu Thuận Lợi</span>
+              <span className="inline-block whitespace-nowrap mt-1">Tạo nên thương hiệu Thuận Lợi</span>
             </>
           }
           desc="Nền tảng vững chắc định hình mọi hoạt động sản xuất, cung ứng và phát triển lâu dài của doanh nghiệp."
