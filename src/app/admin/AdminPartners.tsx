@@ -24,20 +24,24 @@ export function AdminPartners() {
     setOpen(true);
   }
 
-  async function handleDelete(id: number) {
+  async function handleDelete(p: Partner, e?: React.MouseEvent) {
+    e?.stopPropagation();
+    if (!window.confirm(`Bạn có chắc chắn muốn xoá đối tác "${p.name}" không?`)) {
+      return;
+    }
     try {
-      const res = await fetch(`${API_BASE_URL}/partners/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/partners/${p.id}`, {
         method: "DELETE",
         headers: getAuthHeaders(),
       });
       if (res.ok) {
-        setPartners(partners.filter((p) => p.id !== id));
+        setPartners(partners.filter((item) => item.id !== p.id));
         toast.success("Đã xoá đối tác");
       } else {
         toast.error("Lỗi khi xoá đối tác trên máy chủ.");
       }
     } catch {
-      setPartners(partners.filter((p) => p.id !== id));
+      setPartners(partners.filter((item) => item.id !== p.id));
       toast.success("Đã xoá đối tác (offline)");
     }
   }
@@ -115,7 +119,11 @@ export function AdminPartners() {
           </thead>
           <tbody className="divide-y divide-slate-100">
             {partners?.map((p) => (
-              <tr key={p.id} className={`transition-colors hover:bg-[#C76B86]/5 ${!p.isActive ? "opacity-40" : ""}`}>
+              <tr
+                key={p.id}
+                onClick={() => openEdit(p)}
+                className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${!p.isActive ? "opacity-40" : ""}`}
+              >
                 <td className="px-5 py-4">
                   <div className="flex items-center gap-3">
                     {p.logoPath && (
@@ -133,7 +141,19 @@ export function AdminPartners() {
                 </td>
 
                 <td className="px-5 py-4 text-[13px] text-[#560213]/70">
-                  {p.website ? <a href={p.website} target="_blank" rel="noreferrer" className="hover:underline text-blue-600">{p.website}</a> : "—"}
+                  {p.website ? (
+                    <a
+                      href={p.website}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="hover:underline text-blue-600"
+                    >
+                      {p.website}
+                    </a>
+                  ) : (
+                    "—"
+                  )}
                 </td>
                 <td className="px-5 py-4 text-[13px] text-[#560213]/70">
                   {p.displayOrder}
@@ -145,8 +165,23 @@ export function AdminPartners() {
                 </td>
                 <td className="px-5 py-4">
                   <div className="flex items-center justify-end gap-2">
-                    <button onClick={() => openEdit(p)} className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"><Pencil className="h-3.5 w-3.5" /></button>
-                    <button onClick={() => handleDelete(p.id)} className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"><Trash2 className="h-3.5 w-3.5" /></button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openEdit(p);
+                      }}
+                      className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
+                      title="Sửa đối tác"
+                    >
+                      <Pencil className="h-3.5 w-3.5" />
+                    </button>
+                    <button
+                      onClick={(e) => handleDelete(p, e)}
+                      className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
+                      title="Xoá đối tác"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
                   </div>
                 </td>
               </tr>

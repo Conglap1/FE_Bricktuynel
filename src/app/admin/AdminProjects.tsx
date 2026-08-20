@@ -67,20 +67,24 @@ export function AdminProjects() {
     setOpen(true);
   }
 
-  async function handleDelete(id: number) {
+  async function handleDelete(p: Project, e?: React.MouseEvent) {
+    e?.stopPropagation();
+    if (!window.confirm(`Bạn có chắc chắn muốn xoá dự án "${p.name}" không?`)) {
+      return;
+    }
     try {
-      const res = await fetch(`${API_BASE_URL}/projects/${id}`, { 
+      const res = await fetch(`${API_BASE_URL}/projects/${p.id}`, { 
         method: "DELETE",
         headers: getAuthHeaders(),
       });
       if (res.ok) {
-        setProjects(projects.filter((p) => p.id !== id));
+        setProjects(projects.filter((item) => item.id !== p.id));
         toast.success("Đã xoá dự án");
       } else {
         toast.error("Lỗi khi xoá dự án trên máy chủ.");
       }
     } catch {
-      setProjects(projects.filter((p) => p.id !== id));
+      setProjects(projects.filter((item) => item.id !== p.id));
       toast.success("Đã xoá dự án (offline)");
     }
   }
@@ -283,7 +287,11 @@ export function AdminProjects() {
               const displayImg = p.image || (p.images && p.images[0]) || "";
               const imgCount = p.images?.length || (p.image ? 1 : 0);
               return (
-                <tr key={p.id} className={`transition-colors hover:bg-[#C76B86]/5 ${!p.isActive ? "opacity-40" : ""}`}>
+                <tr
+                  key={p.id}
+                  onClick={() => openEdit(p)}
+                  className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${!p.isActive ? "opacity-40" : ""}`}
+                >
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
                       {displayImg && (
@@ -313,8 +321,23 @@ export function AdminProjects() {
                   </td>
                   <td className="px-5 py-4">
                     <div className="flex items-center justify-end gap-2">
-                      <button onClick={() => openEdit(p)} className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"><Pencil className="h-3.5 w-3.5" /></button>
-                      <button onClick={() => handleDelete(p.id)} className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"><Trash2 className="h-3.5 w-3.5" /></button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openEdit(p);
+                        }}
+                        className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
+                        title="Sửa dự án"
+                      >
+                        <Pencil className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        onClick={(e) => handleDelete(p, e)}
+                        className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
+                        title="Xoá dự án"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
                     </div>
                   </td>
                 </tr>

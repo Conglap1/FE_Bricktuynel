@@ -16,21 +16,22 @@ export function AdminContactRequests() {
     setTimeout(() => setIsRefreshing(false), 400);
   };
 
-  async function handleDelete(id: number) {
-    if (!confirm("Bạn có chắc chắn muốn xoá yêu cầu này?")) return;
+  async function handleDelete(r: ContactRequest, e?: React.MouseEvent) {
+    e?.stopPropagation();
+    if (!window.confirm(`Bạn có chắc chắn muốn xoá yêu cầu từ "${r.fullName}" không?`)) return;
     try {
-      const res = await fetch(`${API_BASE_URL}/contact-requests/${id}`, { method: "DELETE" });
+      const res = await fetch(`${API_BASE_URL}/contact-requests/${r.id}`, { method: "DELETE" });
       if (res.ok) {
-        setContactRequests(contactRequests.filter((r) => r.id !== id));
+        setContactRequests(contactRequests.filter((item) => item.id !== r.id));
         toast.success("Đã xoá yêu cầu liên hệ");
-        if (detailReq?.id === id) setDetailReq(null);
+        if (detailReq?.id === r.id) setDetailReq(null);
       } else {
         toast.error("Lỗi khi xoá yêu cầu liên hệ.");
       }
     } catch {
-      setContactRequests(contactRequests.filter((r) => r.id !== id));
+      setContactRequests(contactRequests.filter((item) => item.id !== r.id));
       toast.success("Đã xoá yêu cầu liên hệ (offline)");
-      if (detailReq?.id === id) setDetailReq(null);
+      if (detailReq?.id === r.id) setDetailReq(null);
     }
   }
 
@@ -91,14 +92,18 @@ export function AdminContactRequests() {
           </thead>
           <tbody className="divide-y divide-slate-100">
             {contactRequests?.map((r) => (
-              <tr key={r.id} className={`transition-colors hover:bg-[#C76B86]/5 ${r.isRead ? "opacity-60" : ""}`}>
+              <tr
+                key={r.id}
+                onClick={() => setDetailReq(r)}
+                className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${r.isRead ? "opacity-60" : ""}`}
+              >
                 <td className="px-5 py-4">
                   <div className="font-semibold text-[#560213]">{r.fullName}</div>
                   <div className="text-[12px] text-[#560213]/70">{r.phone}</div>
                 </td>
                 <td className="px-5 py-4 text-[#560213]/80">{r.email || "—"}</td>
                 <td className="px-5 py-4">
-                  <div className="max-w-[200px] truncate text-[#560213]/80 cursor-pointer hover:text-[#560213]" onClick={() => setDetailReq(r)}>
+                  <div className="max-w-[200px] truncate text-[#560213]/80">
                     {r.content || "—"}
                   </div>
                 </td>
@@ -112,13 +117,33 @@ export function AdminContactRequests() {
                 </td>
                 <td className="px-5 py-4">
                   <div className="flex items-center justify-end gap-2">
-                    <button onClick={() => setDetailReq(r)} title="Xem chi tiết" className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setDetailReq(r);
+                      }}
+                      title="Xem chi tiết"
+                      className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
+                    >
                       <MessageSquare className="h-3.5 w-3.5" />
                     </button>
-                    <button onClick={() => toggleRead(r)} title={r.isRead ? "Đánh dấu chưa đọc" : "Đánh dấu đã đọc"} className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleRead(r);
+                      }}
+                      title={r.isRead ? "Đánh dấu chưa đọc" : "Đánh dấu đã đọc"}
+                      className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
+                    >
                       {r.isRead ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
                     </button>
-                    <button onClick={() => handleDelete(r.id)} className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"><Trash2 className="h-3.5 w-3.5" /></button>
+                    <button
+                      onClick={(e) => handleDelete(r, e)}
+                      title="Xoá yêu cầu"
+                      className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
                   </div>
                 </td>
               </tr>

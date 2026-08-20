@@ -34,20 +34,24 @@ export function AdminNews() {
     setOpen(true);
   }
 
-  async function handleDelete(id: number) {
+  async function handleDelete(n: NewsItem, e?: React.MouseEvent) {
+    e?.stopPropagation();
+    if (!window.confirm(`Bạn có chắc chắn muốn xoá bài viết "${n.title}" không?`)) {
+      return;
+    }
     try {
-      const res = await fetch(`${API_BASE_URL}/news/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/news/${n.id}`, {
         method: "DELETE",
         headers: getAuthHeaders(),
       });
       if (res.ok) {
-        setNews(news.filter((n) => n.id !== id));
+        setNews(news.filter((item) => item.id !== n.id));
         toast.success("Đã xoá tin tức");
       } else {
         toast.error("Lỗi khi xoá tin tức trên máy chủ.");
       }
     } catch {
-      setNews(news.filter((n) => n.id !== id));
+      setNews(news.filter((item) => item.id !== n.id));
       toast.success("Đã xoá tin tức (offline)");
     }
   }
@@ -141,7 +145,11 @@ export function AdminNews() {
           </thead>
           <tbody className="divide-y divide-slate-100">
             {news.map((n) => (
-              <tr key={n.id} className={`transition-colors hover:bg-[#C76B86]/5 ${!n.isActive ? "opacity-40" : ""}`}>
+              <tr
+                key={n.id}
+                onClick={() => openEdit(n)}
+                className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${!n.isActive ? "opacity-40" : ""}`}
+              >
                 <td className="px-5 py-4">
                   <div className="flex items-center gap-3">
                     {n.thumbnailPath && (
@@ -170,8 +178,23 @@ export function AdminNews() {
                 </td>
                 <td className="px-5 py-4">
                   <div className="flex items-center justify-end gap-2">
-                    <button onClick={() => openEdit(n)} className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"><Pencil className="h-3.5 w-3.5" /></button>
-                    <button onClick={() => handleDelete(n.id)} className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"><Trash2 className="h-3.5 w-3.5" /></button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openEdit(n);
+                      }}
+                      className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
+                      title="Sửa bài viết"
+                    >
+                      <Pencil className="h-3.5 w-3.5" />
+                    </button>
+                    <button
+                      onClick={(e) => handleDelete(n, e)}
+                      className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
+                      title="Xoá bài viết"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
                   </div>
                 </td>
               </tr>

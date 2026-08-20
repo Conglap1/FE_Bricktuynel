@@ -66,20 +66,24 @@ export function AdminProducts() {
     setOpen(true);
   }
 
-  async function handleDelete(id: number) {
+  async function handleDelete(p: Product, e?: React.MouseEvent) {
+    e?.stopPropagation();
+    if (!window.confirm(`Bạn có chắc chắn muốn xoá sản phẩm "${p.name}" không?`)) {
+      return;
+    }
     try {
-      const res = await fetch(`${API_BASE_URL}/products/${id}`, { 
+      const res = await fetch(`${API_BASE_URL}/products/${p.id}`, { 
         method: "DELETE",
         headers: getAuthHeaders(),
       });
       if (res.ok) {
-        setProducts(products.filter((p) => p.id !== id));
+        setProducts(products.filter((item) => item.id !== p.id));
         toast.success("Đã xoá sản phẩm");
       } else {
         toast.error("Không thể xoá sản phẩm trên máy chủ.");
       }
     } catch {
-      setProducts(products.filter((p) => p.id !== id));
+      setProducts(products.filter((item) => item.id !== p.id));
       toast.success("Đã xoá sản phẩm (offline)");
     }
   }
@@ -286,7 +290,11 @@ export function AdminProducts() {
               const displayImg = p.image || (p.images && p.images[0]) || "";
               const imgCount = p.images?.length || (p.image ? 1 : 0);
               return (
-                <tr key={p.id} className={`transition-colors hover:bg-[#C76B86]/5 ${!p.isActive ? "opacity-40" : ""}`}>
+                <tr
+                  key={p.id}
+                  onClick={() => openEdit(p)}
+                  className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${!p.isActive ? "opacity-40" : ""}`}
+                >
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
                       {displayImg && (
@@ -318,10 +326,21 @@ export function AdminProducts() {
                   <td className="px-5 py-4 text-[#560213]/80">{p.flexuralStrength != null ? `${p.flexuralStrength} MPa` : "—"}</td>
                   <td className="px-5 py-4">
                     <div className="flex items-center justify-end gap-2">
-                      <button onClick={() => openEdit(p)} className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openEdit(p);
+                        }}
+                        className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
+                        title="Sửa sản phẩm"
+                      >
                         <Pencil className="h-3.5 w-3.5" />
                       </button>
-                      <button onClick={() => handleDelete(p.id)} className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500">
+                      <button
+                        onClick={(e) => handleDelete(p, e)}
+                        className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
+                        title="Xoá sản phẩm"
+                      >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
                     </div>
