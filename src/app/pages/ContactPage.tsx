@@ -52,7 +52,7 @@ export function ContactPage() {
         title="Bắt đầu công trình của bạn hôm nay"
         desc="Để lại thông tin, chúng tôi sẽ liên hệ tư vấn và gửi báo giá cho bạn trong thời gian sớm nhất."
         image={IMAGES.contactBanner}
-        imagePosition="object-[15%_80%] scale-[1.65] sm:scale-100 sm:object-[center_92%]"
+        imagePosition="object-[50%_96%] scale-[1.35] sm:scale-100 sm:object-[center_92%]"
         className="!pb-36 md:!pb-52 min-h-[500px] md:min-h-[580px]"
       />
       <Contact />
