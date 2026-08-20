@@ -1,4 +1,4 @@
-import { Compass, Target, Gem, CheckCircle2, Flame, Factory, ShieldAlert, Award, HeartHandshake, Zap } from "lucide-react";
+import { Compass, Target, Gem, CheckCircle2, Flame, Factory, Award, HeartHandshake, Zap, ShieldCheck, Truck } from "lucide-react";
 import { Reveal, Stagger, staggerItem, motion } from "../../lib/motion";
 import { SectionHeading } from "./SectionHeading";
 import { IMAGES } from "../../lib/data";
@@ -22,55 +22,57 @@ export function VisionMissionCore() {
           className="max-w-5xl"
         />
 
-        {/* ── 1. Hàng Tầm Nhìn & Sứ Mệnh (Mỗi ô có đúng 1 khung ảnh sạch sẽ) ── */}
-        <div className="mt-16 grid gap-8 lg:grid-cols-2">
+        {/* ── 1. Hàng Tầm Nhìn & Sứ Mệnh (Symmetrical & Balanced layout) ── */}
+        <div className="mt-16 grid gap-8 lg:grid-cols-2 items-stretch">
           {/* ── TẦM NHÌN (VISION) ── */}
-          <Reveal>
+          <Reveal className="h-full">
             <div className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-8 md:p-10 shadow-sm transition-all duration-300 hover:border-primary/50 hover:shadow-xl h-full">
               <div className="absolute top-0 right-0 h-40 w-40 translate-x-10 -translate-y-10 rounded-full bg-primary/5 transition-transform duration-500 group-hover:scale-150" />
               
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-xl bg-primary/10 px-4 py-2 text-[13px] font-bold text-primary">
-                  <Compass className="h-4.5 w-4.5" />
-                  TẦM NHÌN
+              <div className="flex flex-col h-full justify-between">
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-xl bg-primary/10 px-4 py-2 text-[13px] font-bold text-primary">
+                    <Compass className="h-4.5 w-4.5" />
+                    TẦM NHÌN
+                  </div>
+
+                  <h3 className="mt-6 text-foreground min-h-[3.2rem]" style={{ fontSize: "1.5rem", fontWeight: 800, fontFamily: "var(--font-display)", lineHeight: "1.3" }}>
+                    Tự động hoá hiện đại — Kế thừa truyền thống — 100% Năng lượng xanh
+                  </h3>
+
+                  <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
+                    Gạch Thuận Lợi định hướng trở thành thương hiệu sản xuất gạch hàng đầu, nơi công nghệ tự động hoá khép kín từ khâu sản xuất đến xuất xưởng hoà quyện cùng tinh hoa và bản sắc truyền thống của ngành nghề. Chúng tôi chuyển dịch 100% sang điện mặt trời và mở rộng quy mô dòng gạch không nung bền vững cho tương lai.
+                  </p>
+
+                  {/* Các mục chi tiết của Tầm Nhìn (3 mục) */}
+                  <div className="mt-6 space-y-3">
+                    <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-white p-3.5 shadow-2xs">
+                      <Zap className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                      <div>
+                        <h4 className="font-bold text-foreground text-[14px]">Tự động hoá khép kín từ sản xuất đến xuất xưởng</h4>
+                        <p className="text-[13px] text-muted-foreground">Vận hành dây chuyền tự động hoá đồng bộ ở các khâu tạo hình, đóng gói và xuất xưởng, đảm bảo độ chính xác và năng suất vượt trội.</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-white p-3.5 shadow-2xs">
+                      <Factory className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                      <div>
+                        <h4 className="font-bold text-foreground text-[14px]">Sử dụng 100% Điện mặt trời &amp; Năng lượng xanh</h4>
+                        <p className="text-[13px] text-muted-foreground">Ứng dụng hệ thống điện năng lượng mặt trời vận hành toàn nhà máy, cắt giảm tối đa phát thải carbon và bảo vệ môi trường.</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-white p-3.5 shadow-2xs">
+                      <Flame className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                      <div>
+                        <h4 className="font-bold text-foreground text-[14px]">Mở rộng gạch không nung &amp; Lưu giữ nét truyền thống</h4>
+                        <p className="text-[13px] text-muted-foreground">Thúc đẩy phổ biến các dòng gạch không nung sinh thái, song song giữ gìn nét đẹp kỹ nghệ làm gạch truyền thống lâu đời.</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <h3 className="mt-6 text-foreground" style={{ fontSize: "1.6rem", fontWeight: 800, fontFamily: "var(--font-display)" }}>
-                  Tự động hoá hiện đại — Kế thừa truyền thống — 100% Năng lượng xanh
-                </h3>
-
-                <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-                  Gạch Thuận Lợi định hướng trở thành thương hiệu sản xuất gạch hàng đầu, nơi công nghệ tự động hoá khép kín từ khâu sản xuất đến xuất xưởng hoà quyện cùng tinh hoa và bản sắc truyền thống của ngành nghề. Chúng tôi chuyển dịch 100% sang điện mặt trời và mở rộng quy mô dòng gạch không nung bền vững cho tương lai.
-                </p>
-
-                {/* Các mục chi tiết của Tầm Nhìn */}
-                <div className="mt-6 space-y-3">
-                  <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-white p-3.5 shadow-2xs">
-                    <Zap className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                    <div>
-                      <h4 className="font-bold text-foreground text-[14px]">Tự động hoá khép kín từ sản xuất đến xuất xưởng</h4>
-                      <p className="text-[13px] text-muted-foreground">Vận hành dây chuyền tự động hoá đồng bộ ở các khâu tạo hình, đóng gói và xuất xưởng, đảm bảo độ chính xác và năng suất vượt trội.</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-white p-3.5 shadow-2xs">
-                    <Factory className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                    <div>
-                      <h4 className="font-bold text-foreground text-[14px]">Sử dụng 100% Điện mặt trời &amp; Năng lượng xanh</h4>
-                      <p className="text-[13px] text-muted-foreground">Ứng dụng hệ thống điện năng lượng mặt trời vận hành toàn nhà máy, cắt giảm tối đa phát thải carbon và bảo vệ môi trường.</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-white p-3.5 shadow-2xs">
-                    <Flame className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                    <div>
-                      <h4 className="font-bold text-foreground text-[14px]">Mở rộng gạch không nung &amp; Lưu giữ nét truyền thống</h4>
-                      <p className="text-[13px] text-muted-foreground">Thúc đẩy phổ biến các dòng gạch không nung sinh thái, song song giữ gìn nét đẹp kỹ nghệ làm gạch truyền thống lâu đời.</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Đúng 1 Khung Ảnh Duy Nhất cho phần Tầm Nhìn */}
+                {/* Khung Ảnh Tầm Nhìn */}
                 <div className="mt-8">
                   <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-border bg-secondary shadow-sm">
                     <ImageWithFallback
@@ -85,44 +87,54 @@ export function VisionMissionCore() {
           </Reveal>
 
           {/* ── SỨ MỆNH (MISSION) ── */}
-          <Reveal delay={0.12}>
+          <Reveal delay={0.12} className="h-full">
             <div className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-8 md:p-10 shadow-sm transition-all duration-300 hover:border-primary/50 hover:shadow-xl h-full">
               <div className="absolute top-0 right-0 h-40 w-40 translate-x-10 -translate-y-10 rounded-full bg-primary/5 transition-transform duration-500 group-hover:scale-150" />
 
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-xl bg-primary/10 px-4 py-2 text-[13px] font-bold text-primary">
-                  <Target className="h-4.5 w-4.5" />
-                  SỨ MỆNH
-                </div>
-
-                <h3 className="mt-6 text-foreground" style={{ fontSize: "1.6rem", fontWeight: 800, fontFamily: "var(--font-display)" }}>
-                  Mang đến sự an tâm tuyệt đối cho từng mét vuông công trình
-                </h3>
-
-                <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-                  Sứ mệnh của chúng tôi là tạo ra những viên gạch có độ bền vượt trội, cường độ nén cao và kích thước chuẩn xác. Chúng tôi đồng hành cùng nhà thầu và chủ đầu tư để kiến tạo nên những công trình kiên cố, trường tồn cùng thời gian.
-                </p>
-
-                {/* Các mục chi tiết của Sứ Mệnh */}
-                <div className="mt-6 space-y-3">
-                  <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-white p-3.5 shadow-2xs">
-                    <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                    <div>
-                      <h4 className="font-bold text-foreground text-[14px]">An toàn & Đạt chuẩn kiểm định QCVN</h4>
-                      <p className="text-[13px] text-muted-foreground">100% lô hàng xuất xưởng đều được thử nghiệm độ chịu lực và độ hút nước trước khi giao.</p>
-                    </div>
+              <div className="flex flex-col h-full justify-between">
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-xl bg-primary/10 px-4 py-2 text-[13px] font-bold text-primary">
+                    <Target className="h-4.5 w-4.5" />
+                    SỨ MỆNH
                   </div>
 
-                  <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-white p-3.5 shadow-2xs">
-                    <HeartHandshake className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                    <div>
-                      <h4 className="font-bold text-foreground text-[14px]">Đồng hành cùng sự thành công của khách hàng</h4>
-                      <p className="text-[13px] text-muted-foreground">Giao hàng đúng hẹn, đúng chủng loại, giá cả cạnh tranh trực tiếp từ nhà máy sản xuất.</p>
+                  <h3 className="mt-6 text-foreground min-h-[3.2rem]" style={{ fontSize: "1.5rem", fontWeight: 800, fontFamily: "var(--font-display)", lineHeight: "1.3" }}>
+                    Chất lượng chuẩn xác — Cung ứng vững vàng — Tối ưu mọi công trình
+                  </h3>
+
+                  <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
+                    Sứ mệnh của Gạch Thuận Lợi là mang đến sự an tâm tuyệt đối cho từng mét vuông công trình qua những sản phẩm gạch Tuynel đạt chuẩn kiểm định khắt khe, độ bền đanh chắc và kích thước đồng đều. Chúng tôi liên tục duy trì năng lực cung ứng ổn định và sát cánh đồng hành cùng đối tác.
+                  </p>
+
+                  {/* Các mục chi tiết của Sứ Mệnh (3 mục cân đối) */}
+                  <div className="mt-6 space-y-3">
+                    <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-white p-3.5 shadow-2xs">
+                      <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                      <div>
+                        <h4 className="font-bold text-foreground text-[14px]">Cam kết chất lượng &amp; Đạt chuẩn QCVN 16:2023</h4>
+                        <p className="text-[13px] text-muted-foreground">100% lô hàng xuất xưởng đều qua kiểm tra nghiêm ngặt độ chịu nén, độ bền cơ học và chỉ tiêu kỹ thuật trước khi bàn giao.</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-white p-3.5 shadow-2xs">
+                      <Truck className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                      <div>
+                        <h4 className="font-bold text-foreground text-[14px]">Năng lực cung ứng lớn &amp; Tiến độ vượt trội</h4>
+                        <p className="text-[13px] text-muted-foreground">Chủ động kho bãi và dây chuyền tự động hóa giúp đảm bảo sản lượng lớn, giao hàng kịp thời cho mọi dự án trọng điểm.</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-white p-3.5 shadow-2xs">
+                      <HeartHandshake className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                      <div>
+                        <h4 className="font-bold text-foreground text-[14px]">Đồng hành bền vững &amp; Tối ưu chi phí đối tác</h4>
+                        <p className="text-[13px] text-muted-foreground">Cung cấp bảng giá trực tiếp từ nhà máy không qua trung gian, hỗ trợ giải pháp kỹ thuật tối ưu chi phí cho nhà thầu.</p>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Đúng 1 Khung Ảnh Duy Nhất cho phần Sứ Mệnh */}
+                {/* Khung Ảnh Sứ Mệnh */}
                 <div className="mt-8">
                   <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-border bg-secondary shadow-sm">
                     <ImageWithFallback
