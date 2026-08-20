@@ -240,10 +240,10 @@ function ContactTeaser() {
   const INFO = [
     {
       icon: Phone,
-      label: "Hotline 24/7",
-      value: contact.hotline ? `${contact.hotline} · ${contact.phone}` : "0908 555 888",
+      label: "Điện thoại liên hệ",
+      value: contact.phone || "0918 701 472",
       actionText: "Gọi ngay",
-      href: `tel:${(contact.hotline || contact.phone || "0908555888").replace(/\s/g, "")}`,
+      href: `tel:${(contact.phone || "0918701472").replace(/\s/g, "")}`,
     },
     {
       icon: Mail,
