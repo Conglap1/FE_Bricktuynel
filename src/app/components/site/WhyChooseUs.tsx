@@ -7,7 +7,7 @@ const REASONS = [
   { icon: Gauge, title: "Độ bền vượt trội", desc: "Cường độ nén cao, độ hút nước thấp, đảm bảo tuổi thọ công trình." },
   { icon: Truck, title: "Giao hàng toàn quốc", desc: "Đội xe chuyên dụng, đóng pallet quấn màng, giao đúng tiến độ." },
   { icon: Leaf, title: "Thân thiện môi trường", desc: "Công nghệ nung tiết kiệm năng lượng, tận dụng nhiệt tuần hoàn." },
-  { icon: Headphones, title: "Tư vấn kỹ thuật", desc: "Đội ngũ kỹ sư hỗ trợ chọn vật liệu tối ưu cho từng hạng mục." },
+  { icon: Headphones, title: "Tư vấn tận tâm", desc: "Sẵn sàng hỗ trợ tư vấn chọn vật liệu phù hợp cho công trình của bạn." },
   { icon: BadgeCheck, title: "Giá cạnh tranh", desc: "Sản xuất trực tiếp không qua trung gian, báo giá minh bạch." },
 ];
 

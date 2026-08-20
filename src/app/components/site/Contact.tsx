@@ -150,7 +150,7 @@ export function Contact() {
             <SectionHeading
               eyebrow="Liên hệ & Báo giá"
               title={<>Bắt đầu công trình<br />của bạn hôm nay</>}
-              desc="Để lại thông tin, đội ngũ kỹ thuật của Thuận Lợi sẽ tư vấn giải pháp vật liệu tối ưu và gửi báo giá chi tiết trong vòng 24 giờ."
+              desc="Để lại thông tin, Thuận Lợi sẽ liên hệ tư vấn và gửi báo giá cho bạn trong thời gian sớm nhất."
             />
 
             {/* Info Cards Grid */}
@@ -220,7 +220,7 @@ export function Contact() {
           >
             <div className="mb-5 pb-4 border-b border-border/60">
               <h3 className="text-xl font-bold text-foreground">Gửi yêu cầu báo giá</h3>
-              <p className="mt-1 text-[13px] text-muted-foreground">Điền thông tin bên dưới để kỹ sư Thuận Lợi chuẩn bị báo giá chính xác nhất</p>
+              <p className="mt-1 text-[13px] text-muted-foreground">Điền thông tin bên dưới, chúng tôi sẽ liên hệ tư vấn và báo giá sớm nhất</p>
             </div>
 
             <div className="flex-1 flex flex-col justify-between gap-5">

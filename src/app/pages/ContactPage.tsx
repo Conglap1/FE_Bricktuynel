@@ -50,7 +50,7 @@ export function ContactPage() {
         crumb="Liên hệ"
         eyebrow="Liên hệ & Báo giá"
         title="Bắt đầu công trình của bạn hôm nay"
-        desc="Để lại thông tin, đội ngũ kỹ thuật của Thuận Lợi sẽ tư vấn giải pháp vật liệu và gửi báo giá trong vòng 24 giờ."
+        desc="Để lại thông tin, Thuận Lợi sẽ liên hệ tư vấn và gửi báo giá cho bạn trong thời gian sớm nhất."
         image={IMAGES.contactBanner}
         imagePosition="object-[center_92%]"
         className="!pb-36 md:!pb-52 min-h-[500px] md:min-h-[580px]"

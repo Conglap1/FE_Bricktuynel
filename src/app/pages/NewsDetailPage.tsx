@@ -243,10 +243,10 @@ export function NewsDetailPage() {
               
               {/* Consultation Hotline Card */}
               <div className="rounded-2xl border border-primary/25 bg-gradient-to-br from-white via-secondary/10 to-secondary/30 p-6 shadow-sm">
-                <span className="text-[11px] font-extrabold uppercase tracking-wider text-primary">Tư vấn kỹ thuật & Báo giá</span>
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-primary">Tư vấn & Báo giá</span>
                 <h3 className="mt-1 text-lg font-bold text-foreground">Bạn cần tư vấn loại gạch phù hợp?</h3>
                 <p className="mt-2 text-[13px] text-muted-foreground leading-relaxed">
-                  Đội ngũ kỹ sư Thuận Lợi luôn sẵn sàng tư vấn quy cách, số lượng và báo giá cạnh tranh trực tiếp tại nhà máy cho công trình của bạn.
+                  Thuận Lợi luôn sẵn sàng tư vấn quy cách, số lượng và báo giá cạnh tranh trực tiếp tại nhà máy cho công trình của bạn.
                 </p>
 
                 <div className="mt-5 space-y-3">
