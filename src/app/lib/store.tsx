@@ -112,7 +112,7 @@ export const DEFAULT_ABOUT: AboutData = {
   title: "Gần bốn thập kỷ dựng xây niềm tin từ từng viên gạch",
   desc: "Thành lập năm 1988, CTTNHH 1TV Thuận Lợi Mộc Hóa là một trong những đơn vị sản xuất gạch đất sét nung Tuynel hàng đầu khu vực phía Nam. Chúng tôi kết hợp dây chuyền công nghệ hiện đại với quy trình chuyên nghiệp để tạo ra những sản phẩm bền vững, an toàn — giao hàng toàn quốc với giá cạnh tranh trực tiếp từ nhà máy.",
   points: [
-    "Thành lập năm 1988 — hơn 35 năm kinh nghiệm sản xuất gạch Tuynel",
+    "Thành lập năm 1988 — hơn 30 năm kinh nghiệm sản xuất gạch Tuynel",
     "Năng lực sản xuất lớn, đáp ứng bất kỳ quy mô công trình nào",
     "Giao hàng đúng hạn — giá cạnh tranh trực tiếp từ nhà máy",
     "Sản phẩm đạt hợp quy QCVN 16:2023/BXD — đáp ứng tiêu chuẩn chất lượng cao",

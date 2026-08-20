@@ -21,7 +21,7 @@ export function MediaShowcase() {
               <span className="inline-block whitespace-nowrap">Trong Dây Chuyền Sản Xuất</span>
             </>
           }
-          desc="Phóng sự đài truyền hình Long An TV về quá trình ứng dụng robot tự động hóa trong dây chuyền sản xuất tại nhà máy Thuận Lợi Mộc Hóa."
+          desc="Phóng sự Long An TV về dây chuyền sản xuất tự động hóa hiện đại tại nhà máy Thuận Lợi Mộc Hóa."
           align="center"
         />
 
@@ -65,7 +65,7 @@ export function MediaShowcase() {
               {/* Stats */}
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { value: "35+", label: "Năm kinh nghiệm" },
+                  { value: "30+", label: "Năm kinh nghiệm" },
                   { value: "ISO", label: "Chứng nhận quốc tế" },
                   { value: "100%", label: "Nguyên liệu tự nhiên" },
                   { value: "24/7", label: "Dây chuyền sản xuất" },

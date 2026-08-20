@@ -98,32 +98,12 @@ export function Footer() {
                   <Building2 className="h-5 w-5" />
                 </span>
                 <span
-                  className="leading-snug text-white font-extrabold text-[15px] sm:text-[16px] md:text-[17px]"
+                  className="leading-snug text-white font-extrabold text-[15px] sm:text-[16px]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
-                  {contact.companyName ? (
-                    contact.companyName.includes(" - ") ? (
-                      <>
-                        {contact.companyName.split(" - ")[0]}
-                        <br />
-                        <span className="text-[#C76B86]">{contact.companyName.split(" - ")[1]}</span>
-                      </>
-                    ) : contact.companyName.includes("Thuận Lợi") ? (
-                      <>
-                        {contact.companyName.slice(0, contact.companyName.indexOf("Thuận Lợi")).trim()}
-                        <br />
-                        <span className="text-[#C76B86]">{contact.companyName.slice(contact.companyName.indexOf("Thuận Lợi"))}</span>
-                      </>
-                    ) : (
-                      contact.companyName
-                    )
-                  ) : (
-                    <>
-                      Công ty TNHH Một Thành Viên
-                      <br />
-                      <span className="text-[#C76B86]">Thuận Lợi - Mộc Hóa</span>
-                    </>
-                  )}
+                  <span className="inline-block whitespace-nowrap">Công ty TNHH MTV</span>
+                  <br />
+                  <span className="inline-block whitespace-nowrap text-[#C76B86]">Thuận Lợi - Mộc Hóa</span>
                 </span>
               </h4>
             </div>

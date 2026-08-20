@@ -53,7 +53,7 @@ export function Awards() {
       <div className="relative mx-auto max-w-[1280px] px-6">
         <SectionHeading
           eyebrow="Thành tích & Ghi nhận"
-          title={<>Giấy Khen &amp; Bằng Khen<br />Của Công Ty</>}
+          title={<span className="inline-block whitespace-nowrap">Bằng Khen Của Công Ty</span>}
           desc="Những ghi nhận từ cơ quan nhà nước, khẳng định chất lượng sản xuất và đóng góp tích cực của Gạch Thuận Lợi cho cộng đồng."
           align="center"
         />
