@@ -10,7 +10,7 @@ export function ProjectsPage() {
         crumb="Dự án"
         eyebrow="Dự án tiêu biểu"
         title="Những công trình được xây bằng niềm tin"
-        desc="Hơn 1.200 công trình dân dụng, công nghiệp và công cộng trên khắp cả nước đã tin dùng sản phẩm của CTTNHH 1TV Thuận Lợi Mộc Hóa."
+        desc="Các công trình dân dụng, công nghiệp và công cộng trên khắp cả nước đã tin dùng sản phẩm của chúng tôi."
       />
       <Projects />
       <LogoMarquee />

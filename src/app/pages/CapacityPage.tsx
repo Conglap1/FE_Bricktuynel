@@ -14,7 +14,7 @@ export function CapacityPage() {
         crumb="Năng lực & Thành Tựu"
         eyebrow="Năng lực & Thành Tựu"
         title={<span className="inline-block whitespace-nowrap">Năng Lực &amp; Thành Tựu</span>}
-        desc="Giấy khen, chứng nhận ISO và hệ thống công nghệ sản xuất hiện đại — minh chứng cho cam kết chất lượng của CTTNHH 1TV Thuận Lợi Mộc Hóa."
+        desc="Bằng khen, chứng nhận ISO và hệ thống công nghệ sản xuất hiện đại — minh chứng cho cam kết chất lượng của chúng tôi."
         image={IMAGES.aboutBanner}
       />
       {/* 0. Video phóng sự nhà đài */}
