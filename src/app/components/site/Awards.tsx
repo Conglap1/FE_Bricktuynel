@@ -29,6 +29,14 @@ const AWARDS: AwardCardItem[] = [
     badgeText: "GIẤY KHEN CỤC THUẾ",
     image: "/images/bang_khen_thue_2018.jpg",
   },
+  {
+    id: "san-pham-tieu-bieu-2011",
+    title: "Chứng Nhận Sản Phẩm Công Nghiệp Nông Thôn Tiêu Biểu",
+    issuer: "Ủy Ban Nhân Dân Huyện Mộc Hóa",
+    year: "2011",
+    badgeText: "SẢN PHẨM TIÊU BIỂU",
+    image: "/images/bang_khen_2011.jpg",
+  },
 ];
 
 export function Awards() {
@@ -50,7 +58,7 @@ export function Awards() {
           align="center"
         />
 
-        <Stagger className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <Stagger className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {AWARDS.map((award) => (
             <motion.div
               key={award.id}
