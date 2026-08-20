@@ -61,7 +61,11 @@ export type Product = {
   weight?: number;
   holeCount?: number;
   compressionStrength?: number;
+  flexuralStrength?: number;
+  bulkDensity?: number;
   waterAbsorption?: number;
+  brickGrade?: string;
+  standardCode?: string;
   isFeatured: boolean;
   displayOrder: number;
   isActive: boolean;

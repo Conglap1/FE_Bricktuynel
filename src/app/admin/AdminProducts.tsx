@@ -12,13 +12,17 @@ const EMPTY: ProductForm = {
   slug: "",
   shortDescription: "",
   description: "",
-  length: 220,
-  width: 105,
-  height: 60,
+  length: 180,
+  width: 80,
+  height: 80,
   weight: undefined,
   holeCount: undefined,
   compressionStrength: undefined,
+  flexuralStrength: undefined,
+  bulkDensity: undefined,
   waterAbsorption: undefined,
+  brickGrade: "Mác 75",
+  standardCode: "QCVN 16:2023/BXD",
   isFeatured: true,
   displayOrder: 0,
   isActive: true,
@@ -57,7 +61,9 @@ export function AdminProducts() {
     setForm({
       name: p.name, slug: p.slug, shortDescription: p.shortDescription, description: p.description,
       length: p.length, width: p.width, height: p.height, weight: p.weight,
-      holeCount: p.holeCount, compressionStrength: p.compressionStrength, waterAbsorption: p.waterAbsorption,
+      holeCount: p.holeCount, compressionStrength: p.compressionStrength,
+      flexuralStrength: p.flexuralStrength, bulkDensity: p.bulkDensity, waterAbsorption: p.waterAbsorption,
+      brickGrade: p.brickGrade, standardCode: p.standardCode,
       isFeatured: p.isFeatured, displayOrder: p.displayOrder, isActive: p.isActive,
       image: p.image || existingImgs[0] || "",
       images: existingImgs,
@@ -274,8 +280,10 @@ export function AdminProducts() {
             <tr>
               <th className="px-5 py-4">Sản phẩm</th>
               <th className="px-5 py-4">Kích thước (mm)</th>
+              <th className="px-5 py-4">Mác gạch</th>
               <th className="px-5 py-4">Số lỗ</th>
-              <th className="px-5 py-4">Nén (kG/cm²)</th>
+              <th className="px-5 py-4">Nén (MPa)</th>
+              <th className="px-5 py-4">Uốn (MPa)</th>
               <th className="px-5 py-4">Hút nước (%)</th>
               <th className="px-5 py-4 text-right">Thao tác</th>
             </tr>
@@ -312,8 +320,10 @@ export function AdminProducts() {
                     </div>
                   </td>
                   <td className="px-5 py-4 text-[#560213]/80">{p.length}×{p.width}×{p.height}</td>
+                  <td className="px-5 py-4 text-[#560213]/80 font-medium">{p.brickGrade ?? "—"}</td>
                   <td className="px-5 py-4 text-[#560213]/80">{p.holeCount ?? "—"}</td>
                   <td className="px-5 py-4 text-[#560213]/80">{p.compressionStrength != null ? `≥ ${p.compressionStrength}` : "—"}</td>
+                  <td className="px-5 py-4 text-[#560213]/80">{p.flexuralStrength != null ? `≥ ${p.flexuralStrength}` : "—"}</td>
                   <td className="px-5 py-4 text-[#560213]/80">{p.waterAbsorption != null ? `≤ ${p.waterAbsorption}%` : "—"}</td>
                   <td className="px-5 py-4">
                     <div className="flex items-center justify-end gap-2">
@@ -329,7 +339,7 @@ export function AdminProducts() {
               );
             })}
             {products.length === 0 && (
-              <tr><td colSpan={6} className="py-12 text-center text-[#810C00]">Chưa có sản phẩm nào</td></tr>
+              <tr><td colSpan={8} className="py-12 text-center text-[#810C00]">Chưa có sản phẩm nào</td></tr>
             )}
           </tbody>
         </table>
@@ -459,28 +469,34 @@ export function AdminProducts() {
                 <textarea value={form.description ?? ""} onChange={(e) => set("description", e.target.value)} rows={4} className={inp + " resize-none"} />
               </F>
 
-              {/* Kích thước */}
+              {/* Kích thước & Mác gạch */}
               <div>
-                <div className="mb-2 text-[12px] font-semibold uppercase tracking-wider text-[#810C00]">Kích thước (mm)</div>
-                <div className="grid grid-cols-3 gap-3">
-                  <F label="Dài (L)"><input type="number" value={form.length} onChange={(e) => set("length", num(e.target.value) ?? 220)} className={inp} /></F>
-                  <F label="Rộng (W)"><input type="number" value={form.width} onChange={(e) => set("width", num(e.target.value) ?? 105)} className={inp} /></F>
-                  <F label="Cao (H)"><input type="number" value={form.height} onChange={(e) => set("height", num(e.target.value) ?? 60)} className={inp} /></F>
+                <div className="mb-2 text-[12px] font-semibold uppercase tracking-wider text-[#810C00]">Kích thước & Quy chuẩn</div>
+                <div className="grid grid-cols-4 gap-3">
+                  <F label="Dài (L)"><input type="number" value={form.length} onChange={(e) => set("length", num(e.target.value) ?? 180)} className={inp} /></F>
+                  <F label="Rộng (W)"><input type="number" value={form.width} onChange={(e) => set("width", num(e.target.value) ?? 80)} className={inp} /></F>
+                  <F label="Cao (H)"><input type="number" value={form.height} onChange={(e) => set("height", num(e.target.value) ?? 80)} className={inp} /></F>
+                  <F label="Mác gạch"><input value={form.brickGrade ?? ""} onChange={(e) => set("brickGrade", e.target.value)} placeholder="Mác 75" className={inp} /></F>
                 </div>
               </div>
 
               {/* Thông số kỹ thuật */}
               <div>
-                <div className="mb-2 text-[12px] font-semibold uppercase tracking-wider text-[#810C00]">Thông số kỹ thuật</div>
+                <div className="mb-2 text-[12px] font-semibold uppercase tracking-wider text-[#810C00]">Thông số kỹ thuật & Thí nghiệm</div>
                 <div className="grid grid-cols-3 gap-3">
-                  <F label="Số lỗ"><input type="number" value={form.holeCount ?? ""} onChange={(e) => set("holeCount", num(e.target.value))} placeholder="—" className={inp} /></F>
-                  <F label="Cường độ nén"><input type="number" value={form.compressionStrength ?? ""} onChange={(e) => set("compressionStrength", num(e.target.value))} placeholder="kG/cm²" className={inp} /></F>
-                  <F label="Độ hút nước"><input type="number" value={form.waterAbsorption ?? ""} onChange={(e) => set("waterAbsorption", num(e.target.value))} placeholder="%" className={inp} /></F>
+                  <F label="Số lỗ"><input type="number" value={form.holeCount ?? ""} onChange={(e) => set("holeCount", num(e.target.value))} placeholder="2, 4" className={inp} /></F>
+                  <F label="Trọng lượng (kg/viên)"><input type="number" step="0.1" value={form.weight ?? ""} onChange={(e) => set("weight", num(e.target.value))} placeholder="1.1" className={inp} /></F>
+                  <F label="Khối lượng thể tích (g/cm³)"><input type="number" step="0.01" value={form.bulkDensity ?? ""} onChange={(e) => set("bulkDensity", num(e.target.value))} placeholder="1.49" className={inp} /></F>
+                </div>
+                <div className="grid grid-cols-3 gap-3 mt-3">
+                  <F label="Cường độ nén (MPa)"><input type="number" step="0.1" value={form.compressionStrength ?? ""} onChange={(e) => set("compressionStrength", num(e.target.value))} placeholder="7.9" className={inp} /></F>
+                  <F label="Cường độ uốn (MPa)"><input type="number" step="0.1" value={form.flexuralStrength ?? ""} onChange={(e) => set("flexuralStrength", num(e.target.value))} placeholder="1.9" className={inp} /></F>
+                  <F label="Độ hút nước (%)"><input type="number" step="0.1" value={form.waterAbsorption ?? ""} onChange={(e) => set("waterAbsorption", num(e.target.value))} placeholder="11.3" className={inp} /></F>
+                </div>
+                <div className="mt-3">
+                  <F label="Tiêu chuẩn áp dụng"><input value={form.standardCode ?? ""} onChange={(e) => set("standardCode", e.target.value)} placeholder="QCVN 16:2023/BXD" className={inp} /></F>
                 </div>
               </div>
-              <F label="Trọng lượng (kg/viên)">
-                <input type="number" step="0.1" value={form.weight ?? ""} onChange={(e) => set("weight", num(e.target.value))} placeholder="—" className={inp} />
-              </F>
 
               {/* Meta */}
               <div className="grid grid-cols-3 gap-3">

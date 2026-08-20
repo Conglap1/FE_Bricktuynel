@@ -14,10 +14,14 @@ function buildAllSpecs(p: ReturnType<typeof useStore>["products"][number]) {
     { label: "Chiều dài", value: `${p.length} mm`, unit: "L" },
     { label: "Chiều rộng", value: `${p.width} mm`, unit: "W" },
     { label: "Chiều cao", value: `${p.height} mm`, unit: "H" },
-    p.weight != null ? { label: "Trọng lượng", value: `${p.weight} kg/viên`, unit: "~" } : null,
+    p.brickGrade ? { label: "Mác gạch", value: p.brickGrade, unit: "M" } : null,
     p.holeCount != null ? { label: "Số lỗ", value: `${p.holeCount} lỗ`, unit: "#" } : null,
-    p.compressionStrength != null ? { label: "Cường độ nén", value: `≥ ${p.compressionStrength} kG/cm²`, unit: "Rn" } : null,
+    p.weight != null ? { label: "Trọng lượng", value: `${p.weight} kg/viên`, unit: "~" } : null,
+    p.compressionStrength != null ? { label: "Cường độ nén", value: `≥ ${p.compressionStrength} MPa`, unit: "Rn" } : null,
+    p.flexuralStrength != null ? { label: "Cường độ uốn", value: `≥ ${p.flexuralStrength} MPa`, unit: "Ru" } : null,
+    p.bulkDensity != null ? { label: "Khối lượng thể tích", value: `${p.bulkDensity} g/cm³`, unit: "γ" } : null,
     p.waterAbsorption != null ? { label: "Độ hút nước", value: `≤ ${p.waterAbsorption}%`, unit: "W%" } : null,
+    p.standardCode ? { label: "Tiêu chuẩn áp dụng", value: p.standardCode, unit: "TC" } : null,
   ].filter((s): s is { label: string; value: string; unit: string } => s !== null);
 }
 
