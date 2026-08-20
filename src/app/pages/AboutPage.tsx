@@ -13,9 +13,9 @@ export function AboutPage() {
     <>
       <PageHeader
         crumb="Giới thiệu"
-        eyebrow="Về Thuận Lợi"
+        eyebrow="CTTNHH 1TV Thuận Lợi Mộc Hóa"
         title="Hơn hai mươi năm dựng xây niềm tin"
-        desc="Câu chuyện, giá trị và năng lực sản xuất gạch Tuynel đằng sau thương hiệu Gạch Thuận Lợi từ năm 1988."
+        desc="Câu chuyện, giá trị và năng lực sản xuất gạch Tuynel đằng sau thương hiệu CTTNHH 1TV Thuận Lợi Mộc Hóa."
         image={IMAGES.aboutBanner}
       />
       {/* 1. Khúc đầu (Giữ nguyên) */}

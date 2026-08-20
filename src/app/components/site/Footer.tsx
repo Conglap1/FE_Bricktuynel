@@ -91,7 +91,7 @@ export function Footer() {
               <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#C76B86]/20 text-[#C76B86]">
                 <Building2 className="h-4 w-4" />
               </span>
-              {contact.companyName || "Công ty TNHH Gạch Thuận Lợi"}
+              {contact.companyName || "CTTNHH 1TV Thuận Lợi Mộc Hóa"}
             </h4>
             <ul className="mt-5 space-y-3.5 text-[14px]">
               {contact.address && (
@@ -164,7 +164,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row">
           <p className="text-[13px] text-white/50">
-            © 2026 {contact.companyName || "Công ty TNHH Gạch Thuận Lợi"}. Bảo lưu mọi quyền.{" "}
+            © 2026 {contact.companyName || "CTTNHH 1TV Thuận Lợi Mộc Hóa"}. Bảo lưu mọi quyền.{" "}
             <Link to="/admin" className="text-white/15 transition-colors hover:text-white/40" tabIndex={-1} aria-hidden>
               ·
             </Link>

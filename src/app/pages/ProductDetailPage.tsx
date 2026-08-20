@@ -83,7 +83,7 @@ export function ProductDetailPage() {
     <>
       <PageHeader
         crumb={product.name}
-        eyebrow="Sản phẩm"
+        eyebrow="CTTNHH 1TV Thuận Lợi Mộc Hóa"
         title={product.name}
         desc={product.shortDescription}
       />

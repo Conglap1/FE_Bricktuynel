@@ -29,7 +29,7 @@ export function BrandStory() {
                 &ldquo;Vững bước dựng xây — Nâng tầm công trình Việt&rdquo;
               </h3>
               <p className="mt-4 text-[16px] text-white/85 leading-relaxed max-w-2xl">
-                Mỗi viên gạch Thuận Lợi ra lò không chỉ mang sức mạnh của công nghệ hiện đại, mà còn gắn liền với niềm tự hào được đồng hành cùng hàng ngàn công trình lớn nhỏ trên khắp cả nước.
+                Mỗi viên gạch ra lò không chỉ mang sức mạnh của công nghệ hiện đại, mà còn gắn liền với niềm tự hào được đồng hành cùng hàng ngàn công trình lớn nhỏ trên khắp cả nước.
               </p>
             </div>
           </div>
@@ -41,7 +41,7 @@ export function BrandStory() {
           <div className="lg:col-span-7">
             <SectionHeading
               eyebrow="Hành trình phát triển"
-              title={<>Hành trình tôi luyện qua lửa đỏ<br />Gạch Thuận Lợi</>}
+              title={<>Hành trình tôi luyện qua lửa đỏ<br />CTTNHH 1TV Thuận Lợi Mộc Hóa</>}
               desc="Bắt đầu từ năm 1988, vượt qua biến cố bão lũ nghiệt ngã để đứng dậy, không ngừng đổi mới công nghệ và vươn mình trở thành nhà sản xuất gạch Tuynel uy tín hàng đầu."
             />
 

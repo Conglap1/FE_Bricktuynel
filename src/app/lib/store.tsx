@@ -121,13 +121,13 @@ export const DEFAULT_ABOUT: AboutData = {
 };
 
 export const DEFAULT_CONTACT: ContactInfo = {
-  companyName: "Công ty TNHH Gạch Thuận Lợi",
-  address: "KCN Mỹ Phước, Bến Cát, Bình Dương",
-  phone: "0908 555 888",
-  hotline: "1900 1234",
+  companyName: "CTTNHH 1TV Thuận Lợi Mộc Hóa",
+  address: "Ấp Mới, Xã Bình Tân, Thị xã Kiến Tường, Tỉnh Long An",
+  phone: "0918 701 472",
+  hotline: "0918 701 472",
   email: "kinhdoanh@gachthuanloi.vn",
   facebook: "https://facebook.com",
-  zalo: "0908555888",
+  zalo: "0918701472",
   tiktok: "https://tiktok.com",
   googleMapEmbed:
     "https://maps.google.com/maps?q=KCN+My+Phuoc,+Ben+Cat,+Binh+Duong,+Vietnam&t=&z=14&ie=UTF8&iwloc=&output=embed",

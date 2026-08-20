@@ -25,8 +25,8 @@ export function ProductsPage() {
     <>
       <PageHeader
         crumb="Sản phẩm"
-        eyebrow="Tất cả sản phẩm"
-        title={`${activeProducts.length > 0 ? `${activeProducts.length} dòng` : "Các dòng"} gạch đất sét nung Thuận Lợi`}
+        eyebrow="CTTNHH 1TV Thuận Lợi Mộc Hóa"
+        title={`${activeProducts.length > 0 ? `${activeProducts.length} dòng` : "Các dòng"} gạch đất sét nung Mộc Hóa`}
         desc="Toàn bộ sản phẩm được sản xuất tại lò Tuynel 1.050°C, đạt chuẩn QCVN 16:2023/BXD, kèm thông số kỹ thuật minh bạch."
       />
 
