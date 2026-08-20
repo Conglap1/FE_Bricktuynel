@@ -115,8 +115,6 @@ export function NewsDetailPage() {
       <div className="bg-secondary/20 border-b border-border/30 py-3.5">
         <div className="mx-auto max-w-[1240px] px-6">
           <nav className="flex items-center flex-wrap gap-2 text-[13px] text-muted-foreground">
-            <Link to="/" className="hover:text-primary transition-colors">Trang chủ</Link>
-            <ChevronRight className="h-3.5 w-3.5 opacity-60" />
             <Link to="/tin-tuc" className="hover:text-primary transition-colors">Tin tức & Sự kiện</Link>
             <ChevronRight className="h-3.5 w-3.5 opacity-60" />
             <span className="text-foreground font-semibold truncate max-w-[280px] sm:max-w-[450px] md:max-w-[600px]">

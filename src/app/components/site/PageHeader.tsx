@@ -9,6 +9,8 @@ export function PageHeader({
   title,
   desc,
   crumb,
+  parentCrumb,
+  parentLink,
   image,
   imagePosition = "object-center",
   className = "",
@@ -17,6 +19,8 @@ export function PageHeader({
   title: React.ReactNode;
   desc?: string;
   crumb: string;
+  parentCrumb?: string;
+  parentLink?: string;
   image?: string;
   imagePosition?: string;
   className?: string;
@@ -39,11 +43,21 @@ export function PageHeader({
           animate={{ opacity: 1, y: 0 }}
           className="inline-flex items-center gap-2 text-[13px] font-semibold rounded-full bg-black/40 backdrop-blur-md px-4 py-1.5 border border-white/20 text-white shadow-lg"
         >
-          <Link to="/" className="text-white/80 transition-colors hover:text-white">
-            Trang chủ
-          </Link>
-          <ChevronRight className="h-3.5 w-3.5 text-white/60" />
-          <span className="text-white font-bold">{crumb}</span>
+          {parentCrumb ? (
+            <>
+              {parentLink ? (
+                <Link to={parentLink} className="text-white/80 transition-colors hover:text-white">
+                  {parentCrumb}
+                </Link>
+              ) : (
+                <span className="text-white/80">{parentCrumb}</span>
+              )}
+              <ChevronRight className="h-3.5 w-3.5 text-white/60" />
+              <span className="text-white font-bold">{crumb}</span>
+            </>
+          ) : (
+            <span className="text-white font-bold">{crumb}</span>
+          )}
         </motion.nav>
 
         <motion.h1

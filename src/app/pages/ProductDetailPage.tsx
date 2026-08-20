@@ -83,6 +83,8 @@ export function ProductDetailPage() {
     <>
       <PageHeader
         crumb={product.name}
+        parentCrumb="Sản phẩm"
+        parentLink="/san-pham"
         eyebrow="Sản phẩm"
         title={product.name}
         desc={product.shortDescription}
