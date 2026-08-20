@@ -85,12 +85,17 @@ export function Footer() {
 
           {/* Column 2: Detailed Company Information */}
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm shadow-inner transition-all hover:border-white/20">
-            <h4 className="flex items-center gap-2.5 text-white" style={{ fontSize: "1rem", fontWeight: 700 }}>
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#C76B86]/20 text-[#C76B86]">
-                <Building2 className="h-4 w-4" />
-              </span>
-              {contact.companyName || "CTTNHH 1TV Thuận Lợi Mộc Hóa"}
-            </h4>
+            <div>
+              <h4 className="flex items-center gap-2.5 text-white" style={{ fontSize: "1rem", fontWeight: 700 }}>
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#C76B86]/20 text-[#C76B86]">
+                  <Building2 className="h-4 w-4" />
+                </span>
+                {contact.companyName || "CTTNHH 1TV Thuận Lợi Mộc Hóa"}
+              </h4>
+              <p className="mt-1.5 ml-10 text-[13px] text-white/75 font-medium">
+                Mã số thuế: <span className="font-mono text-white/95 font-semibold">1100556321</span>
+              </p>
+            </div>
             <ul className="mt-5 space-y-3.5 text-[14px]">
               {contact.address && (
                 <li className="flex items-start gap-3">
