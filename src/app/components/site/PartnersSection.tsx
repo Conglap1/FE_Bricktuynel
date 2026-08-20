@@ -4,7 +4,7 @@ import { SectionHeading } from "./SectionHeading";
 import { Reveal, Stagger, staggerItem, motion } from "../../lib/motion";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 
-export function PartnersSection({ title = "Đối tác & Nhà thầu chiến lược", showHeading = true }: { title?: string; showHeading?: boolean }) {
+export function PartnersSection({ title = "Đối tác & Đại lý chiến lược", showHeading = true }: { title?: string; showHeading?: boolean }) {
   const { partners } = useStore();
 
   const activePartners = partners.filter((p) => p.isActive);
@@ -19,7 +19,7 @@ export function PartnersSection({ title = "Đối tác & Nhà thầu chiến lư
           <SectionHeading
             eyebrow="Đồng hành cùng phát triển"
             title={title}
-            desc="Hợp tác chiến lược cùng các tập đoàn xây dựng và nhà thầu hàng đầu Việt Nam để kiến tạo những công trình bền vững."
+            desc="Hợp tác chiến lược cùng các đối tác và đại lý phân phối hàng đầu Việt Nam để kiến tạo những công trình bền vững."
             align="center"
           />
         )}
@@ -33,7 +33,7 @@ export function PartnersSection({ title = "Đối tác & Nhà thầu chiến lư
               </div>
               <div>
                 <div className="text-xl font-bold text-foreground font-display">50+</div>
-                <div className="text-[13px] text-muted-foreground">Tập đoàn & Nhà thầu lớn</div>
+                <div className="text-[13px] text-muted-foreground">Đối tác & Đại lý uy tín</div>
               </div>
             </div>
             <div className="flex items-center gap-4">

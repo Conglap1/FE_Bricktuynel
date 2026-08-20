@@ -16,7 +16,7 @@ export function AboutPartnersShowcase() {
       <div className="mx-auto max-w-[1240px] px-6">
         <SectionHeading
           eyebrow="Đối tác chiến lược"
-          title={<><span className="inline-block whitespace-nowrap">Những tập đoàn &amp; nhà thầu</span><br /><span className="inline-block whitespace-nowrap">tin dùng gạch Thuận Lợi</span></>}
+          title={<><span className="inline-block whitespace-nowrap">Các đối tác &amp; đại lý</span><br /><span className="inline-block whitespace-nowrap">tin dùng gạch Thuận Lợi</span></>}
           desc="Đồng hành cùng những đơn vị xây dựng uy tín hàng đầu Việt Nam để tạo nên các công trình bền vững."
           align="center"
         />

@@ -59,7 +59,7 @@ export function LogoMarquee() {
           className="mb-6 text-center text-[12px] font-medium uppercase tracking-[0.24em] text-muted-foreground"
           style={{ fontFamily: "var(--font-mono)" }}
         >
-          Đối tác & Nhà thầu tin tưởng
+          Đối tác & Đại lý tin tưởng
         </p>
       </div>
       <div className="relative flex overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)] select-none">
