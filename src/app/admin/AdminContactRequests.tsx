@@ -1,12 +1,20 @@
 import { useState } from "react";
-import { Eye, EyeOff, Trash2, X, MessageSquare } from "lucide-react";
+import { Eye, EyeOff, Trash2, X, MessageSquare, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { useStore, API_BASE_URL } from "../lib/store";
 import type { ContactRequest } from "../lib/store";
 
 export function AdminContactRequests() {
-  const { contactRequests, setContactRequests } = useStore();
+  const { contactRequests, setContactRequests, refreshContactRequests } = useStore();
   const [detailReq, setDetailReq] = useState<ContactRequest | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleManualRefresh = async () => {
+    setIsRefreshing(true);
+    await refreshContactRequests(false);
+    toast.success("Đã làm mới danh sách yêu cầu");
+    setTimeout(() => setIsRefreshing(false), 400);
+  };
 
   async function handleDelete(id: number) {
     if (!confirm("Bạn có chắc chắn muốn xoá yêu cầu này?")) return;
@@ -46,8 +54,27 @@ export function AdminContactRequests() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-[#560213]" style={{ fontFamily: "var(--font-display)" }}>Yêu cầu liên hệ</h1>
-          <p className="mt-1 text-sm text-[#560213]/70">{contactRequests?.length || 0} yêu cầu</p>
+          <div className="flex items-center gap-3 mt-1">
+            <p className="text-sm text-[#560213]/70">{contactRequests?.length || 0} yêu cầu</p>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 border border-emerald-200">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              Real-time Live (Tự động mỗi 3s)
+            </span>
+          </div>
         </div>
+
+        <button
+          onClick={handleManualRefresh}
+          className={`flex items-center gap-2 rounded-xl bg-[#560213] hover:bg-[#810C00] text-white px-4 py-2 text-xs font-semibold shadow-sm transition-all active:scale-95 ${
+            isRefreshing ? "opacity-75 cursor-wait" : ""
+          }`}
+        >
+          <RefreshCw className={`h-3.5 w-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
+          Làm mới ngay
+        </button>
       </div>
 
       <div className="mt-8 overflow-hidden rounded-2xl border border-[#810C00]/20 bg-white shadow-sm">

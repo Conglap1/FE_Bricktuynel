@@ -17,16 +17,17 @@ import {
 import { useStore } from "../lib/store";
 
 export function AdminDashboard() {
-  const { products, projects, news, partners, contactRequests } = useStore();
+  const { products, projects, news, partners, contactRequests, refreshAll } = useStore();
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const unreadRequests = contactRequests.filter((r) => !r.isRead).length;
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setIsRefreshing(true);
+    await refreshAll();
     setTimeout(() => {
       setIsRefreshing(false);
-    }, 500);
+    }, 400);
   };
 
   const stats = [
@@ -103,6 +104,14 @@ export function AdminDashboard() {
           </div>
 
           <div className="flex items-center gap-2.5">
+            <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 px-3 py-1 text-[11px] font-semibold text-emerald-300 border border-emerald-500/30">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+              </span>
+              Tự động cập nhật (3s)
+            </span>
+
             <button
               onClick={handleRefresh}
               className={`flex items-center gap-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 px-3 py-1.5 text-xs font-semibold text-white transition-all active:scale-95 ${

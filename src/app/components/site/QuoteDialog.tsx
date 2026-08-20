@@ -3,10 +3,11 @@ import { AnimatePresence } from "motion/react";
 import { X, Send, CheckCircle2, FileText } from "lucide-react";
 import { motion } from "../../lib/motion";
 import { useQuote } from "./QuoteContext";
-import { API_BASE_URL } from "../../lib/store";
+import { API_BASE_URL, useStore } from "../../lib/store";
 
 export function QuoteDialog() {
   const { open, product, closeQuote } = useQuote();
+  const { refreshContactRequests } = useStore();
   const [sent, setSent] = useState(false);
 
   async function submit(e: FormEvent<HTMLFormElement>) {
@@ -34,6 +35,7 @@ export function QuoteDialog() {
           content,
         }),
       });
+      refreshContactRequests(false);
     } catch (err) {
       console.error("Lỗi khi gửi yêu cầu báo giá:", err);
     }

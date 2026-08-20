@@ -4,8 +4,10 @@ import {
   useState,
   useEffect,
   useCallback,
+  useRef,
   type ReactNode,
 } from "react";
+import { toast } from "sonner";
 import {
   CATEGORIES,
   PROCESS,
@@ -44,7 +46,22 @@ export function getImageUrl(url?: string): string {
   return `${serverOrigin}/${url}`;
 }
 
-
+function playNotificationChime() {
+  try {
+    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5 tone
+    osc.frequency.setValueAtTime(880, ctx.currentTime + 0.12); // A5 tone
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.5);
+  } catch {}
+}
 
 /* ── ContactInfo — maps to DB: ContactInfo (10 fields) ─────── */
 export type ContactInfo = {
@@ -88,6 +105,8 @@ type StoreActions = {
   setContact: (v: ContactInfo) => void;
   setPartners: (v: Partner[]) => void;
   setContactRequests: (v: ContactRequest[]) => void;
+  refreshContactRequests: (notifyIfNew?: boolean) => Promise<void>;
+  refreshAll: () => Promise<void>;
 };
 
 export const DEFAULT_ABOUT: AboutData = {
@@ -138,68 +157,78 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [partners, setPartnersRaw] = useState<Partner[]>([]);
   const [contactRequests, setContactRequestsRaw] = useState<ContactRequest[]>([]);
 
-  // Fetch real data strictly from .NET 9 API
-  useEffect(() => {
-    async function fetchFromApi() {
-      try {
-        const resContact = await fetch(`${API_BASE_URL}/contact-info`);
-        if (resContact.ok) {
-          const data = await resContact.json();
-          setContactRaw(data);
-        }
+  // Track seen request IDs to detect brand new incoming requests
+  const knownRequestIdsRef = useRef<Set<number>>(new Set());
 
-        const resProducts = await fetch(`${API_BASE_URL}/products`);
-        if (resProducts.ok) {
-          const data = await resProducts.json();
-          setProductsRaw(Array.isArray(data) ? data : []);
-        } else {
-          setProductsRaw([]);
-        }
+  // Function to refresh contact requests with optional real-time toast alert
+  const refreshContactRequests = useCallback(async (notifyIfNew = true) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/contact-requests`);
+      if (res.ok) {
+        const data: ContactRequest[] = await res.json();
+        if (Array.isArray(data)) {
+          const currentKnown = knownRequestIdsRef.current;
+          
+          // Check for newly arrived requests
+          if (notifyIfNew && currentKnown.size > 0) {
+            const newRequests = data.filter((r) => !currentKnown.has(r.id));
+            if (newRequests.length > 0) {
+              const latest = newRequests[0];
+              playNotificationChime();
+              toast.info(`🔔 Yêu cầu báo giá mới từ ${latest.fullName || "Khách hàng"}!`, {
+                description: latest.phone ? `SĐT: ${latest.phone}` : undefined,
+                duration: 6000,
+              });
+            }
+          }
 
-        const resProjects = await fetch(`${API_BASE_URL}/projects`);
-        if (resProjects.ok) {
-          const data = await resProjects.json();
-          setProjectsRaw(Array.isArray(data) ? data : []);
-        } else {
-          setProjectsRaw([]);
-        }
+          // Update ref set
+          const updatedSet = new Set<number>();
+          data.forEach((r) => updatedSet.add(r.id));
+          knownRequestIdsRef.current = updatedSet;
 
-        const resNews = await fetch(`${API_BASE_URL}/news`);
-        if (resNews.ok) {
-          const data = await resNews.json();
-          setNewsRaw(Array.isArray(data) ? data : []);
-        } else {
-          setNewsRaw([]);
+          setContactRequestsRaw(data);
         }
-
-        const resPartners = await fetch(`${API_BASE_URL}/partners`);
-        if (resPartners.ok) {
-          const data = await resPartners.json();
-          setPartnersRaw(Array.isArray(data) ? data : []);
-        } else {
-          setPartnersRaw([]);
-        }
-
-        const resReqs = await fetch(`${API_BASE_URL}/contact-requests`);
-        if (resReqs.ok) {
-          const data = await resReqs.json();
-          setContactRequestsRaw(Array.isArray(data) ? data : []);
-        } else {
-          setContactRequestsRaw([]);
-        }
-      } catch (err) {
-        console.warn("Backend API not connected / offline:", err);
-        // Reset to empty arrays if BE is offline
-        setProductsRaw([]);
-        setProjectsRaw([]);
-        setNewsRaw([]);
-        setPartnersRaw([]);
-        setContactRequestsRaw([]);
       }
+    } catch (err) {
+      console.warn("Lỗi khi cập nhật danh sách yêu cầu:", err);
     }
-
-    fetchFromApi();
   }, []);
+
+  // Fetch all real data strictly from .NET 9 API
+  const refreshAll = useCallback(async () => {
+    try {
+      const [resContact, resProducts, resProjects, resNews, resPartners] = await Promise.all([
+        fetch(`${API_BASE_URL}/contact-info`).catch(() => null),
+        fetch(`${API_BASE_URL}/products`).catch(() => null),
+        fetch(`${API_BASE_URL}/projects`).catch(() => null),
+        fetch(`${API_BASE_URL}/news`).catch(() => null),
+        fetch(`${API_BASE_URL}/partners`).catch(() => null),
+      ]);
+
+      if (resContact?.ok) setContactRaw(await resContact.json());
+      if (resProducts?.ok) setProductsRaw(await resProducts.json());
+      if (resProjects?.ok) setProjectsRaw(await resProjects.json());
+      if (resNews?.ok) setNewsRaw(await resNews.json());
+      if (resPartners?.ok) setPartnersRaw(await resPartners.json());
+
+      await refreshContactRequests(false);
+    } catch (err) {
+      console.warn("Backend API fetch error:", err);
+    }
+  }, [refreshContactRequests]);
+
+  // Initial load and continuous real-time polling every 3 seconds
+  useEffect(() => {
+    refreshAll();
+
+    // Auto-poll every 3 seconds for immediate real-time synchronization across devices
+    const pollInterval = setInterval(() => {
+      refreshContactRequests(true);
+    }, 3000);
+
+    return () => clearInterval(pollInterval);
+  }, [refreshAll, refreshContactRequests]);
 
   const setProducts = useCallback((v: Product[]) => setProductsRaw(v), []);
   const setCategories = useCallback((v: Category[]) => setCategoriesRaw(v), []);
@@ -232,6 +261,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         setContact,
         setPartners,
         setContactRequests,
+        refreshContactRequests,
+        refreshAll,
       }}
     >
       {children}
@@ -244,3 +275,4 @@ export function useStore() {
   if (!ctx) throw new Error("useStore outside StoreProvider");
   return ctx;
 }
+

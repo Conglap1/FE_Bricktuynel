@@ -6,7 +6,7 @@ import { useStore, API_BASE_URL } from "../../lib/store";
 import { CATEGORIES } from "../../lib/data";
 
 export function Contact() {
-  const { contact, products } = useStore();
+  const { contact, products, refreshContactRequests } = useStore();
   const [sent, setSent] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -127,6 +127,7 @@ export function Contact() {
           content: content,
         }),
       });
+      refreshContactRequests(false);
     } catch (err) {
       console.error("Lỗi khi gửi yêu cầu liên hệ:", err);
     }
