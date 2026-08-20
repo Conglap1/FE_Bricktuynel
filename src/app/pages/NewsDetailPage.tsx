@@ -94,7 +94,7 @@ export function NewsDetailPage() {
     "datePublished": article.publishedAt || new Date().toISOString(),
     "author": {
       "@type": "Organization",
-      "name": "Công ty TNHH Gạch Thuận Lợi"
+      "name": "Công ty TNHH Một Thành Viên Thuận Lợi Mộc Hóa"
     },
     "publisher": {
       "@type": "Organization",

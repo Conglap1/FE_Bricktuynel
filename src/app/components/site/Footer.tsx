@@ -101,9 +101,9 @@ export function Footer() {
                   className="leading-snug text-white font-extrabold text-[15px] sm:text-[16px]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
-                  <span className="inline-block whitespace-nowrap">Công ty TNHH MTV</span>
+                  <span className="inline-block">Công ty TNHH Một Thành Viên</span>
                   <br />
-                  <span className="inline-block whitespace-nowrap text-[#C76B86]">Thuận Lợi - Mộc Hóa</span>
+                  <span className="inline-block text-[#C76B86]">Thuận Lợi Mộc Hóa</span>
                 </span>
               </h4>
             </div>
@@ -186,7 +186,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row">
           <p className="text-[13px] text-white/50">
-            © 2026 {contact.companyName || "CTTNHH 1TV Thuận Lợi Mộc Hóa"}. Bảo lưu mọi quyền.{" "}
+            © 2026 {contact.companyName || "Công ty TNHH Một Thành Viên Thuận Lợi Mộc Hóa"}. Bảo lưu mọi quyền.{" "}
             <Link to="/admin" className="text-white/15 transition-colors hover:text-white/40" tabIndex={-1} aria-hidden>
               ·
             </Link>

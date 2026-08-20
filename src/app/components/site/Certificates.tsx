@@ -41,7 +41,7 @@ const REAL_CERTIFICATES: CertificateCardItem[] = [
     id: "cbhq-01-2025",
     title: "Bản Công Bố Hợp Quy Gạch Đất Sét Nung",
     code: "Số: 01/2025/CBHQ-TLMH",
-    issuer: "Công ty TNHH MTV Thuận Lợi Mộc Hóa",
+    issuer: "Công ty TNHH Một Thành Viên Thuận Lợi Mộc Hóa",
     badgeText: "CÔNG BỐ HỢP QUY",
     image: "/images/giayto/cbhq_page-1.png",
     pages: ["/images/giayto/cbhq_page-1.png", "/images/giayto/cbhq_page-2.png"],
