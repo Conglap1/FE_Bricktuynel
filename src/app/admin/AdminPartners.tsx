@@ -91,19 +91,19 @@ export function AdminPartners() {
   function set(key: keyof PartnerForm, val: unknown) { setForm((f) => ({ ...f, [key]: val })); }
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between">
+    <div className="p-4 sm:p-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#560213]" style={{ fontFamily: "var(--font-display)" }}>Đối tác</h1>
-          <p className="mt-1 text-sm text-[#560213]/70">{partners?.length || 0} đối tác</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-[#560213]" style={{ fontFamily: "var(--font-display)" }}>Đối tác</h1>
+          <p className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-[#560213]/70">{partners?.length || 0} đối tác</p>
         </div>
-        <button onClick={openAdd} className="inline-flex items-center gap-2 rounded-xl bg-[#810C00] px-4 py-2.5 text-sm font-semibold text-white hover:opacity-80">
+        <button onClick={openAdd} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#810C00] px-4 py-2.5 text-xs sm:text-sm font-semibold text-white hover:opacity-80 shrink-0">
           <Plus className="h-4 w-4" /> Thêm đối tác
         </button>
       </div>
 
-      <div className="mt-8 overflow-hidden rounded-2xl border border-[#810C00]/20 bg-white shadow-sm">
-        <table className="w-full text-sm">
+      <div className="mt-6 sm:mt-8 overflow-x-auto rounded-2xl border border-[#810C00]/20 bg-white shadow-sm">
+        <table className="w-full text-xs sm:text-sm min-w-[500px]">
           <thead className="bg-[#560213] text-white border-b border-[#810C00]/20 text-left text-[12px] font-bold uppercase tracking-wider">
             <tr>
               <th className="px-5 py-4">Đối tác</th>

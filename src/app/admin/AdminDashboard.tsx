@@ -89,21 +89,21 @@ export function AdminDashboard() {
   });
 
   return (
-    <div className="h-full flex flex-col p-4 lg:p-5 gap-3.5 bg-slate-50 overflow-hidden box-border">
+    <div className="min-h-full flex flex-col p-3.5 sm:p-5 gap-3.5 bg-slate-50 box-border overflow-y-auto">
       {/* ── Top Header Banner (Compact Single Screen) ── */}
-      <div className="relative shrink-0 overflow-hidden rounded-2xl bg-gradient-to-r from-[#560213] via-[#810C00] to-[#560213] px-5 py-3.5 text-white shadow-md">
-        <div className="relative z-10 flex items-center justify-between gap-4">
+      <div className="relative shrink-0 overflow-hidden rounded-2xl bg-gradient-to-r from-[#560213] via-[#810C00] to-[#560213] px-4 sm:px-5 py-3.5 text-white shadow-md">
+        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2 text-[11px] text-white/70">
               <Clock className="h-3 w-3 text-amber-300" />
               <span>{todayFormatted}</span>
             </div>
-            <h1 className="text-xl font-extrabold tracking-tight text-white mt-0.5">
+            <h1 className="text-lg sm:text-xl font-extrabold tracking-tight text-white mt-0.5">
               Tổng quan Quản trị
             </h1>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2 flex-wrap">
             <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 px-3 py-1 text-[11px] font-semibold text-emerald-300 border border-emerald-500/30">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -114,7 +114,7 @@ export function AdminDashboard() {
 
             <button
               onClick={handleRefresh}
-              className={`flex items-center gap-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 px-3 py-1.5 text-xs font-semibold text-white transition-all active:scale-95 ${
+              className={`flex items-center gap-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 px-2.5 py-1.5 text-xs font-semibold text-white transition-all active:scale-95 ${
                 isRefreshing ? "opacity-75 cursor-wait" : ""
               }`}
             >
@@ -126,7 +126,7 @@ export function AdminDashboard() {
               href="#/"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 px-3 py-1.5 text-xs font-bold text-slate-950 shadow-md transition-all active:scale-95"
+              className="flex items-center gap-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 px-2.5 py-1.5 text-xs font-bold text-slate-950 shadow-md transition-all active:scale-95"
             >
               <Eye className="h-3.5 w-3.5" />
               Xem website
@@ -137,39 +137,39 @@ export function AdminDashboard() {
       </div>
 
       {/* ── Real KPI Stat Cards ── */}
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5 shrink-0">
+      <div className="grid gap-2.5 grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 shrink-0">
         {stats.map((s) => (
           <RouterLink
             key={s.label}
             to={s.to}
-            className={`group relative overflow-hidden rounded-xl border bg-white p-3 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${s.color}`}
+            className={`group relative overflow-hidden rounded-xl border bg-white p-2.5 sm:p-3 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${s.color}`}
           >
             <div className="flex items-center justify-between">
-              <span className={`grid h-8.5 w-8.5 place-items-center rounded-lg shadow-sm ${s.iconBg}`}>
-                <s.icon className="h-4 w-4" />
+              <span className={`grid h-7 sm:h-8.5 w-7 sm:w-8.5 place-items-center rounded-lg shadow-sm ${s.iconBg}`}>
+                <s.icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               </span>
               {s.badge && (
-                <span className="rounded-full bg-red-600 px-2 py-0.5 text-[10px] font-bold text-white shadow-sm">
+                <span className="rounded-full bg-red-600 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-bold text-white shadow-sm">
                   {s.badge}
                 </span>
               )}
             </div>
 
-            <div className="mt-2">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 group-hover:text-[#810C00] transition-colors">
+            <div className="mt-1.5 sm:mt-2">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 group-hover:text-[#810C00] transition-colors">
                 {s.value}
               </div>
-              <div className="text-xs font-semibold text-slate-700 mt-0.5 truncate">{s.label}</div>
-              <div className="text-[11px] text-slate-500 mt-0.5 truncate">{s.subtext}</div>
+              <div className="text-[11px] sm:text-xs font-semibold text-slate-700 mt-0.5 truncate">{s.label}</div>
+              <div className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 truncate">{s.subtext}</div>
             </div>
           </RouterLink>
         ))}
       </div>
 
       {/* ── Main Content Grid: Recent Customer Inquiries & Content Overview ── */}
-      <div className="grid gap-3.5 lg:grid-cols-3 flex-1 min-h-0 overflow-hidden">
+      <div className="grid gap-3.5 lg:grid-cols-3 flex-1 min-h-0">
         {/* Real Customer Contact Requests (2 columns) */}
-        <div className="lg:col-span-2 rounded-xl border border-slate-200/80 bg-white p-4 shadow-sm flex flex-col h-full overflow-hidden">
+        <div className="lg:col-span-2 rounded-xl border border-slate-200/80 bg-white p-3.5 sm:p-4 shadow-sm flex flex-col h-full min-h-[300px] overflow-hidden">
           <div className="flex items-center justify-between mb-3 shrink-0">
             <div className="flex items-center gap-2">
               <MessageSquare className="h-4.5 w-4.5 text-[#810C00]" />

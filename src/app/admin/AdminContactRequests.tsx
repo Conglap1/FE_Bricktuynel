@@ -50,25 +50,25 @@ export function AdminContactRequests() {
 
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between">
+    <div className="p-4 sm:p-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#560213]" style={{ fontFamily: "var(--font-display)" }}>Yêu cầu liên hệ</h1>
-          <div className="flex items-center gap-3 mt-1">
-            <p className="text-sm text-[#560213]/70">{contactRequests?.length || 0} yêu cầu</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-[#560213]" style={{ fontFamily: "var(--font-display)" }}>Yêu cầu liên hệ</h1>
+          <div className="flex items-center gap-3 mt-1 flex-wrap">
+            <p className="text-xs sm:text-sm text-[#560213]/70">{contactRequests?.length || 0} yêu cầu</p>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 border border-emerald-200">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              Real-time Live (Tự động mỗi 3s)
+              Real-time Live (3s)
             </span>
           </div>
         </div>
 
         <button
           onClick={handleManualRefresh}
-          className={`flex items-center gap-2 rounded-xl bg-[#560213] hover:bg-[#810C00] text-white px-4 py-2 text-xs font-semibold shadow-sm transition-all active:scale-95 ${
+          className={`flex items-center justify-center gap-2 rounded-xl bg-[#560213] hover:bg-[#810C00] text-white px-4 py-2 text-xs font-semibold shadow-sm transition-all active:scale-95 shrink-0 ${
             isRefreshing ? "opacity-75 cursor-wait" : ""
           }`}
         >
@@ -77,8 +77,8 @@ export function AdminContactRequests() {
         </button>
       </div>
 
-      <div className="mt-8 overflow-hidden rounded-2xl border border-[#810C00]/20 bg-white shadow-sm">
-        <table className="w-full text-sm">
+      <div className="mt-6 sm:mt-8 overflow-x-auto rounded-2xl border border-[#810C00]/20 bg-white shadow-sm">
+        <table className="w-full text-xs sm:text-sm min-w-[600px]">
           <thead className="bg-[#560213] text-white border-b border-[#810C00]/20 text-left text-[12px] font-bold uppercase tracking-wider">
             <tr>
               <th className="px-5 py-4">Khách hàng</th>
