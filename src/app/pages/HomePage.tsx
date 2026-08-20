@@ -242,7 +242,6 @@ function ContactTeaser() {
       icon: Phone,
       label: "Hotline 24/7",
       value: contact.hotline ? `${contact.hotline} · ${contact.phone}` : "0908 555 888",
-      subText: "Hỗ trợ cuộc gọi & Zalo miễn phí",
       actionText: "Gọi ngay",
       href: `tel:${(contact.hotline || contact.phone || "0908555888").replace(/\s/g, "")}`,
     },
@@ -250,7 +249,6 @@ function ContactTeaser() {
       icon: Mail,
       label: "Email báo giá",
       value: contact.email || "kinhdoanh@gachthuanloi.vn",
-      subText: "Phản hồi trong 2-4h làm việc",
       actionText: "Gửi mail",
       href: `mailto:${contact.email || "kinhdoanh@gachthuanloi.vn"}`,
       isEmail: true,
@@ -259,7 +257,6 @@ function ContactTeaser() {
       icon: MapPin,
       label: "Địa chỉ Nhà máy",
       value: contact.address || "KCN Mỹ Phước, Bến Cát, Bình Dương",
-      subText: "Diện tích sản xuất hơn 100.000m²",
       actionText: "Xem vị trí",
       href: "#google-map-section",
       onClick: (e: React.MouseEvent) => {
@@ -272,7 +269,6 @@ function ContactTeaser() {
       icon: Clock,
       label: "Giờ làm việc",
       value: contact.workingHours || "Thứ 2 – Thứ 7 · 07:30 – 17:30",
-      subText: "Nghỉ Chủ Nhật & các ngày Lễ lớn",
       actionText: "Giờ phục vụ",
     },
   ];
