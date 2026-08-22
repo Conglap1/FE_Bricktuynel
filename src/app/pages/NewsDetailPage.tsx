@@ -249,13 +249,13 @@ export function NewsDetailPage() {
 
                 <div className="mt-5 space-y-3">
                   <a 
-                    href={`tel:${contact.hotline || contact.phone || '0908555888'}`} 
+                    href={`tel:${contact.phone ? contact.phone.replace(/\s/g, "") : '0918701472'}`} 
                     className="flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-white shadow-md hover:bg-primary/90 transition-colors"
                   >
-                    <PhoneCall className="h-4 w-4" /> Hotline: {contact.hotline || contact.phone || '0908 555 888'}
+                    <PhoneCall className="h-4 w-4" /> Hotline: {contact.phone || '0918 701 472'}
                   </a>
                   <a 
-                    href={`https://zalo.me/${contact.zalo || '0908555888'}`} 
+                    href={`https://zalo.me/${contact.zalo ? contact.zalo.replace(/\s/g, "") : '0918701472'}`} 
                     target="_blank" 
                     rel="noreferrer" 
                     className="flex items-center justify-center gap-2 rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold text-foreground hover:bg-slate-50 transition-colors"
