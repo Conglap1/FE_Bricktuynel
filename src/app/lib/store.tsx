@@ -120,15 +120,15 @@ export const DEFAULT_ABOUT: AboutData = {
 };
 
 export const DEFAULT_CONTACT: ContactInfo = {
-  companyName: "Công ty TNHH Một Thành Viên Thuận Lợi Mộc Hóa",
-  address: "Ấp Mới, Xã Bình Tân, Thị xã Kiến Tường, Tỉnh Long An",
-  phone: "0918 701 472",
-  email: "kinhdoanh@gachthuanloi.vn",
+  companyName: "",
+  address: "",
+  phone: "",
+  email: "",
   facebook: "",
-  zalo: "0918701472",
+  zalo: "",
   tiktok: "",
   googleMapEmbed: "",
-  workingHours: "T2 – T7 · 07:30 – 17:30",
+  workingHours: "",
 };
 
 const Ctx = createContext<(StoreState & StoreActions) | null>(null);
