@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Save,
   Building2,
@@ -18,6 +18,10 @@ import { useStore, API_BASE_URL, getAuthHeaders, type ContactInfo } from "../lib
 export function AdminContact() {
   const { contact, setContact } = useStore();
   const [form, setForm] = useState<ContactInfo>({ ...contact });
+
+  useEffect(() => {
+    setForm({ ...contact });
+  }, [contact]);
 
   async function handleSave() {
     try {

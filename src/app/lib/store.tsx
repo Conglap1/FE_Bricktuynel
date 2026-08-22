@@ -124,11 +124,10 @@ export const DEFAULT_CONTACT: ContactInfo = {
   address: "Ấp Mới, Xã Bình Tân, Thị xã Kiến Tường, Tỉnh Long An",
   phone: "0918 701 472",
   email: "kinhdoanh@gachthuanloi.vn",
-  facebook: "https://facebook.com",
+  facebook: "",
   zalo: "0918701472",
-  tiktok: "https://tiktok.com",
-  googleMapEmbed:
-    "https://maps.google.com/maps?q=KCN+My+Phuoc,+Ben+Cat,+Binh+Duong,+Vietnam&t=&z=14&ie=UTF8&iwloc=&output=embed",
+  tiktok: "",
+  googleMapEmbed: "",
   workingHours: "T2 – T7 · 07:30 – 17:30",
 };
 
