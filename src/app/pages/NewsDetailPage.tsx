@@ -119,7 +119,6 @@ export function NewsDetailPage() {
   const { news, products, contact } = useStore();
   const { openQuote } = useQuote();
   const [copied, setCopied] = useState(false);
-  const [liked, setLiked] = useState<boolean | null>(null);
 
   const activeNews = news.filter((n) => n.isActive);
   const article = activeNews.find((n) => n.slug === slug);
@@ -434,40 +433,13 @@ export function NewsDetailPage() {
                 {/* Article Footer & Reader Feedback Bar */}
                 <div className="mt-12 pt-8 border-t border-slate-200 space-y-6">
                   {/* Author Card */}
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
-                    <div className="flex items-center gap-3.5">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-white font-extrabold text-lg shadow-sm">
-                        TL
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-slate-900 text-sm">Biên tập: Ban Truyền Thông Thuận Lợi</h4>
-                        <p className="text-xs text-slate-500 mt-0.5">Công ty TNHH Một Thành Viên Thuận Lợi Mộc Hóa</p>
-                      </div>
+                  <div className="flex items-center gap-3.5 p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-white font-extrabold text-lg shadow-sm shrink-0">
+                      TL
                     </div>
-
-                    {/* Interactive Feedback */}
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-slate-500 font-medium mr-1">Bài viết hữu ích?</span>
-                      <button
-                        onClick={() => setLiked(true)}
-                        className={`p-2 rounded-xl border transition-all cursor-pointer ${
-                          liked === true
-                            ? "bg-emerald-50 border-emerald-300 text-emerald-600 font-bold"
-                            : "bg-white border-slate-200 text-slate-600 hover:bg-slate-100"
-                        }`}
-                      >
-                        <ThumbsUp className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => setLiked(false)}
-                        className={`p-2 rounded-xl border transition-all cursor-pointer ${
-                          liked === false
-                            ? "bg-red-50 border-red-300 text-red-600 font-bold"
-                            : "bg-white border-slate-200 text-slate-600 hover:bg-slate-100"
-                        }`}
-                      >
-                        <ThumbsDown className="h-4 w-4" />
-                      </button>
+                    <div>
+                      <h4 className="font-bold text-slate-900 text-sm">Biên tập: Ban Truyền Thông Thuận Lợi</h4>
+                      <p className="text-xs text-slate-500 mt-0.5">Công ty TNHH Một Thành Viên Thuận Lợi Mộc Hóa</p>
                     </div>
                   </div>
                 </div>
