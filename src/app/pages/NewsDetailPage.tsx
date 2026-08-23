@@ -75,11 +75,11 @@ function autoLinkify(text: string): string {
           const parsed = new URL(cleanUrl);
           const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
           if (host.includes("youtube.com") || host.includes("youtu.be")) {
-            label = "Xem video trên YouTube";
+            label = "YouTube";
           } else if (host.includes("facebook.com") || host.includes("fb.watch")) {
-            label = "Xem trên Facebook";
+            label = "Facebook";
           } else if (host.includes("tiktok.com")) {
-            label = "Xem liên kết (tiktok.com)";
+            label = "TikTok";
           } else if (host.includes("zalo.me")) {
             label = "Zalo";
           } else {
@@ -89,7 +89,7 @@ function autoLinkify(text: string): string {
           label = "Liên kết";
         }
 
-        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-semibold text-[#810C00] hover:text-[#560213] underline underline-offset-2 transition-colors cursor-pointer" title="${cleanUrl}">🔗 ${label}</a>${trailing}`;
+        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-semibold text-[#810C00] hover:text-[#560213] underline underline-offset-2 transition-colors cursor-pointer" title="${cleanUrl}">${label}</a>${trailing}`;
       });
     })
     .join("");
