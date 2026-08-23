@@ -28,7 +28,7 @@ export function PageHeader({
   const bg = image ?? IMAGES.heroWall;
 
   return (
-    <section className={`relative overflow-hidden bg-[#560213] pb-20 pt-32 md:pb-24 md:pt-36 ${className}`}>
+    <section className={`relative overflow-hidden bg-[#810C00] pb-20 pt-32 md:pb-24 md:pt-36 ${className}`}>
       {/* Background image & Dark Overlay */}
       <div className="absolute inset-0">
         <img src={bg} alt="" className={`h-full w-full object-cover ${imagePosition}`} aria-hidden />

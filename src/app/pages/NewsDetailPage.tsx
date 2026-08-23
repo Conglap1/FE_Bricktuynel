@@ -187,7 +187,7 @@ export function NewsDetailPage() {
       />
 
       {/* Dynamic Hero Banner */}
-      <section className="relative overflow-hidden bg-[#560213] text-white pt-24 pb-16 md:pt-32 md:pb-24">
+      <section className="relative overflow-hidden bg-[#810C00] text-white pt-24 pb-16 md:pt-32 md:pb-24">
         {/* Background Image & Layered Dark Gradient Overlays */}
         <div className="absolute inset-0">
           <ImageWithFallback
@@ -292,7 +292,7 @@ export function NewsDetailPage() {
                 {/* Sapo / Lead Summary Box */}
                 {article.summary && (
                   <Reveal delay={0.12}>
-                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-red-50/80 via-white to-amber-50/50 p-6 border-l-4 border-[#560213] shadow-sm mb-8">
+                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-red-50/80 via-white to-amber-50/50 p-6 border-l-4 border-[#810C00] shadow-sm mb-8">
                       <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-primary mb-2">
                         <Sparkles className="h-4 w-4 text-amber-500" />
                         <span>Tóm tắt bài viết</span>
