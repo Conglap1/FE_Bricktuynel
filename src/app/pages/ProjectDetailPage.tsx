@@ -25,6 +25,21 @@ import { SectionHeading } from "../components/site/SectionHeading";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Reveal, Stagger, staggerItem, motion } from "../lib/motion";
 
+function autoLinkify(text: string) {
+  if (!text) return "";
+  return text.replace(
+    /(https?:\/\/[^\s<]+)/g,
+    (url) => {
+      let label = "Xem liên kết";
+      if (url.includes("youtube.com") || url.includes("youtu.be")) label = "YouTube";
+      else if (url.includes("facebook.com") || url.includes("fb.watch")) label = "Facebook";
+      else if (url.includes("tiktok.com")) label = "TikTok";
+      else if (url.includes("zalo.me")) label = "Zalo";
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="font-bold text-primary underline hover:text-[#560213] inline-flex items-center gap-1">${label}</a>`;
+    }
+  );
+}
+
 export function ProjectDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const { projects } = useStore();
@@ -238,11 +253,23 @@ export function ProjectDetailPage() {
                     </span>
                     Tổng quan &amp; Quy mô công trình
                   </h2>
-                  <div className="text-[15px] leading-[1.85] text-muted-foreground space-y-3 pl-10">
+                  <div className="prose-article text-[15.5px] leading-[1.85] text-slate-700 pl-2 sm:pl-4">
                     {project.description ? (
-                      project.description.split("\n\n").map((para, i) => (
-                        <p key={i}>{para}</p>
-                      ))
+                      project.description.includes("<") ? (
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: autoLinkify(project.description)
+                          }}
+                        />
+                      ) : (
+                        project.description.split(/\n\s*\n/).map((para, pIdx) => (
+                          <p
+                            key={pIdx}
+                            className="mb-4 text-justify"
+                            dangerouslySetInnerHTML={{ __html: autoLinkify(para) }}
+                          />
+                        ))
+                      )
                     ) : (
                       <>
                         <p>
@@ -261,41 +288,6 @@ export function ProjectDetailPage() {
                   </div>
                 </div>
               </Reveal>
-
-              {/* Divider */}
-              <div className="border-t border-border/60" />
-
-              {/* Tiêu chuẩn vật liệu */}
-              <Reveal delay={0.12}>
-                <div className="space-y-5">
-                  <h2 className="flex items-center gap-2 text-[17px] font-bold text-foreground">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                      <FileCheck className="h-4 w-4" />
-                    </span>
-                    Tiêu chuẩn &amp; Đặc điểm vật liệu cung cấp
-                  </h2>
-                  <div className="grid gap-3 sm:grid-cols-2 pl-2">
-                    {[
-                      { title: "Chuẩn hợp quy", desc: "Đạt chứng nhận QCVN 16:2023/BXD" },
-                      { title: "Độ bền nén cao", desc: "Đảm bảo mác chịu lực cho công trình lớn" },
-                      { title: "Kích thước chuẩn xác", desc: "Đồng bộ tuyệt đối, tiết kiệm vữa xây" },
-                      { title: "Kiểm định lô hàng", desc: "100% mẫu gạch test QC trước xuất kho" },
-                    ].map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-start gap-3 rounded-2xl bg-secondary/40 border border-border/60 p-4 hover:bg-secondary/70 transition-colors"
-                      >
-                        <CheckCircle2 className="h-4.5 w-4.5 mt-0.5 shrink-0 text-primary" />
-                        <div>
-                          <p className="text-[13.5px] font-semibold text-foreground">{item.title}</p>
-                          <p className="text-[12.5px] text-muted-foreground mt-0.5">{item.desc}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </Reveal>
-
             </div>
 
             {/* Cột Phải: Sidebar sticky */}
@@ -359,34 +351,6 @@ export function ProjectDetailPage() {
                       </div>
                     </div>
                   </div>
-                </div>
-              </Reveal>
-
-              {/* Cam kết chất lượng */}
-              <Reveal delay={0.12}>
-                <div className="rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 text-white shadow-lg space-y-4">
-                  <div className="flex items-center gap-2 font-bold text-[15px]">
-                    <ShieldCheck className="h-5 w-5 text-amber-400 shrink-0" />
-                    Cam kết chất lượng
-                  </div>
-                  <ul className="space-y-2.5">
-                    {[
-                      "100% gạch đạt tiêu chuẩn QCVN 16:2023",
-                      "Cung ứng đúng tiến độ công trình",
-                      "Hỗ trợ vận chuyển tận chân công trình",
-                    ].map((txt, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-[13px] text-slate-300">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-amber-400 mt-0.5 shrink-0" />
-                        {txt}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    to="/lien-he"
-                    className="mt-1 w-full flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-[13.5px] font-semibold text-white transition-all hover:bg-primary/90 shadow-md active:scale-95"
-                  >
-                    <PhoneCall className="h-4 w-4" /> Báo giá dự án tương tự
-                  </Link>
                 </div>
               </Reveal>
             </div>
