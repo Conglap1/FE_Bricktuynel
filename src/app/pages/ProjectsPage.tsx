@@ -149,9 +149,6 @@ export function ProjectsPage() {
                           alt={p.name}
                           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
-                        <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md text-[11.5px] font-bold text-white flex items-center gap-1">
-                          <MapPin className="h-3 w-3 text-red-400" /> {p.location}
-                        </div>
                       </div>
 
                       <div className="flex flex-1 flex-col p-6">
