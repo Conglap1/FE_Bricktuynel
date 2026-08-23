@@ -3,6 +3,7 @@ import { PageHeader } from "../components/site/PageHeader";
 import { CTABand } from "../components/site/CTABand";
 import { LogoMarquee } from "../components/site/LogoMarquee";
 import { useStore } from "../lib/store";
+import { IMAGES } from "../lib/data";
 import { Link } from "react-router";
 import { ArrowRight, Phone, Search } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
@@ -42,6 +43,7 @@ export function ProductsPage() {
         eyebrow="Tất cả sản phẩm"
         title={`${activeProducts.length > 0 ? `${activeProducts.length} dòng` : "Các dòng"} gạch đất sét nung Thuận Lợi`}
         desc="Toàn bộ sản phẩm được sản xuất tại lò Tuynel 1.050°C, đạt chuẩn QCVN 16:2023/BXD, kèm thông số kỹ thuật minh bạch."
+        image={IMAGES.aboutBanner}
       />
 
       <section className="bg-slate-50/50 py-12 md:py-20">
