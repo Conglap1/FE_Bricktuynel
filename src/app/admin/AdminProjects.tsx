@@ -279,7 +279,6 @@ export function AdminProjects() {
               <th className="px-5 py-4">Dự án</th>
               <th className="px-5 py-4">Địa điểm</th>
               <th className="px-5 py-4">Ngày hoàn thành</th>
-              <th className="px-5 py-4">Nổi bật</th>
               <th className="px-5 py-4 text-right">Thao tác</th>
             </tr>
           </thead>
@@ -315,11 +314,6 @@ export function AdminProjects() {
                     <div className="flex items-center gap-1 text-[#560213]/70"><MapPin className="h-3.5 w-3.5" />{p.location}</div>
                   </td>
                   <td className="px-5 py-4 text-[#560213]/70">{formatDateDisplay(p.completedDate)}</td>
-                  <td className="px-5 py-4">
-                    {p.isFeatured
-                      ? <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-[12px] font-medium text-amber-700">Lớn 2×2</span>
-                      : <span className="text-[#810C00]/50">—</span>}
-                  </td>
                   <td className="px-5 py-4">
                     <div className="flex items-center justify-end gap-2">
                       <button
@@ -488,12 +482,8 @@ export function AdminProjects() {
                 rows={8}
                 minHeight="180px"
               />
-              <div className="grid grid-cols-3 gap-3 items-end">
+              <div className="grid grid-cols-2 gap-3 items-end">
                 <F label="Thứ tự"><input type="number" value={form.displayOrder} onChange={(e) => set("displayOrder", parseInt(e.target.value) || 0)} className={inp} /></F>
-                <label className="flex items-center gap-2 cursor-pointer pb-2.5">
-                  <input type="checkbox" checked={form.isFeatured} onChange={(e) => set("isFeatured", e.target.checked)} className="h-4 w-4 rounded" />
-                  <span className="text-sm text-[#560213]">Card lớn 2×2</span>
-                </label>
                 <label className="flex items-center gap-2 cursor-pointer pb-2.5">
                   <input type="checkbox" checked={form.isActive} onChange={(e) => set("isActive", e.target.checked)} className="h-4 w-4 rounded" />
                   <span className="text-sm text-[#560213]">Hiển thị</span>
