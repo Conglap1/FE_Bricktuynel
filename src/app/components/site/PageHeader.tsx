@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { ChevronRight } from "lucide-react";
 import { motion } from "../../lib/motion";
@@ -25,13 +26,23 @@ export function PageHeader({
   imagePosition?: string;
   className?: string;
 }) {
-  const bg = image ?? IMAGES.heroWall;
+  const [imgSrc, setImgSrc] = useState<string>(image || IMAGES.newsBanner);
+
+  useEffect(() => {
+    setImgSrc(image || IMAGES.newsBanner);
+  }, [image]);
 
   return (
     <section className={`relative overflow-hidden bg-[#560213] pb-20 pt-32 md:pb-24 md:pt-36 ${className}`}>
       {/* Background image & Dark Overlay */}
       <div className="absolute inset-0">
-        <img src={bg} alt="" className={`h-full w-full object-cover ${imagePosition}`} aria-hidden />
+        <img
+          src={imgSrc}
+          alt=""
+          className={`h-full w-full object-cover ${imagePosition}`}
+          onError={() => setImgSrc(IMAGES.newsBanner)}
+          aria-hidden
+        />
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
       </div>
