@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { 
   Bold, 
   Italic, 
@@ -8,7 +8,8 @@ import {
   Heading3, 
   Eye, 
   Edit3, 
-  Highlighter 
+  Highlighter,
+  Sparkles
 } from "lucide-react";
 
 interface RichTextareaProps {
@@ -18,6 +19,89 @@ interface RichTextareaProps {
   placeholder?: string;
   rows?: number;
   minHeight?: string;
+}
+
+function cleanWordHtml(html: string): string {
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+
+    function processNode(node: Node): string {
+      if (node.nodeType === Node.TEXT_NODE) {
+        return node.textContent || "";
+      }
+      if (node.nodeType !== Node.ELEMENT_NODE) return "";
+
+      const el = node as HTMLElement;
+      const tagName = el.tagName.toLowerCase();
+
+      // Skip Word internal tags
+      if (["style", "script", "meta", "link", "xml", "title", "o:p"].includes(tagName)) {
+        return "";
+      }
+
+      const style = el.getAttribute("style") || "";
+      const isBold =
+        tagName === "b" ||
+        tagName === "strong" ||
+        /font-weight\s*:\s*(700|800|900|bold)/i.test(style);
+
+      const isItalic =
+        tagName === "i" ||
+        tagName === "em" ||
+        /font-style\s*:\s*italic/i.test(style);
+
+      const isUnderline =
+        tagName === "u" ||
+        /text-decoration\s*:\s*underline/i.test(style);
+
+      let childrenContent = Array.from(el.childNodes).map(processNode).join("");
+
+      if (!childrenContent.trim() && tagName !== "br") return "";
+
+      if (tagName === "br") return "\n";
+
+      if (isBold && !childrenContent.startsWith("<b>")) {
+        childrenContent = `<b>${childrenContent}</b>`;
+      }
+      if (isItalic && !childrenContent.startsWith("<i>")) {
+        childrenContent = `<i>${childrenContent}</i>`;
+      }
+      if (isUnderline && !childrenContent.startsWith("<u>")) {
+        childrenContent = `<u>${childrenContent}</u>`;
+      }
+
+      if (["h1", "h2", "h3", "h4", "h5", "h6"].includes(tagName)) {
+        return `\n<h3 class="text-lg font-bold text-[#560213] mt-3 mb-1">${childrenContent}</h3>\n`;
+      }
+
+      if (tagName === "a") {
+        const href = el.getAttribute("href");
+        if (href) {
+          return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="text-[#810C00] font-semibold underline">${childrenContent}</a>`;
+        }
+      }
+
+      if (tagName === "ul" || tagName === "ol") {
+        return `\n<ul class="list-disc pl-5 space-y-1 my-2">\n${childrenContent}\n</ul>\n`;
+      }
+
+      if (tagName === "li") {
+        return `  <li>${childrenContent}</li>\n`;
+      }
+
+      if (tagName === "p" || tagName === "div") {
+        return `${childrenContent}\n\n`;
+      }
+
+      return childrenContent;
+    }
+
+    const result = Array.from(doc.body.childNodes).map(processNode).join("");
+    return result.replace(/\n{3,}/g, "\n\n").trim();
+  } catch {
+    return html;
+  }
 }
 
 export function RichTextarea({
@@ -59,7 +143,7 @@ export function RichTextarea({
   };
 
   const handleAddList = () => {
-    const listSnippet = `\n<ul className="list-disc pl-5 space-y-1 my-2">\n  <li>Mục thứ nhất</li>\n  <li>Mục thứ hai</li>\n</ul>\n`;
+    const listSnippet = `\n<ul class="list-disc pl-5 space-y-1 my-2">\n  <li>Mục thứ nhất</li>\n  <li>Mục thứ hai</li>\n</ul>\n`;
     const textarea = textareaRef.current;
     if (!textarea) {
       onChange(value + listSnippet);
@@ -70,12 +154,40 @@ export function RichTextarea({
     onChange(newValue);
   };
 
+  const handlePaste = (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+    const html = e.clipboardData.getData("text/html");
+    if (!html) return; // Allow normal plain text paste
+
+    // Process Word / Docs rich text paste
+    e.preventDefault();
+    const cleaned = cleanWordHtml(html);
+    if (!cleaned) return;
+
+    const textarea = textareaRef.current;
+    if (!textarea) {
+      onChange(value ? `${value}\n\n${cleaned}` : cleaned);
+      return;
+    }
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const newValue = value.substring(0, start) + cleaned + value.substring(end);
+    onChange(newValue);
+
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + cleaned.length, start + cleaned.length);
+    }, 0);
+  };
+
   return (
     <div className="space-y-1.5">
       {label && (
         <div className="flex items-center justify-between">
           <label className="text-[12px] font-semibold text-[#560213]/80">{label}</label>
-          <span className="text-[11px] text-muted-foreground italic">Hỗ trợ in đậm, nghiêng, danh sách & chèn link</span>
+          <span className="inline-flex items-center gap-1 text-[11px] text-[#810C00] font-medium bg-[#810C00]/8 px-2 py-0.5 rounded-full">
+            <Sparkles className="h-3 w-3 text-[#810C00]" /> Hỗ trợ dán trực tiếp từ Word / Docs
+          </span>
         </div>
       )}
 
@@ -188,6 +300,7 @@ export function RichTextarea({
             ref={textareaRef}
             value={value}
             onChange={(e) => onChange(e.target.value)}
+            onPaste={handlePaste}
             rows={rows}
             placeholder={placeholder}
             className="w-full bg-[#C76B86]/5 px-3.5 py-2.5 text-sm text-[#560213] outline-none transition-colors focus:bg-white resize-y block font-normal"
