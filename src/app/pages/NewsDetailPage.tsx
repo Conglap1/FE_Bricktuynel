@@ -43,6 +43,26 @@ function formatDateShort(iso: string) {
   }
 }
 
+function autoLinkify(text: string): string {
+  if (!text) return "";
+  const parts = text.split(/(<a\s+[^>]*>[\s\S]*?<\/a>|<[^>]+>)/gi);
+  return parts
+    .map((part) => {
+      if (part.startsWith("<")) return part;
+      const urlRegex = /(https?:\/\/[^\s<)]+)/gi;
+      return part.replace(urlRegex, (url) => {
+        let cleanUrl = url;
+        let trailing = "";
+        if (/[.,!?)]$/.test(cleanUrl)) {
+          trailing = cleanUrl.slice(-1);
+          cleanUrl = cleanUrl.slice(0, -1);
+        }
+        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="text-[#810C00] hover:text-[#560213] font-semibold underline break-all inline-flex items-center gap-1 cursor-pointer transition-colors" title="Mở liên kết">${cleanUrl}</a>${trailing}`;
+      });
+    })
+    .join("");
+}
+
 export function NewsDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const { news, contact } = useStore();
@@ -208,7 +228,7 @@ export function NewsDetailPage() {
                         <div
                           key={pIdx}
                           className="whitespace-pre-line"
-                          dangerouslySetInnerHTML={{ __html: para }}
+                          dangerouslySetInnerHTML={{ __html: autoLinkify(para) }}
                         />
                       ))}
                     </div>
@@ -270,7 +290,7 @@ export function NewsDetailPage() {
                               <div
                                 key={pIdx}
                                 className="whitespace-pre-line"
-                                dangerouslySetInnerHTML={{ __html: para }}
+                                dangerouslySetInnerHTML={{ __html: autoLinkify(para) }}
                               />
                             ))}
                           </div>
@@ -303,12 +323,14 @@ export function NewsDetailPage() {
                   <Reveal delay={0.2}>
                     <div className="prose-article space-y-5 text-[16.5px] leading-[1.85] text-slate-800">
                       {article.content.includes("<") ? (
-                        <div dangerouslySetInnerHTML={{ __html: article.content }} />
+                        <div dangerouslySetInnerHTML={{ __html: autoLinkify(article.content) }} />
                       ) : (
                         article.content.split(/\n\s*\n/).map((para, pIdx) => (
-                          <p key={pIdx} className="whitespace-pre-line">
-                            {para}
-                          </p>
+                          <div
+                            key={pIdx}
+                            className="whitespace-pre-line"
+                            dangerouslySetInnerHTML={{ __html: autoLinkify(para) }}
+                          />
                         ))
                       )}
                     </div>

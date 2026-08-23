@@ -104,6 +104,26 @@ function cleanWordHtml(html: string): string {
   }
 }
 
+function autoLinkify(text: string): string {
+  if (!text) return "";
+  const parts = text.split(/(<a\s+[^>]*>[\s\S]*?<\/a>|<[^>]+>)/gi);
+  return parts
+    .map((part) => {
+      if (part.startsWith("<")) return part;
+      const urlRegex = /(https?:\/\/[^\s<)]+)/gi;
+      return part.replace(urlRegex, (url) => {
+        let cleanUrl = url;
+        let trailing = "";
+        if (/[.,!?)]$/.test(cleanUrl)) {
+          trailing = cleanUrl.slice(-1);
+          cleanUrl = cleanUrl.slice(0, -1);
+        }
+        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="text-[#810C00] hover:text-[#560213] font-semibold underline break-all inline-flex items-center gap-1 cursor-pointer transition-colors" title="Mở liên kết">${cleanUrl}</a>${trailing}`;
+      });
+    })
+    .join("");
+}
+
 export function RichTextarea({
   label,
   value,
@@ -288,7 +308,7 @@ export function RichTextarea({
                 <div 
                   key={pIdx} 
                   className="whitespace-pre-line text-slate-800"
-                  dangerouslySetInnerHTML={{ __html: para }}
+                  dangerouslySetInnerHTML={{ __html: autoLinkify(para) }}
                 />
               ))
             ) : (

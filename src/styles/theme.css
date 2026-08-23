@@ -346,4 +346,20 @@ html { scroll-behavior: smooth; }
   margin-bottom: 0.5rem;
 }
 
+.prose-article a,
+article a {
+  color: #810C00;
+  font-weight: 600;
+  text-decoration: underline;
+  word-break: break-all;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.prose-article a:hover,
+article a:hover {
+  color: #560213;
+  text-decoration: underline;
+}
+
 
