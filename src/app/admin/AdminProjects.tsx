@@ -3,6 +3,7 @@ import { Plus, Pencil, Trash2, X, Save, MapPin, Upload, Star, Loader2, Link as L
 import { toast } from "sonner";
 import { useStore, API_BASE_URL, getAuthHeaders, getImageUrl, FALLBACK_IMAGE } from "../lib/store";
 import { compressImageFile } from "../lib/imageCompressor";
+import { RichTextarea } from "./RichTextarea";
 import type { ProjectItem } from "../lib/store";
 
 type ProjectForm = Omit<ProjectItem, "id">;
@@ -479,9 +480,14 @@ export function AdminProjects() {
               <F label="Mô tả ngắn">
                 <textarea value={form.shortDescription ?? ""} onChange={(e) => set("shortDescription", e.target.value)} rows={2} className={inp + " resize-none"} />
               </F>
-              <F label="Mô tả chi tiết (description)">
-                <textarea value={form.description ?? ""} onChange={(e) => set("description", e.target.value)} rows={4} className={inp + " resize-none"} />
-              </F>
+              <RichTextarea
+                label="Mô tả chi tiết dự án (Nội dung bài viết đầy đủ)"
+                value={form.description ?? ""}
+                onChange={(val) => set("description", val)}
+                placeholder="Nhập nội dung dự án, quy mô, quá trình thi công... Hoặc dán trực tiếp từ file Word / Docs vào đây."
+                rows={8}
+                minHeight="180px"
+              />
               <div className="grid grid-cols-3 gap-3 items-end">
                 <F label="Thứ tự"><input type="number" value={form.displayOrder} onChange={(e) => set("displayOrder", parseInt(e.target.value) || 0)} className={inp} /></F>
                 <label className="flex items-center gap-2 cursor-pointer pb-2.5">
