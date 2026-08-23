@@ -113,7 +113,7 @@ export function NewsDetailPage() {
 
       {/* Top Breadcrumbs navigation bar */}
       <div className="bg-secondary/20 border-b border-border/30 py-3.5">
-        <div className="mx-auto max-w-[1240px] px-6">
+        <div className="mx-auto max-w-[920px] px-6">
           <nav className="flex items-center flex-wrap gap-2 text-[13px] text-muted-foreground">
             <Link to="/tin-tuc" className="hover:text-primary transition-colors">Tin tức & Sự kiện</Link>
             <ChevronRight className="h-3.5 w-3.5 opacity-60" />
@@ -126,8 +126,8 @@ export function NewsDetailPage() {
 
       {/* Text-First Editorial Header */}
       <header className="bg-white pt-10 pb-8 border-b border-slate-100">
-        <div className="mx-auto max-w-[1240px] px-6">
-          <div className="max-w-[900px]">
+        <div className="mx-auto max-w-[920px] px-6">
+          <div>
             <Reveal>
               <div className="flex flex-wrap items-center gap-3.5 mb-4">
                 <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-[12px] font-bold text-primary tracking-wide uppercase">
@@ -193,198 +193,115 @@ export function NewsDetailPage() {
         </div>
       </header>
 
-      {/* Main Content Layout with 2 Columns (Main Article + Sidebar) */}
+      {/* Main Content Layout - Centered Single Reader Column */}
       <section className="bg-white py-10 md:py-16">
-        <div className="mx-auto max-w-[1240px] px-6">
-          <div className="grid gap-12 lg:grid-cols-12">
-
-            {/* Left Column: Main Article Body (8 cols) */}
-            <main className="lg:col-span-8">
-              <article itemscope itemtype="https://schema.org/NewsArticle">
-                
-                {/* Sapo / Lead Summary */}
-                {article.summary && (
-                  <Reveal delay={0.12}>
-                    <div className="mb-8 rounded-2xl bg-secondary/25 p-6 border-l-4 border-primary shadow-sm">
-                      <p className="text-[17px] sm:text-[18px] font-semibold leading-relaxed text-foreground whitespace-pre-line">
-                        {article.summary}
-                      </p>
-                    </div>
-                  </Reveal>
-                )}
-
-                {/* Main Article Thumbnail Image */}
-                {article.thumbnailPath && (
-                  <Reveal delay={0.16}>
-                    <div className="my-8 overflow-hidden rounded-2xl border border-border/60 bg-slate-50/80 p-2 shadow-sm">
-                      <ImageWithFallback
-                        src={article.thumbnailPath}
-                        alt={article.title}
-                        className="h-auto w-full max-h-[520px] object-cover rounded-xl"
-                      />
-                    </div>
-                  </Reveal>
-                )}
-
-                {/* Main Article Top Images (if any attached directly to article) */}
-                {article.images && article.images.length > 0 && (
-                  <div className="space-y-6 my-8">
-                    {article.images.map((img, imgIdx) => (
-                      <figure key={img.id || imgIdx} className="overflow-hidden rounded-2xl border border-border/60 bg-slate-50 p-2 shadow-sm">
-                        <ImageWithFallback
-                          src={img.imagePath}
-                          alt={img.caption || article.title}
-                          className="h-auto w-full max-h-[550px] object-cover rounded-xl"
-                        />
-                        {img.caption && (
-                          <figcaption className="mt-2.5 px-3 pb-1 text-center text-[13.5px] font-medium text-slate-600 italic">
-                            {img.caption}
-                          </figcaption>
-                        )}
-                      </figure>
-                    ))}
-                  </div>
-                )}
-
-                {/* Structured Sections (Question + Answer + Section Images with Captions) */}
-                {article.sections && article.sections.length > 0 ? (
-                  <div className="space-y-10 my-8">
-                    {article.sections.map((section, idx) => (
-                      <Reveal key={section.id || idx} delay={0.15 + idx * 0.05}>
-                        <div className="space-y-4 pt-6 border-t border-slate-100 first:border-0 first:pt-0">
-                          {section.question && (
-                            <h2 
-                              className="text-xl sm:text-2xl font-bold text-foreground tracking-tight" 
-                              style={{ fontFamily: "var(--font-display)" }}
-                            >
-                              {section.question}
-                            </h2>
-                          )}
-
-                          {section.answer && (
-                            <div className="text-[16.5px] leading-[1.85] text-slate-800 space-y-4 whitespace-pre-line">
-                              {section.answer}
-                            </div>
-                          )}
-
-                          {section.images && section.images.length > 0 && (
-                            <div className="space-y-6 my-6">
-                              {section.images.map((img, imgIdx) => (
-                                <figure key={img.id || imgIdx} className="overflow-hidden rounded-2xl border border-border/60 bg-slate-50 p-2 shadow-sm">
-                                  <ImageWithFallback
-                                    src={img.imagePath}
-                                    alt={img.caption || section.question || article.title}
-                                    className="h-auto w-full max-h-[550px] object-cover rounded-xl"
-                                  />
-                                  {img.caption && (
-                                    <figcaption className="mt-2.5 px-3 pb-1 text-center text-[13.5px] font-medium text-slate-600 italic">
-                                      {img.caption}
-                                    </figcaption>
-                                  )}
-                                </figure>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </Reveal>
-                    ))}
-                  </div>
-                ) : (
-                  article.content && (
-                    <Reveal delay={0.2}>
-                      <div 
-                        className="prose-article space-y-6 text-[16.5px] leading-[1.85] text-slate-800"
-                        dangerouslySetInnerHTML={{ __html: article.content }}
-                      />
-                    </Reveal>
-                  )
-                )}
-
-              </article>
-            </main>
-
-            {/* Right Column: SEO Sidebar (4 cols) */}
-            <aside className="lg:col-span-4 space-y-8">
+        <div className="mx-auto max-w-[920px] px-6">
+          <main>
+            <article itemscope itemtype="https://schema.org/NewsArticle">
               
-              {/* Consultation Hotline Card */}
-              <div className="rounded-2xl border border-primary/25 bg-gradient-to-br from-white via-secondary/10 to-secondary/30 p-6 shadow-sm">
-                <span className="text-[11px] font-extrabold uppercase tracking-wider text-primary">Tư vấn & Báo giá</span>
-                <h3 className="mt-1 text-lg font-bold text-foreground">Bạn cần tư vấn loại gạch phù hợp?</h3>
-                <p className="mt-2 text-[13px] text-muted-foreground leading-relaxed">
-                  Thuận Lợi luôn sẵn sàng tư vấn quy cách, số lượng và báo giá cạnh tranh trực tiếp tại nhà máy cho công trình của bạn.
-                </p>
-
-                <div className="mt-5 space-y-3">
-                  <a 
-                    href={`tel:${contact.phone ? contact.phone.replace(/\s/g, "") : '0918701472'}`} 
-                    className="flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-white shadow-md hover:bg-primary/90 transition-colors"
-                  >
-                    <PhoneCall className="h-4 w-4" /> Hotline: {contact.phone || '0918 701 472'}
-                  </a>
-                  <a 
-                    href={`https://zalo.me/${contact.zalo ? contact.zalo.replace(/\s/g, "") : '0918701472'}`} 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="flex items-center justify-center gap-2 rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold text-foreground hover:bg-slate-50 transition-colors"
-                  >
-                    <MessageSquare className="h-4 w-4 text-blue-600" /> Chat Zalo tư vấn
-                  </a>
-                </div>
-              </div>
-
-              {/* Related News List Widget */}
-              {others.length > 0 && (
-                <div className="rounded-2xl border border-border/80 bg-white p-6 shadow-sm">
-                  <h3 className="text-base font-bold text-foreground border-b border-border/50 pb-3 mb-4 flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-primary" /> Tin cùng chuyên mục
-                  </h3>
-                  <div className="space-y-4">
-                    {others.slice(0, 5).map((item) => (
-                      <Link 
-                        key={item.id} 
-                        to={`/tin-tuc/${item.slug}`} 
-                        className="group flex gap-3 items-start pb-3 border-b border-slate-100 last:border-0 last:pb-0"
-                      >
-                        {item.thumbnailPath && (
-                          <div className="h-16 w-20 shrink-0 overflow-hidden rounded-lg bg-secondary">
-                            <ImageWithFallback 
-                              src={item.thumbnailPath} 
-                              alt={item.title} 
-                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                            />
-                          </div>
-                        )}
-                        <div className="min-w-0 flex-1">
-                          <h4 className="text-[13px] font-bold text-foreground leading-snug line-clamp-2 group-hover:text-primary transition-colors">
-                            {item.title}
-                          </h4>
-                          {item.publishedAt && (
-                            <span className="mt-1 block text-[11px] text-muted-foreground">
-                              {formatDateShort(item.publishedAt)}
-                            </span>
-                          )}
-                        </div>
-                      </Link>
-                    ))}
+              {/* Sapo / Lead Summary */}
+              {article.summary && (
+                <Reveal delay={0.12}>
+                  <div className="mb-8 rounded-2xl bg-secondary/25 p-6 border-l-4 border-primary shadow-sm">
+                    <p className="text-[17px] sm:text-[18px] font-semibold leading-relaxed text-foreground whitespace-pre-line">
+                      {article.summary}
+                    </p>
                   </div>
+                </Reveal>
+              )}
+
+              {/* Main Article Thumbnail Image */}
+              {article.thumbnailPath && (
+                <Reveal delay={0.16}>
+                  <div className="my-8 overflow-hidden rounded-2xl border border-border/60 bg-slate-50/80 p-2 shadow-sm">
+                    <ImageWithFallback
+                      src={article.thumbnailPath}
+                      alt={article.title}
+                      className="h-auto w-full max-h-[550px] object-cover rounded-xl"
+                    />
+                  </div>
+                </Reveal>
+              )}
+
+              {/* Main Article Top Images (if any attached directly to article) */}
+              {article.images && article.images.length > 0 && (
+                <div className="space-y-6 my-8">
+                  {article.images.map((img, imgIdx) => (
+                    <figure key={img.id || imgIdx} className="overflow-hidden rounded-2xl border border-border/60 bg-slate-50 p-2 shadow-sm">
+                      <ImageWithFallback
+                        src={img.imagePath}
+                        alt={img.caption || article.title}
+                        className="h-auto w-full max-h-[550px] object-cover rounded-xl"
+                      />
+                      {img.caption && (
+                        <figcaption className="mt-2.5 px-3 pb-1 text-center text-[13.5px] font-medium text-slate-600 italic">
+                          {img.caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ))}
                 </div>
               )}
 
-              {/* Company Info Badge */}
-              <div className="rounded-2xl border border-border/60 bg-slate-50/70 p-5 text-center">
-                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-                  <User className="h-6 w-6" />
-                </div>
-                <h4 className="font-bold text-foreground text-sm">Gạch Tuynel Thuận Lợi</h4>
-                <p className="mt-1 text-[12px] text-muted-foreground">
-                  Hơn 30 năm sản xuất & cung cấp gạch đất sét nung Tuynel chất lượng cao cho hàng ngàn dự án phía Nam.
-                </p>
-              </div>
+              {/* Structured Sections (Question + Answer + Section Images with Captions) */}
+              {article.sections && article.sections.length > 0 ? (
+                <div className="space-y-10 my-8">
+                  {article.sections.map((section, idx) => (
+                    <Reveal key={section.id || idx} delay={0.15 + idx * 0.05}>
+                      <div className="space-y-4 pt-6 border-t border-slate-100 first:border-0 first:pt-0">
+                        {section.question && (
+                          <h2 
+                            className="text-xl sm:text-2xl font-bold text-foreground tracking-tight" 
+                            style={{ fontFamily: "var(--font-display)" }}
+                          >
+                            {section.question}
+                          </h2>
+                        )}
 
-            </aside>
-          </div>
+                        {section.answer && (
+                          <div className="text-[16.5px] leading-[1.85] text-slate-800 space-y-4 whitespace-pre-line">
+                            {section.answer}
+                          </div>
+                        )}
+
+                        {section.images && section.images.length > 0 && (
+                          <div className="space-y-6 my-6">
+                            {section.images.map((img, imgIdx) => (
+                              <figure key={img.id || imgIdx} className="overflow-hidden rounded-2xl border border-border/60 bg-slate-50 p-2 shadow-sm">
+                                <ImageWithFallback
+                                  src={img.imagePath}
+                                  alt={img.caption || section.question || article.title}
+                                  className="h-auto w-full max-h-[580px] object-cover rounded-xl"
+                                />
+                                {img.caption && (
+                                  <figcaption className="mt-2.5 px-3 pb-1 text-center text-[13.5px] font-medium text-slate-600 italic">
+                                    {img.caption}
+                                  </figcaption>
+                                )}
+                              </figure>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </Reveal>
+                  ))}
+                </div>
+              ) : (
+                article.content && (
+                  <Reveal delay={0.2}>
+                    <div 
+                      className="prose-article space-y-6 text-[16.5px] leading-[1.85] text-slate-800"
+                      dangerouslySetInnerHTML={{ __html: article.content }}
+                    />
+                  </Reveal>
+                )
+              )}
+
+            </article>
+          </main>
         </div>
       </section>
+
 
       {/* Bottom Section: Expanded Related Articles */}
       {others.length > 0 && (
