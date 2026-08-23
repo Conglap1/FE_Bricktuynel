@@ -118,7 +118,25 @@ function autoLinkify(text: string): string {
           trailing = cleanUrl.slice(-1);
           cleanUrl = cleanUrl.slice(0, -1);
         }
-        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="text-[#810C00] hover:text-[#560213] font-semibold underline break-all inline-flex items-center gap-1 cursor-pointer transition-colors" title="Mở liên kết">${cleanUrl}</a>${trailing}`;
+
+        let label = "Xem liên kết";
+        try {
+          const parsed = new URL(cleanUrl);
+          const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
+          if (host.includes("youtube.com") || host.includes("youtu.be")) {
+            label = "Xem video trên YouTube";
+          } else if (host.includes("facebook.com") || host.includes("fb.watch")) {
+            label = "Xem trên Facebook";
+          } else if (host.includes("zalo.me")) {
+            label = "Mở Zalo";
+          } else {
+            label = `Xem liên kết (${host})`;
+          }
+        } catch {
+          label = "Xem liên kết";
+        }
+
+        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 font-semibold text-[#810C00] hover:text-[#560213] underline underline-offset-2 transition-colors cursor-pointer" title="${cleanUrl}">🔗 ${label}</a>${trailing}`;
       });
     })
     .join("");
