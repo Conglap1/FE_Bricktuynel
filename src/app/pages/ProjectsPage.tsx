@@ -6,12 +6,7 @@ import {
   Calendar, 
   ArrowRight, 
   Sparkles, 
-  Building2, 
-  Award, 
-  Truck, 
-  CheckCircle2,
-  Layers,
-  Tag
+  Building2
 } from "lucide-react";
 import { PageHeader } from "../components/site/PageHeader";
 import { LogoMarquee } from "../components/site/LogoMarquee";
@@ -20,7 +15,6 @@ import { useStore } from "../lib/store";
 import { IMAGES } from "../lib/data";
 import { Reveal, Stagger, staggerItem, motion } from "../lib/motion";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { useQuote } from "../components/site/QuoteContext";
 
 function formatDateShort(iso: string) {
   if (!iso) return "";
@@ -31,56 +25,23 @@ function formatDateShort(iso: string) {
   return iso;
 }
 
-const CATEGORIES = ["Tất cả", "Dân dụng & Biệt thự", "Công nghiệp & Nhà xưởng", "Công cộng & Hạ tầng"];
-
-const STATS = [
-  {
-    icon: Building2,
-    title: "500+ Công Trình",
-    desc: "Đồng hành cùng hàng trăm dự án trọng điểm phía Nam",
-    color: "text-red-600 bg-red-50 border-red-200",
-  },
-  {
-    icon: Award,
-    title: "Mác Gạch Đạt Chuẩn",
-    desc: "Cường độ nén cao, nghiệm thu đúng tiêu chuẩn QCVN 16",
-    color: "text-amber-600 bg-amber-50 border-amber-200",
-  },
-  {
-    icon: Truck,
-    title: "Giao Hàng Tận Nơi",
-    desc: "Vận chuyển xe cẩu chuyên dụng tận chân công trình",
-    color: "text-emerald-600 bg-emerald-50 border-emerald-200",
-  },
-  {
-    icon: CheckCircle2,
-    title: "100% Niềm Tin",
-    desc: "35+ năm uy tín nhà máy gạch Tuynel Mộc Hóa",
-    color: "text-blue-600 bg-blue-50 border-blue-200",
-  },
-];
-
 export function ProjectsPage() {
   const { projects } = useStore();
-  const { openQuote } = useQuote();
   const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("Tất cả");
 
   const visible = useMemo(() => {
     return projects
       .filter((p) => p.isActive)
       .filter((p) => {
-        const matchesSearch =
-          !search ||
+        if (!search) return true;
+        return (
           p.name.toLowerCase().includes(search.toLowerCase()) ||
           p.location.toLowerCase().includes(search.toLowerCase()) ||
-          (p.shortDescription && p.shortDescription.toLowerCase().includes(search.toLowerCase()));
-
-        if (activeCategory === "Tất cả") return matchesSearch;
-        return matchesSearch;
+          (p.shortDescription && p.shortDescription.toLowerCase().includes(search.toLowerCase()))
+        );
       })
       .sort((a, b) => (b.displayOrder ?? 0) - (a.displayOrder ?? 0));
-  }, [projects, search, activeCategory]);
+  }, [projects, search]);
 
   const featured = visible.find((p) => p.isFeatured) || visible[0];
   const rest = visible.filter((p) => p !== featured);
@@ -95,59 +56,21 @@ export function ProjectsPage() {
         image={IMAGES.heroWall}
       />
 
-      {/* Highlights / Achievement Ribbon Bar */}
-      <section className="relative z-10 -mt-8 mx-auto max-w-[1240px] px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 rounded-3xl bg-white p-6 shadow-xl border border-slate-100/80">
-          {STATS.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <div key={idx} className="flex items-start gap-3.5 p-3 rounded-2xl transition-colors hover:bg-slate-50">
-                <div className={`p-3 rounded-2xl border ${item.color} shrink-0 shadow-sm`}>
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div>
-                  <h4 className="font-extrabold text-[15px] text-slate-900 leading-tight">{item.title}</h4>
-                  <p className="text-[12.5px] text-slate-500 mt-1 leading-snug">{item.desc}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
       {/* Main Section */}
       <section className="bg-slate-50/50 py-12 md:py-20">
         <div className="mx-auto max-w-[1240px] px-6">
 
-          {/* Search Bar & Category Tabs */}
+          {/* Search Input Bar Only */}
           <Reveal>
-            <div className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
-              {/* Category Pills */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
-                {CATEGORIES.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
-                    className={`shrink-0 rounded-full px-4 py-2 text-[13px] font-bold transition-all cursor-pointer ${
-                      activeCategory === cat
-                        ? "bg-[#560213] text-white shadow-md shadow-red-950/20"
-                        : "bg-slate-100 text-slate-600 hover:bg-slate-200/80 hover:text-slate-900"
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-
-              {/* Search input */}
-              <div className="relative min-w-[260px] sm:min-w-[320px]">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <div className="mb-10 max-w-xl mx-auto">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                 <input
                   type="text"
-                  placeholder="Tìm theo tên công trình, vị trí..."
+                  placeholder="Tìm kiếm công trình theo tên, vị trí..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full rounded-full border border-slate-200 bg-slate-50 pl-10 pr-4 py-2 text-[13.5px] font-medium text-slate-800 focus:bg-white focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  className="w-full rounded-full border border-slate-200 bg-white pl-11 pr-4 py-3 text-[14px] font-medium text-slate-800 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                 />
               </div>
             </div>
@@ -285,35 +208,13 @@ export function ProjectsPage() {
             <div className="py-20 text-center bg-white rounded-3xl border border-slate-200 shadow-sm">
               <p className="text-slate-500 font-medium text-base">Không tìm thấy công trình nào phù hợp với từ khóa "{search}".</p>
               <button
-                onClick={() => { setSearch(""); setActiveCategory("Tất cả"); }}
+                onClick={() => setSearch("")}
                 className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-xs font-bold text-white shadow-md hover:bg-primary/90 transition-all cursor-pointer"
               >
-                Xóa bộ lọc tìm kiếm
+                Xóa từ khóa tìm kiếm
               </button>
             </div>
           )}
-
-          {/* Bottom Consultation CTA Bar for Projects */}
-          <div className="mt-16 rounded-3xl bg-gradient-to-r from-[#560213] via-red-950 to-[#560213] text-white p-8 md:p-12 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-2 text-center md:text-left">
-              <span className="inline-block rounded-full bg-white/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-amber-300">
-                Tư vấn vật liệu gạch cho dự án
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-white" style={{ fontFamily: "var(--font-display)" }}>
-                Bạn đang chuẩn bị triển khai công trình?
-              </h3>
-              <p className="text-sm text-slate-300 max-w-xl">
-                Liên hệ ngay với Thuận Lợi để nhận bảng báo giá gạch Tuynel ưu đãi trực tiếp từ nhà máy cho toàn bộ quy mô dự án.
-              </p>
-            </div>
-
-            <button
-              onClick={() => openQuote("Tư vấn gạch cho dự án")}
-              className="shrink-0 rounded-full bg-white px-7 py-3.5 text-sm font-extrabold text-[#560213] shadow-lg hover:bg-amber-100 hover:scale-105 transition-all cursor-pointer active:scale-95"
-            >
-              Yêu cầu báo giá công trình ↗
-            </button>
-          </div>
 
         </div>
       </section>
