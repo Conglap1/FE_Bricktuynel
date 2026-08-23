@@ -55,7 +55,6 @@ function formatDateShort(iso: string) {
   }
 }
 
-/* Enhanced autoLinkify: Converts video/social links into interactive media cards */
 function autoLinkify(text: string): string {
   if (!text) return "";
   const parts = text.split(/(<a\s+[^>]*>[\s\S]*?<\/a>|<[^>]+>)/gi);
@@ -71,77 +70,26 @@ function autoLinkify(text: string): string {
           cleanUrl = cleanUrl.slice(0, -1);
         }
 
+        let label = "Liên kết";
         try {
           const parsed = new URL(cleanUrl);
           const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
-
           if (host.includes("youtube.com") || host.includes("youtu.be")) {
-            return `
-              <a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="my-5 group flex flex-col sm:flex-row items-center gap-4 rounded-2xl border border-red-200/90 bg-gradient-to-r from-red-50/90 via-white to-red-50/40 p-4 shadow-sm transition-all hover:shadow-md hover:border-red-400 no-underline cursor-pointer">
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red-600 text-white shadow-md group-hover:scale-105 transition-transform">
-                  <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                </div>
-                <div class="flex-1 text-left">
-                  <div class="flex items-center gap-2 text-xs font-bold text-red-600 uppercase tracking-wider">
-                    <span>Video YouTube</span>
-                    <span class="rounded-full bg-red-100 px-2 py-0.5 text-[10px]">Xem thực tế</span>
-                  </div>
-                  <div class="text-sm font-bold text-slate-900 group-hover:text-red-700 transition-colors mt-0.5">
-                    Xem video thực tế quy trình trên YouTube
-                  </div>
-                  <div class="text-xs text-slate-500 truncate max-w-sm mt-0.5">${cleanUrl}</div>
-                </div>
-                <div class="shrink-0 rounded-full bg-red-600 px-4 py-1.5 text-xs font-bold text-white shadow-sm group-hover:bg-red-700 transition-colors">
-                  Xem ngay ↗
-                </div>
-              </a>${trailing}
-            `;
+            label = "Xem video trên YouTube";
           } else if (host.includes("facebook.com") || host.includes("fb.watch")) {
-            return `
-              <a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="my-5 group flex flex-col sm:flex-row items-center gap-4 rounded-2xl border border-blue-200/90 bg-gradient-to-r from-blue-50/90 via-white to-blue-50/40 p-4 shadow-sm transition-all hover:shadow-md hover:border-blue-400 no-underline cursor-pointer">
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white shadow-md group-hover:scale-105 transition-transform">
-                  <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                </div>
-                <div class="flex-1 text-left">
-                  <div class="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-wider">
-                    <span>Facebook Social</span>
-                    <span class="rounded-full bg-blue-100 px-2 py-0.5 text-[10px]">Cập nhật</span>
-                  </div>
-                  <div class="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors mt-0.5">
-                    Ghé thăm Fanpage chính thức trên Facebook
-                  </div>
-                  <div class="text-xs text-slate-500 truncate max-w-sm mt-0.5">${cleanUrl}</div>
-                </div>
-                <div class="shrink-0 rounded-full bg-blue-600 px-4 py-1.5 text-xs font-bold text-white shadow-sm group-hover:bg-blue-700 transition-colors">
-                  Ghé thăm ↗
-                </div>
-              </a>${trailing}
-            `;
+            label = "Xem trên Facebook";
           } else if (host.includes("tiktok.com")) {
-            return `
-              <a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="my-5 group flex flex-col sm:flex-row items-center gap-4 rounded-2xl border border-slate-800 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 p-4 text-white shadow-sm transition-all hover:shadow-md hover:border-pink-500/50 no-underline cursor-pointer">
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-cyan-500 to-pink-500 text-white shadow-md group-hover:scale-105 transition-transform">
-                  <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02.08.04.16.06.24.03.11.04.24.06.35v3.46c-1.04-.33-2.2-.24-3.15.26-.87.44-1.54 1.25-1.78 2.2-.31 1.17-.03 2.47.7 3.39.75.97 1.94 1.52 3.16 1.46 1.25-.03 2.42-.64 3.08-1.7.53-.84.77-1.87.75-2.87.03-4.57.01-9.13.02-13.7.01-.06.01-.12.01-.18z"/></svg>
-                </div>
-                <div class="flex-1 text-left">
-                  <div class="flex items-center gap-2 text-xs font-bold text-pink-400 uppercase tracking-wider">
-                    <span>Clip TikTok Short</span>
-                    <span class="rounded-full bg-pink-950/80 px-2 py-0.5 text-[10px] text-pink-300">Xem clip</span>
-                  </div>
-                  <div class="text-sm font-bold text-white group-hover:text-pink-300 transition-colors mt-0.5">
-                    Xem video clip ngắn trên TikTok
-                  </div>
-                  <div class="text-xs text-slate-400 truncate max-w-sm mt-0.5">${cleanUrl}</div>
-                </div>
-                <div class="shrink-0 rounded-full bg-gradient-to-r from-cyan-500 to-pink-500 px-4 py-1.5 text-xs font-bold text-white shadow-sm transition-all group-hover:opacity-90">
-                  Xem TikTok ↗
-                </div>
-              </a>${trailing}
-            `;
+            label = "Xem liên kết (tiktok.com)";
+          } else if (host.includes("zalo.me")) {
+            label = "Zalo";
+          } else {
+            label = host;
           }
-        } catch {}
+        } catch {
+          label = "Liên kết";
+        }
 
-        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-bold text-primary hover:text-red-900 underline underline-offset-4 transition-colors cursor-pointer" title="${cleanUrl}">${cleanUrl} ↗</a>${trailing}`;
+        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-semibold text-[#810C00] hover:text-[#560213] underline underline-offset-2 transition-colors cursor-pointer" title="${cleanUrl}">🔗 ${label}</a>${trailing}`;
       });
     })
     .join("");
