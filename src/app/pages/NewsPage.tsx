@@ -123,15 +123,6 @@ export function NewsPage() {
           {/* Rest Grid */}
           {rest.length > 0 && (
             <div>
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-slate-900" style={{ fontFamily: "var(--font-display)" }}>
-                  Các tin tức khác
-                </h3>
-                <span className="text-xs font-semibold text-slate-500 bg-slate-200/70 px-2.5 py-1 rounded-full">
-                  {rest.length} bài viết
-                </span>
-              </div>
-
               <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {rest.map((n) => (
                   <motion.div key={n.id} variants={staggerItem}>
@@ -146,9 +137,6 @@ export function NewsPage() {
                             alt={n.title}
                             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                           />
-                          <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md text-[11px] font-semibold text-white flex items-center gap-1">
-                            <Tag className="h-3 w-3 text-red-400" /> Tin tức
-                          </div>
                         </div>
                       )}
                       <div className="flex flex-1 flex-col p-6">

@@ -136,15 +136,6 @@ export function ProjectsPage() {
           {/* Grid of Remaining Projects */}
           {rest.length > 0 && (
             <div>
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-slate-900" style={{ fontFamily: "var(--font-display)" }}>
-                  Các công trình đồng hành khác
-                </h3>
-                <span className="text-xs font-semibold text-slate-500 bg-slate-200/70 px-2.5 py-1 rounded-full">
-                  {rest.length} dự án
-                </span>
-              </div>
-
               <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {rest.map((p) => (
                   <motion.div key={p.id} variants={staggerItem}>
