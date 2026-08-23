@@ -315,7 +315,13 @@ export function AdminNews() {
                   allowExternalUrl={true}
                 />
                 <F label="Mô tả / Tóm tắt mở đầu (Summary)">
-                  <textarea value={form.summary ?? ""} onChange={(e) => set("summary", e.target.value)} rows={3} className={inp + " resize-none"} />
+                  <textarea
+                    value={form.summary ?? ""}
+                    onChange={(e) => set("summary", e.target.value)}
+                    rows={3}
+                    placeholder="Nhập tóm tắt mở đầu... (hỗ trợ xuống dòng)"
+                    className={inp + " resize-y min-h-[80px]"}
+                  />
                 </F>
                 <div className="grid grid-cols-2 gap-3 items-end">
                   <F label="Ngày đăng (PublishedAt)">
@@ -333,7 +339,7 @@ export function AdminNews() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-xs font-bold uppercase tracking-wider text-[#810C00]">2. Các Mục phụ / Câu hỏi & Trả lời ({form.sections?.length || 0})</h3>
-                    <p className="text-[12px] text-muted-foreground">Tạo các đoạn tiêu đề mục, nội dung giải thích và hình ảnh kèm mô tả</p>
+                    <p className="text-[12px] text-muted-foreground">💡 Bạn có thể nhấn <b>Enter</b> để xuống dòng hoặc <b>2 lần Enter</b> để tách thành các đoạn văn riêng biệt</p>
                   </div>
                   <button
                     type="button"
@@ -376,9 +382,9 @@ export function AdminNews() {
                           <textarea
                             value={sec.answer || ""}
                             onChange={(e) => updateSection(secIdx, "answer", e.target.value)}
-                            rows={4}
-                            placeholder="Nhập nội dung câu trả lời..."
-                            className={inp + " resize-none"}
+                            rows={5}
+                            placeholder="Nhập nội dung câu trả lời... (nhấn Enter để xuống dòng, cách 2 dòng để tạo đoạn mới)"
+                            className={inp + " resize-y min-h-[120px]"}
                           />
                         </F>
 

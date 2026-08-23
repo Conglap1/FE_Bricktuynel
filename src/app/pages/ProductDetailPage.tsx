@@ -166,9 +166,13 @@ export function ProductDetailPage() {
                   {product.name}
                 </h1>
                 {product.description ? (
-                  <p className="mt-4 text-[16px] leading-relaxed text-muted-foreground">{product.description}</p>
+                  <div className="mt-4 text-[16px] leading-relaxed text-muted-foreground space-y-3">
+                    {product.description.split(/\n\s*\n/).map((para, pIdx) => (
+                      <p key={pIdx} className="whitespace-pre-line">{para}</p>
+                    ))}
+                  </div>
                 ) : (
-                  <p className="mt-4 text-[16px] leading-relaxed text-muted-foreground">{product.shortDescription}</p>
+                  <p className="mt-4 text-[16px] leading-relaxed text-muted-foreground whitespace-pre-line">{product.shortDescription}</p>
                 )}
               </Reveal>
 

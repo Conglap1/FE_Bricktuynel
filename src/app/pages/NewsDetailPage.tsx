@@ -203,9 +203,13 @@ export function NewsDetailPage() {
               {article.summary && (
                 <Reveal delay={0.12}>
                   <div className="mb-8 rounded-2xl bg-secondary/25 p-6 border-l-4 border-primary shadow-sm">
-                    <p className="text-[17px] sm:text-[18px] font-semibold leading-relaxed text-foreground whitespace-pre-line">
-                      {article.summary}
-                    </p>
+                    <div className="text-[17px] sm:text-[18px] font-semibold leading-relaxed text-foreground space-y-3">
+                      {article.summary.split(/\n\s*\n/).map((para, pIdx) => (
+                        <p key={pIdx} className="whitespace-pre-line">
+                          {para}
+                        </p>
+                      ))}
+                    </div>
                   </div>
                 </Reveal>
               )}
@@ -259,8 +263,12 @@ export function NewsDetailPage() {
                         )}
 
                         {section.answer && (
-                          <div className="text-[16.5px] leading-[1.85] text-slate-800 space-y-4 whitespace-pre-line">
-                            {section.answer}
+                          <div className="text-[16.5px] leading-[1.85] text-slate-800 space-y-4">
+                            {section.answer.split(/\n\s*\n/).map((para, pIdx) => (
+                              <p key={pIdx} className="whitespace-pre-line">
+                                {para}
+                              </p>
+                            ))}
                           </div>
                         )}
 
@@ -289,10 +297,17 @@ export function NewsDetailPage() {
               ) : (
                 article.content && (
                   <Reveal delay={0.2}>
-                    <div 
-                      className="prose-article space-y-6 text-[16.5px] leading-[1.85] text-slate-800"
-                      dangerouslySetInnerHTML={{ __html: article.content }}
-                    />
+                    <div className="prose-article space-y-5 text-[16.5px] leading-[1.85] text-slate-800">
+                      {article.content.includes("<") ? (
+                        <div dangerouslySetInnerHTML={{ __html: article.content }} />
+                      ) : (
+                        article.content.split(/\n\s*\n/).map((para, pIdx) => (
+                          <p key={pIdx} className="whitespace-pre-line">
+                            {para}
+                          </p>
+                        ))
+                      )}
+                    </div>
                   </Reveal>
                 )
               )}
