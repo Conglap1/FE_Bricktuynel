@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { useStore, API_BASE_URL, getAuthHeaders, getImageUrl, FALLBACK_IMAGE } from "../lib/store";
 import type { NewsItem, NewsSectionItem, NewsImageItem } from "../lib/store";
 import { ImageUploadInput } from "./ImageUploadInput";
+import { RichTextarea } from "./RichTextarea";
 
 type NewsForm = Omit<NewsItem, "id">;
 
@@ -314,15 +315,14 @@ export function AdminNews() {
                   folder="news"
                   allowExternalUrl={true}
                 />
-                <F label="Mô tả / Tóm tắt mở đầu (Summary)">
-                  <textarea
-                    value={form.summary ?? ""}
-                    onChange={(e) => set("summary", e.target.value)}
-                    rows={3}
-                    placeholder="Nhập tóm tắt mở đầu... (hỗ trợ xuống dòng)"
-                    className={inp + " resize-y min-h-[80px]"}
-                  />
-                </F>
+                <RichTextarea
+                  label="Mô tả / Tóm tắt mở đầu (Summary)"
+                  value={form.summary ?? ""}
+                  onChange={(val) => set("summary", val)}
+                  placeholder="Nhập tóm tắt mở đầu bài viết..."
+                  rows={3}
+                  minHeight="80px"
+                />
                 <div className="grid grid-cols-2 gap-3 items-end">
                   <F label="Ngày đăng (PublishedAt)">
                     <input type="date" value={form.publishedAt ?? ""} onChange={(e) => set("publishedAt", e.target.value)} className={inp} />
@@ -339,7 +339,7 @@ export function AdminNews() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-xs font-bold uppercase tracking-wider text-[#810C00]">2. Các Mục phụ / Câu hỏi & Trả lời ({form.sections?.length || 0})</h3>
-                    <p className="text-[12px] text-muted-foreground">💡 Bạn có thể nhấn <b>Enter</b> để xuống dòng hoặc <b>2 lần Enter</b> để tách thành các đoạn văn riêng biệt</p>
+                    <p className="text-[12px] text-muted-foreground">💡 Sử dụng thanh công cụ để <b>in đậm</b>, <i>in nghiêng</i>, <u>gạch chân</u>, danh sách, chèn link hoặc bấm <b>Xem trước</b></p>
                   </div>
                   <button
                     type="button"
@@ -378,15 +378,14 @@ export function AdminNews() {
                           />
                         </F>
 
-                        <F label="Nội dung chi tiết / Câu trả lời (Answer / Content)">
-                          <textarea
-                            value={sec.answer || ""}
-                            onChange={(e) => updateSection(secIdx, "answer", e.target.value)}
-                            rows={5}
-                            placeholder="Nhập nội dung câu trả lời... (nhấn Enter để xuống dòng, cách 2 dòng để tạo đoạn mới)"
-                            className={inp + " resize-y min-h-[120px]"}
-                          />
-                        </F>
+                        <RichTextarea
+                          label="Nội dung chi tiết / Câu trả lời (Answer / Content)"
+                          value={sec.answer || ""}
+                          onChange={(val) => updateSection(secIdx, "answer", val)}
+                          placeholder="Nhập nội dung câu trả lời..."
+                          rows={5}
+                          minHeight="120px"
+                        />
 
                         {/* Hình ảnh kèm caption thuộc Section */}
                         <div className="space-y-2 pt-2 border-t border-slate-200">

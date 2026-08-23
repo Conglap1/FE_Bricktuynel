@@ -1,0 +1,200 @@
+import { useState, useRef } from "react";
+import { 
+  Bold, 
+  Italic, 
+  Underline, 
+  List, 
+  Link as LinkIcon, 
+  Heading3, 
+  Eye, 
+  Edit3, 
+  Highlighter 
+} from "lucide-react";
+
+interface RichTextareaProps {
+  label?: string;
+  value: string;
+  onChange: (val: string) => void;
+  placeholder?: string;
+  rows?: number;
+  minHeight?: string;
+}
+
+export function RichTextarea({
+  label,
+  value,
+  onChange,
+  placeholder = "Nhập nội dung...",
+  rows = 5,
+  minHeight = "120px",
+}: RichTextareaProps) {
+  const [isPreview, setIsPreview] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const applyFormat = (startTag: string, endTag: string = "", defaultText: string = "văn bản") => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = value.substring(start, end) || defaultText;
+    const replacement = `${startTag}${selectedText}${endTag}`;
+    const newValue = value.substring(0, start) + replacement + value.substring(end);
+
+    onChange(newValue);
+
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(
+        start + startTag.length,
+        start + startTag.length + selectedText.length
+      );
+    }, 0);
+  };
+
+  const handleAddLink = () => {
+    const url = prompt("Nhập đường dẫn URL (ví dụ: https://gachthuanloi.vn):");
+    if (!url) return;
+    applyFormat(`<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-[#810C00] font-semibold underline">`, `</a>`, "tiêu đề liên kết");
+  };
+
+  const handleAddList = () => {
+    const listSnippet = `\n<ul className="list-disc pl-5 space-y-1 my-2">\n  <li>Mục thứ nhất</li>\n  <li>Mục thứ hai</li>\n</ul>\n`;
+    const textarea = textareaRef.current;
+    if (!textarea) {
+      onChange(value + listSnippet);
+      return;
+    }
+    const start = textarea.selectionStart;
+    const newValue = value.substring(0, start) + listSnippet + value.substring(start);
+    onChange(newValue);
+  };
+
+  return (
+    <div className="space-y-1.5">
+      {label && (
+        <div className="flex items-center justify-between">
+          <label className="text-[12px] font-semibold text-[#560213]/80">{label}</label>
+          <span className="text-[11px] text-muted-foreground italic">Hỗ trợ in đậm, nghiêng, danh sách & chèn link</span>
+        </div>
+      )}
+
+      <div className="rounded-xl border border-[#810C00]/20 bg-white shadow-sm overflow-hidden transition-colors focus-within:border-[#810C00]">
+        {/* Mini Word Formatting Toolbar */}
+        <div className="flex flex-wrap items-center justify-between gap-1 border-b border-[#810C00]/15 bg-slate-100/90 px-2.5 py-1.5 text-slate-700">
+          <div className="flex flex-wrap items-center gap-1">
+            <button
+              type="button"
+              onClick={() => applyFormat("<b>", "</b>", "văn bản in đậm")}
+              className="rounded p-1.5 hover:bg-[#810C00]/10 hover:text-[#810C00] transition-colors font-bold"
+              title="In đậm (Bold)"
+            >
+              <Bold className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => applyFormat("<i>", "</i>", "văn bản in nghiêng")}
+              className="rounded p-1.5 hover:bg-[#810C00]/10 hover:text-[#810C00] transition-colors italic"
+              title="In nghiêng (Italic)"
+            >
+              <Italic className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => applyFormat("<u>", "</u>", "văn bản gạch chân")}
+              className="rounded p-1.5 hover:bg-[#810C00]/10 hover:text-[#810C00] transition-colors underline"
+              title="Gạch chân (Underline)"
+            >
+              <Underline className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => applyFormat('<mark class="bg-amber-200/80 px-1 py-0.5 rounded font-medium">', "</mark>", "văn bản nổi bật")}
+              className="rounded p-1.5 hover:bg-[#810C00]/10 hover:text-[#810C00] transition-colors"
+              title="Tạo màu nổi bật (Highlight)"
+            >
+              <Highlighter className="h-4 w-4 text-amber-600" />
+            </button>
+
+            <div className="h-4 w-[1px] bg-slate-300 mx-1" />
+
+            <button
+              type="button"
+              onClick={() => applyFormat('<h3 class="text-lg font-bold text-[#560213] mt-3 mb-1">', "</h3>", "Tiêu đề mục nhỏ")}
+              className="rounded p-1.5 hover:bg-[#810C00]/10 hover:text-[#810C00] transition-colors"
+              title="Thêm Tiêu đề nhỏ (H3)"
+            >
+              <Heading3 className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={handleAddList}
+              className="rounded p-1.5 hover:bg-[#810C00]/10 hover:text-[#810C00] transition-colors"
+              title="Chèn danh sách dấu chấm (Bullet List)"
+            >
+              <List className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={handleAddLink}
+              className="rounded p-1.5 hover:bg-[#810C00]/10 hover:text-[#810C00] transition-colors"
+              title="Chèn đường dẫn (Link)"
+            >
+              <LinkIcon className="h-4 w-4" />
+            </button>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsPreview(!isPreview)}
+            className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold transition-colors cursor-pointer ${
+              isPreview 
+                ? "bg-[#810C00] text-white" 
+                : "bg-slate-200 text-slate-700 hover:bg-slate-300"
+            }`}
+          >
+            {isPreview ? (
+              <>
+                <Edit3 className="h-3.5 w-3.5" /> Chỉnh sửa
+              </>
+            ) : (
+              <>
+                <Eye className="h-3.5 w-3.5" /> Xem trước
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* Input Textarea vs Live Preview */}
+        {isPreview ? (
+          <div 
+            className="p-3.5 text-sm leading-relaxed text-[#560213] bg-[#FAF5EF]/50 overflow-y-auto space-y-3 border-t border-slate-100"
+            style={{ minHeight }}
+          >
+            {value.trim() ? (
+              value.split(/\n\s*\n/).map((para, pIdx) => (
+                <div 
+                  key={pIdx} 
+                  className="whitespace-pre-line text-slate-800"
+                  dangerouslySetInnerHTML={{ __html: para }}
+                />
+              ))
+            ) : (
+              <span className="text-slate-400 italic text-xs">Chưa có nội dung để xem trước...</span>
+            )}
+          </div>
+        ) : (
+          <textarea
+            ref={textareaRef}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            rows={rows}
+            placeholder={placeholder}
+            className="w-full bg-[#C76B86]/5 px-3.5 py-2.5 text-sm text-[#560213] outline-none transition-colors focus:bg-white resize-y block font-normal"
+            style={{ minHeight }}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
