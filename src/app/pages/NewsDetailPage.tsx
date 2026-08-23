@@ -25,6 +25,7 @@ import {
 import { useStore, getImageUrl } from "../lib/store";
 import { IMAGES } from "../lib/data";
 import { useQuote } from "../components/site/QuoteContext";
+import { PageHeader } from "../components/site/PageHeader";
 import { LogoMarquee } from "../components/site/LogoMarquee";
 import { CTABand } from "../components/site/CTABand";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
@@ -186,99 +187,16 @@ export function NewsDetailPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Dynamic Hero Banner */}
-      <section className="relative overflow-hidden bg-[#810C00] text-white pt-24 pb-16 md:pt-32 md:pb-24">
-        {/* Background Image & Layered Dark Gradient Overlays */}
-        <div className="absolute inset-0">
-          <ImageWithFallback
-            src={article.thumbnailPath || IMAGES.newsBanner}
-            alt={article.title}
-            className="h-full w-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-black/45 to-black/30" />
-        </div>
-
-        <div className="relative mx-auto max-w-[1240px] px-6">
-          {/* Breadcrumbs */}
-          <Reveal>
-            <nav className="inline-flex items-center flex-wrap gap-2 text-[13px] font-semibold rounded-full bg-black/40 backdrop-blur-md px-4 py-1.5 border border-white/20 text-white shadow-lg mb-6">
-              <Link to="/tin-tuc" className="text-white/80 transition-colors hover:text-white">
-                Tin tức & Sự kiện
-              </Link>
-              <ChevronRight className="h-3.5 w-3.5 text-white/60" />
-              <span className="text-white font-bold truncate max-w-[220px] sm:max-w-[400px] md:max-w-[600px]">
-                {article.title}
-              </span>
-            </nav>
-          </Reveal>
-
-          {/* Meta Tags */}
-          <Reveal delay={0.05}>
-            <div className="flex flex-wrap items-center gap-3.5 mb-5 text-[13px] text-white/90">
-              <span className="inline-flex items-center rounded-full bg-primary px-3 py-1 text-[11.5px] font-extrabold tracking-wider text-white uppercase shadow-md">
-                TIN TỨC SẢN XUẤT
-              </span>
-              {article.publishedAt && (
-                <span className="inline-flex items-center gap-1.5 font-medium bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10">
-                  <Calendar className="h-3.5 w-3.5 text-red-400" />
-                  {formatDate(article.publishedAt)}
-                </span>
-              )}
-              <span className="inline-flex items-center gap-1.5 font-medium bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10">
-                <Clock className="h-3.5 w-3.5 text-amber-400" />
-                3 phút đọc
-              </span>
-              <span className="inline-flex items-center gap-1.5 font-medium bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10">
-                <User className="h-3.5 w-3.5 text-blue-400" />
-                Thuận Lợi Brick
-              </span>
-            </div>
-          </Reveal>
-
-          {/* Title */}
-          <Reveal delay={0.08}>
-            <h1
-              className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.2] drop-shadow-lg mb-8 max-w-4xl"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              {article.title}
-            </h1>
-          </Reveal>
-
-          {/* Share Utility & Back Button */}
-          <Reveal delay={0.12}>
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-5 border-t border-white/20 text-[13px]">
-              <div className="flex items-center gap-3">
-                <span className="font-semibold text-white/80">Chia sẻ bài viết:</span>
-                <button
-                  onClick={handleShare}
-                  className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur-md border border-white/25 px-4 py-1.5 text-[12.5px] font-semibold text-white hover:bg-white/25 transition-all shadow-sm cursor-pointer active:scale-95"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="h-3.5 w-3.5 text-emerald-400" />
-                      <span className="text-emerald-400 font-bold">Đã sao chép link!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Share2 className="h-3.5 w-3.5 text-white" />
-                      <span>Sao chép liên kết</span>
-                    </>
-                  )}
-                </button>
-              </div>
-
-              <Link
-                to="/tin-tuc"
-                className="inline-flex items-center gap-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 px-4 py-1.5 text-[12.5px] font-semibold text-white hover:bg-black/60 transition-all"
-              >
-                <ArrowLeft className="h-3.5 w-3.5 text-white" /> Tất cả tin tức
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      {/* Standard Page Header Banner */}
+      <PageHeader
+        crumb={article.title}
+        parentCrumb="Tin tức & Sự kiện"
+        parentLink="/tin-tuc"
+        eyebrow="Tin tức"
+        title={article.title}
+        desc={article.publishedAt ? `Đăng ngày ${formatDate(article.publishedAt)} • Thuận Lợi Brick` : "Thuận Lợi Brick"}
+        image={article.thumbnailPath || IMAGES.newsBanner}
+      />
 
       {/* Main Magazine Layout: 2-Column Grid */}
       <section className="bg-slate-50/60 py-12 md:py-16">
@@ -287,6 +205,33 @@ export function NewsDetailPage() {
             
             {/* Left / Main Article Column (8 cols) */}
             <main className="lg:col-span-8 space-y-8 bg-white p-6 sm:p-10 rounded-3xl border border-slate-200/80 shadow-sm">
+              {/* Top Utility Bar (Back link & Share button) */}
+              <div className="flex items-center justify-between gap-4 pb-6 border-b border-slate-100 text-xs font-semibold">
+                <Link
+                  to="/tin-tuc"
+                  className="inline-flex items-center gap-1.5 text-slate-600 hover:text-primary transition-colors"
+                >
+                  <ArrowLeft className="h-4 w-4" /> Quay lại danh sách tin tức
+                </Link>
+
+                <button
+                  onClick={handleShare}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3.5 py-1.5 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer active:scale-95"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="h-3.5 w-3.5 text-emerald-600" />
+                      <span className="text-emerald-600 font-bold">Đã sao chép link!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Share2 className="h-3.5 w-3.5 text-slate-500" />
+                      <span>Chia sẻ bài viết</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
               <article itemscope itemtype="https://schema.org/NewsArticle">
                 
                 {/* Sapo / Lead Summary Box */}
