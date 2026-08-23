@@ -63,15 +63,10 @@ export function NewsPage() {
             </div>
           </Reveal>
 
-          {/* Featured Article */}
+          {/* Featured Hero Article */}
           {featured && (
             <Reveal>
               <div className="mb-14">
-                <div className="flex items-center gap-2 mb-4 text-xs font-bold uppercase tracking-wider text-primary">
-                  <Sparkles className="h-4 w-4 text-amber-500" />
-                  <span>Bài viết tiêu điểm</span>
-                </div>
-
                 <Link
                   to={`/tin-tuc/${featured.slug}`}
                   className="group flex flex-col lg:flex-row overflow-hidden rounded-3xl border border-slate-200/90 bg-white transition-all duration-300 hover:shadow-[0_24px_64px_rgba(86,2,19,0.12)] hover:border-red-900/30"
@@ -83,9 +78,6 @@ export function NewsPage() {
                         alt={featured.title}
                         className="h-full w-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
                       />
-                      <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-[#560213]/90 backdrop-blur-md px-3.5 py-1 text-[11.5px] font-extrabold uppercase tracking-wider text-white shadow-lg">
-                        Tin mới nhất
-                      </div>
                     </div>
                   )}
                   <div className="flex flex-col justify-between p-8 lg:p-10 flex-1">
