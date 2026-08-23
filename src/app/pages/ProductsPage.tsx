@@ -1,11 +1,12 @@
+import { useState, useMemo } from "react";
 import { PageHeader } from "../components/site/PageHeader";
 import { CTABand } from "../components/site/CTABand";
 import { LogoMarquee } from "../components/site/LogoMarquee";
 import { useStore } from "../lib/store";
 import { Link } from "react-router";
-import { ArrowRight, Phone } from "lucide-react";
+import { ArrowRight, Phone, Search } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { Stagger, staggerItem, motion } from "../lib/motion";
+import { Reveal, Stagger, staggerItem, motion } from "../lib/motion";
 import type { Product } from "../lib/data";
 
 function buildSpecs(p: Product) {
@@ -19,7 +20,20 @@ function buildSpecs(p: Product) {
 
 export function ProductsPage() {
   const { products } = useStore();
+  const [search, setSearch] = useState("");
   const activeProducts = products.filter((p) => p.isActive);
+
+  const filteredProducts = useMemo(() => {
+    return activeProducts.filter((p) => {
+      if (!search) return true;
+      const q = search.toLowerCase();
+      return (
+        p.name.toLowerCase().includes(q) ||
+        (p.shortDescription && p.shortDescription.toLowerCase().includes(q)) ||
+        (p.brickGrade && p.brickGrade.toLowerCase().includes(q))
+      );
+    });
+  }, [activeProducts, search]);
 
   return (
     <>
@@ -30,10 +44,27 @@ export function ProductsPage() {
         desc="Toàn bộ sản phẩm được sản xuất tại lò Tuynel 1.050°C, đạt chuẩn QCVN 16:2023/BXD, kèm thông số kỹ thuật minh bạch."
       />
 
-      <section className="bg-white py-16 md:py-24">
+      <section className="bg-slate-50/50 py-12 md:py-20">
         <div className="mx-auto max-w-[1500px] px-4 sm:px-6">
+
+          {/* Search Input Bar (Synchronized with NewsPage & ProjectsPage) */}
+          <Reveal>
+            <div className="mb-10 max-w-xl mx-auto">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm sản phẩm theo tên, mác gạch, kích thước..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full rounded-full border border-slate-200 bg-white pl-11 pr-4 py-3 text-[14px] font-medium text-slate-800 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                />
+              </div>
+            </div>
+          </Reveal>
+
           <Stagger className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5" gap={0.08}>
-            {activeProducts.map((p) => {
+            {filteredProducts.map((p) => {
               const specs = buildSpecs(p);
               return (
                 <motion.div
@@ -101,9 +132,15 @@ export function ProductsPage() {
             })}
           </Stagger>
 
-          {activeProducts.length === 0 && (
-            <div className="text-center py-16 text-muted-foreground">
-              Đang cập nhật danh sách sản phẩm.
+          {filteredProducts.length === 0 && (
+            <div className="py-20 text-center bg-white rounded-3xl border border-slate-200 shadow-sm max-w-2xl mx-auto">
+              <p className="text-slate-500 font-medium text-base">Không tìm thấy sản phẩm nào phù hợp với từ khóa "{search}".</p>
+              <button
+                onClick={() => setSearch("")}
+                className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-xs font-bold text-white shadow-md hover:bg-primary/90 transition-all cursor-pointer"
+              >
+                Xóa từ khóa tìm kiếm
+              </button>
             </div>
           )}
         </div>

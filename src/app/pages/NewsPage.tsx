@@ -47,17 +47,17 @@ export function NewsPage() {
       <section className="bg-slate-50/50 py-12 md:py-20">
         <div className="mx-auto max-w-[1240px] px-6">
 
-          {/* Search Header Bar (Only Search) */}
+          {/* Search Input Bar (Synchronized with ProjectsPage) */}
           <Reveal>
-            <div className="mb-10 flex justify-end">
-              <div className="relative w-full sm:w-[360px]">
+            <div className="mb-10 max-w-xl mx-auto">
+              <div className="relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                 <input
                   type="text"
-                  placeholder="Tìm kiếm bài viết..."
+                  placeholder="Tìm kiếm bài viết theo tiêu đề, tóm tắt..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full rounded-full border border-slate-200 bg-white pl-11 pr-4 py-2.5 text-[14px] font-medium text-slate-800 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  className="w-full rounded-full border border-slate-200 bg-white pl-11 pr-4 py-3 text-[14px] font-medium text-slate-800 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                 />
               </div>
             </div>
