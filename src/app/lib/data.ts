@@ -159,7 +159,23 @@ export type ProjectItem = {
 /* ── PROJECTS (No mock data -> empty array) ──────────────── */
 export const PROJECTS: ProjectItem[] = [];
 
-/* ── NEWS TYPE — maps to DB: News ──────────────────────────── */
+/* ── NEWS TYPES — maps to DB: News + NewsSection + NewsImage ──── */
+export type NewsImageItem = {
+  id?: number;
+  imagePath: string;
+  caption?: string;
+  displayOrder: number;
+  newsSectionId?: number | null;
+};
+
+export type NewsSectionItem = {
+  id?: number;
+  question?: string;
+  answer?: string;
+  displayOrder: number;
+  images?: NewsImageItem[];
+};
+
 export type NewsItem = {
   id: number;
   title: string;
@@ -169,10 +185,13 @@ export type NewsItem = {
   content: string;
   publishedAt: string;
   isActive: boolean;
+  sections?: NewsSectionItem[];
+  images?: NewsImageItem[];
 };
 
 /* ── NEWS (No mock seed data -> 100% from DB API) ─────────── */
 export const NEWS: NewsItem[] = [];
+
 
 
 

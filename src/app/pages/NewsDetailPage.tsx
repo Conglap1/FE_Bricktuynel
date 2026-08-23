@@ -206,14 +206,14 @@ export function NewsDetailPage() {
                 {article.summary && (
                   <Reveal delay={0.12}>
                     <div className="mb-8 rounded-2xl bg-secondary/25 p-6 border-l-4 border-primary shadow-sm">
-                      <p className="text-[17px] sm:text-[18px] font-semibold leading-relaxed text-foreground">
+                      <p className="text-[17px] sm:text-[18px] font-semibold leading-relaxed text-foreground whitespace-pre-line">
                         {article.summary}
                       </p>
                     </div>
                   </Reveal>
                 )}
 
-                {/* Main Article Image */}
+                {/* Main Article Thumbnail Image */}
                 {article.thumbnailPath && (
                   <Reveal delay={0.16}>
                     <div className="my-8 overflow-hidden rounded-2xl border border-border/60 bg-slate-50/80 p-2 shadow-sm">
@@ -226,13 +226,80 @@ export function NewsDetailPage() {
                   </Reveal>
                 )}
 
-                {/* Main Text Content */}
-                <Reveal delay={0.2}>
-                  <div 
-                    className="prose-article space-y-6 text-[16.5px] leading-[1.85] text-slate-800"
-                    dangerouslySetInnerHTML={{ __html: article.content }}
-                  />
-                </Reveal>
+                {/* Main Article Top Images (if any attached directly to article) */}
+                {article.images && article.images.length > 0 && (
+                  <div className="space-y-6 my-8">
+                    {article.images.map((img, imgIdx) => (
+                      <figure key={img.id || imgIdx} className="overflow-hidden rounded-2xl border border-border/60 bg-slate-50 p-2 shadow-sm">
+                        <ImageWithFallback
+                          src={img.imagePath}
+                          alt={img.caption || article.title}
+                          className="h-auto w-full max-h-[550px] object-cover rounded-xl"
+                        />
+                        {img.caption && (
+                          <figcaption className="mt-2.5 px-3 pb-1 text-center text-[13.5px] font-medium text-slate-600 italic">
+                            {img.caption}
+                          </figcaption>
+                        )}
+                      </figure>
+                    ))}
+                  </div>
+                )}
+
+                {/* Structured Sections (Question + Answer + Section Images with Captions) */}
+                {article.sections && article.sections.length > 0 ? (
+                  <div className="space-y-10 my-8">
+                    {article.sections.map((section, idx) => (
+                      <Reveal key={section.id || idx} delay={0.15 + idx * 0.05}>
+                        <div className="space-y-4 pt-6 border-t border-slate-100 first:border-0 first:pt-0">
+                          {section.question && (
+                            <h2 
+                              className="text-xl sm:text-2xl font-bold text-foreground tracking-tight" 
+                              style={{ fontFamily: "var(--font-display)" }}
+                            >
+                              {section.question}
+                            </h2>
+                          )}
+
+                          {section.answer && (
+                            <div className="text-[16.5px] leading-[1.85] text-slate-800 space-y-4 whitespace-pre-line">
+                              {section.answer}
+                            </div>
+                          )}
+
+                          {section.images && section.images.length > 0 && (
+                            <div className="space-y-6 my-6">
+                              {section.images.map((img, imgIdx) => (
+                                <figure key={img.id || imgIdx} className="overflow-hidden rounded-2xl border border-border/60 bg-slate-50 p-2 shadow-sm">
+                                  <ImageWithFallback
+                                    src={img.imagePath}
+                                    alt={img.caption || section.question || article.title}
+                                    className="h-auto w-full max-h-[550px] object-cover rounded-xl"
+                                  />
+                                  {img.caption && (
+                                    <figcaption className="mt-2.5 px-3 pb-1 text-center text-[13.5px] font-medium text-slate-600 italic">
+                                      {img.caption}
+                                    </figcaption>
+                                  )}
+                                </figure>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </Reveal>
+                    ))}
+                  </div>
+                ) : (
+                  article.content && (
+                    <Reveal delay={0.2}>
+                      <div 
+                        className="prose-article space-y-6 text-[16.5px] leading-[1.85] text-slate-800"
+                        dangerouslySetInnerHTML={{ __html: article.content }}
+                      />
+                    </Reveal>
+                  )
+                )}
+
               </article>
             </main>
 
