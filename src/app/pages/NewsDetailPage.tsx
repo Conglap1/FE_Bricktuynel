@@ -59,24 +59,32 @@ function autoLinkify(text: string): string {
           cleanUrl = cleanUrl.slice(0, -1);
         }
 
-        let label = "Xem liên kết";
+        let label = "Liên kết";
+        let iconSvg = `<svg class="w-3.5 h-3.5 inline-block shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>`;
+
         try {
           const parsed = new URL(cleanUrl);
           const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
           if (host.includes("youtube.com") || host.includes("youtu.be")) {
-            label = "Xem video trên YouTube";
+            label = "YouTube";
+            iconSvg = `<svg class="w-4 h-4 inline-block text-red-600 shrink-0 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`;
           } else if (host.includes("facebook.com") || host.includes("fb.watch")) {
-            label = "Xem trên Facebook";
+            label = "Facebook";
+            iconSvg = `<svg class="w-4 h-4 inline-block text-blue-600 shrink-0 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>`;
+          } else if (host.includes("tiktok.com")) {
+            label = "TikTok";
+            iconSvg = `<svg class="w-4 h-4 inline-block text-slate-900 shrink-0 fill-current" viewBox="0 0 24 24"><path d="M12.525 0h3.08c.012.633.064 1.258.283 1.868.228.636.598 1.228 1.08 1.71.49.49 1.08.85 1.714 1.08.61.22 1.235.27 1.868.28v3.13a7.84 7.84 0 0 1-5.01-1.78v7.66a6.83 6.83 0 0 1-1.32 4.14 6.87 6.87 0 0 1-3.69 2.51 6.82 6.82 0 0 1-4.45-.36 6.84 6.84 0 0 1-3.26-3.08 6.82 6.82 0 0 1-.58-4.32c.32-1.45 1.1-2.73 2.22-3.64A6.8 6.8 0 0 1 7.42 12c.76 0 1.5.15 2.19.43v3.2a3.63 3.63 0 0 0-1.89-.52 3.65 3.65 0 0 0-2.58 1.06 3.64 3.64 0 0 0-1.06 2.58c0 .97.38 1.89 1.06 2.58a3.64 3.64 0 0 0 2.58 1.06c.97 0 1.89-.38 2.58-1.06a3.64 3.64 0 0 0 1.06-2.58V0z"/></svg>`;
           } else if (host.includes("zalo.me")) {
-            label = "Mở Zalo";
+            label = "Zalo";
+            iconSvg = `<svg class="w-4 h-4 inline-block text-blue-500 shrink-0 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.35 5L2 22l5.12-1.31A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>`;
           } else {
-            label = `Xem liên kết (${host})`;
+            label = host;
           }
         } catch {
-          label = "Xem liên kết";
+          label = "Liên kết";
         }
 
-        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 font-semibold text-[#810C00] hover:text-[#560213] underline underline-offset-2 transition-colors cursor-pointer" title="${cleanUrl}">🔗 ${label}</a>${trailing}`;
+        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 font-semibold text-[#810C00] hover:text-[#560213] underline underline-offset-2 transition-colors cursor-pointer" title="${cleanUrl}">${iconSvg}<span>${label}</span></a>${trailing}`;
       });
     })
     .join("");
