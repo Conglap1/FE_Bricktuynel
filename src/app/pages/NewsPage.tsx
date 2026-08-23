@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router";
-import { Calendar, ArrowRight, Search, Sparkles, Award, Factory, ShieldCheck, Flame, Clock, Tag } from "lucide-react";
+import { Calendar, ArrowRight, Search, Sparkles, Clock, Tag } from "lucide-react";
 import { PageHeader } from "../components/site/PageHeader";
 import { CTABand } from "../components/site/CTABand";
 import { LogoMarquee } from "../components/site/LogoMarquee";
@@ -15,55 +15,22 @@ function formatDate(iso: string) {
   } catch { return iso; }
 }
 
-const CATEGORIES = ["Tất cả", "Sản xuất & Công nghệ", "Doanh nghiệp", "Kiến thức xây dựng", "Sự kiện"];
-
-const HIGHLIGHTS = [
-  {
-    icon: Factory,
-    title: "35+ Năm Kinh Nghiệm",
-    desc: "Nhà máy gạch Tuynel uy tín thành lập từ năm 1988",
-    color: "text-amber-600 bg-amber-50 border-amber-200",
-  },
-  {
-    icon: Flame,
-    title: "100M+ Viên / Năm",
-    desc: "Công suất lò nung Tuynel đáp ứng mọi đại dự án",
-    color: "text-red-600 bg-red-50 border-red-200",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Chuẩn QCVN 16:2023",
-    desc: "Đạt chứng nhận hợp quy Bộ Xây Dựng nghiêm ngặt",
-    color: "text-emerald-600 bg-emerald-50 border-emerald-200",
-  },
-  {
-    icon: Award,
-    title: "100% Đất Sét Tự Nhiên",
-    desc: "Khai thác & ủ đất đúng quy trình cho gạch đanh chắc",
-    color: "text-orange-600 bg-orange-50 border-orange-200",
-  },
-];
-
 export function NewsPage() {
   const { news } = useStore();
   const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("Tất cả");
 
   const visible = useMemo(() => {
     return news
       .filter((n) => n.isActive)
       .filter((n) => {
-        const matchesSearch =
+        return (
           !search ||
           n.title.toLowerCase().includes(search.toLowerCase()) ||
-          (n.summary && n.summary.toLowerCase().includes(search.toLowerCase()));
-
-        // Simple mock category filtering if categories match keyword or fallback
-        if (activeCategory === "Tất cả") return matchesSearch;
-        return matchesSearch;
+          (n.summary && n.summary.toLowerCase().includes(search.toLowerCase()))
+        );
       })
       .sort((a, b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? ""));
-  }, [news, search, activeCategory]);
+  }, [news, search]);
 
   const [featured, ...rest] = visible;
 
@@ -77,58 +44,20 @@ export function NewsPage() {
         image={IMAGES.newsBanner}
       />
 
-      {/* Highlights Ribbon Bar */}
-      <section className="relative z-10 -mt-8 mx-auto max-w-[1240px] px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 rounded-3xl bg-white p-6 shadow-xl border border-slate-100/80">
-          {HIGHLIGHTS.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <div key={idx} className="flex items-start gap-3.5 p-3 rounded-2xl transition-colors hover:bg-slate-50">
-                <div className={`p-3 rounded-2xl border ${item.color} shrink-0 shadow-sm`}>
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div>
-                  <h4 className="font-extrabold text-[15px] text-slate-900 leading-tight">{item.title}</h4>
-                  <p className="text-[12.5px] text-slate-500 mt-1 leading-snug">{item.desc}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
       <section className="bg-slate-50/50 py-12 md:py-20">
         <div className="mx-auto max-w-[1240px] px-6">
 
-          {/* Search & Filter Header Bar */}
+          {/* Search Header Bar (Only Search) */}
           <Reveal>
-            <div className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
-              {/* Category Pills */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
-                {CATEGORIES.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
-                    className={`shrink-0 rounded-full px-4 py-2 text-[13px] font-bold transition-all cursor-pointer ${
-                      activeCategory === cat
-                        ? "bg-[#560213] text-white shadow-md shadow-red-950/20"
-                        : "bg-slate-100 text-slate-600 hover:bg-slate-200/80 hover:text-slate-900"
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-
-              {/* Search input */}
-              <div className="relative min-w-[260px] sm:min-w-[300px]">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <div className="mb-10 flex justify-end">
+              <div className="relative w-full sm:w-[360px]">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Tìm kiếm bài viết..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full rounded-full border border-slate-200 bg-slate-50 pl-10 pr-4 py-2 text-[13.5px] font-medium text-slate-800 focus:bg-white focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  className="w-full rounded-full border border-slate-200 bg-white pl-11 pr-4 py-2.5 text-[14px] font-medium text-slate-800 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                 />
               </div>
             </div>
