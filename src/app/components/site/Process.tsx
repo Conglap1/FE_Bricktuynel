@@ -149,7 +149,7 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
               src="/images/logo/pattern-do.png"
               alt="Pattern Đỏ Chỉ Nhọn"
               className={`w-[95px] md:w-[115px] h-auto object-contain filter drop-shadow-[0_4px_16px_rgba(129,12,0,0.35)] transition-transform duration-500 ${
-                left ? "rotate-90" : "-rotate-90"
+                left ? "-rotate-90" : "rotate-90"
               }`}
             />
           </motion.div>
@@ -258,7 +258,7 @@ function ProcessStepItemMobile({
             <img
               src="/images/logo/pattern-do.png"
               alt="Pattern Đỏ Chỉ Hướng"
-              className="w-[45px] sm:w-[55px] h-auto object-contain rotate-0 filter drop-shadow-[0_4px_10px_rgba(129,12,0,0.3)] opacity-90"
+              className="w-[45px] sm:w-[55px] h-auto object-contain rotate-180 filter drop-shadow-[0_4px_10px_rgba(129,12,0,0.3)] opacity-90"
             />
           </motion.div>
         </div>
