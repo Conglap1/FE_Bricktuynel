@@ -310,34 +310,6 @@ export function NewsDetailPage() {
                   </Reveal>
                 )}
 
-                {/* Table of Contents (Mục lục bài viết) */}
-                {tocSections.length > 0 && (
-                  <Reveal delay={0.14}>
-                    <div className="my-8 rounded-2xl border border-slate-200 bg-slate-50 p-6">
-                      <div className="flex items-center gap-2.5 font-bold text-slate-900 text-base mb-3 pb-3 border-b border-slate-200">
-                        <List className="h-5 w-5 text-primary" />
-                        <span>Mục lục bài viết</span>
-                      </div>
-                      <ul className="space-y-2 text-[14px]">
-                        {tocSections.map((sec, idx) => (
-                          <li key={idx}>
-                            <button
-                              onClick={() => {
-                                const el = document.getElementById(`section-${idx}`);
-                                if (el) el.scrollIntoView({ behavior: "smooth" });
-                              }}
-                              className="flex items-start gap-2 text-slate-700 hover:text-primary transition-colors text-left font-medium cursor-pointer"
-                            >
-                              <span className="font-bold text-primary text-xs mt-0.5 shrink-0">{idx + 1}.</span>
-                              <span className="hover:underline">{sec.question}</span>
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </Reveal>
-                )}
-
                 {/* Top Attached Images */}
                 {article.images && article.images.length > 0 && (
                   <div className="space-y-6 my-8">
@@ -430,7 +402,7 @@ export function NewsDetailPage() {
                   )
                 )}
 
-                {/* Article Footer & Reader Feedback Bar */}
+                {/* Article Footer */}
                 <div className="mt-12 pt-8 border-t border-slate-200 space-y-6">
                   {/* Author Card */}
                   <div className="flex items-center gap-3.5 p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
@@ -450,95 +422,17 @@ export function NewsDetailPage() {
             {/* Right / Sticky Sidebar Column (4 cols) */}
             <aside className="lg:col-span-4 space-y-8 sticky top-28 h-fit">
 
-              {/* Widget 1: Featured Brick Products for Quote */}
-              <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-sm overflow-hidden relative">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary mb-1">
-                  <Building2 className="h-4 w-4" />
-                  <span>Sản phẩm khuyến nghị</span>
-                </div>
-                <h3 className="text-lg font-extrabold text-slate-900 mb-4" style={{ fontFamily: "var(--font-display)" }}>
-                  Gạch Tuynel Thuận Lợi
-                </h3>
-
-                <div className="space-y-4">
-                  {(products.length > 0 ? products.slice(0, 3) : MOCK_SIDEBAR_PRODUCTS).map((p, idx) => (
-                    <div key={idx} className="flex gap-3 items-center p-2.5 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-red-50/40 transition-colors">
-                      <ImageWithFallback
-                        src={"image" in p ? getImageUrl(p.image) : p.image}
-                        alt={p.name}
-                        className="h-14 w-14 rounded-xl object-cover shrink-0 bg-slate-200"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-bold text-xs text-slate-900 truncate">{p.name}</h4>
-                        <p className="text-[11.5px] text-slate-500 line-clamp-1 mt-0.5">
-                          {"shortDescription" in p ? p.shortDescription : p.desc}
-                        </p>
-                        <button
-                          onClick={() => openQuote(p.name)}
-                          className="mt-1 inline-flex items-center gap-1 text-[11px] font-bold text-primary hover:underline cursor-pointer"
-                        >
-                          Nhận báo giá ngay <ArrowRight className="h-3 w-3" />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-5 pt-4 border-t border-slate-100 text-center">
-                  <button
-                    onClick={() => openQuote("Tư vấn gạch công trình")}
-                    className="w-full rounded-2xl bg-[#560213] px-4 py-2.5 text-xs font-extrabold text-white shadow-md hover:bg-red-950 transition-all cursor-pointer active:scale-95"
-                  >
-                    Yêu cầu báo giá toàn bộ gạch ↗
-                  </button>
-                </div>
-              </div>
-
-              {/* Widget 2: Hotline 24/7 Support */}
-              <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-white p-6 shadow-xl relative overflow-hidden">
-                <div className="absolute -right-6 -bottom-6 h-32 w-32 rounded-full bg-red-600/20 blur-2xl pointer-events-none" />
-                <div className="flex items-center gap-2 text-xs font-bold text-red-400 uppercase tracking-wider mb-2">
-                  <PhoneCall className="h-4 w-4" />
-                  <span>Hỗ trợ trực tiếp 24/7</span>
-                </div>
-                <h4 className="font-extrabold text-lg text-white mb-2">
-                  Tư vấn kỹ thuật & Giao hàng tận nơi
-                </h4>
-                <p className="text-xs text-slate-300 mb-5 leading-relaxed">
-                  Liên hệ ngay với bộ phận kinh doanh để nhận báo giá ưu đãi trực tiếp từ nhà máy.
-                </p>
-
-                <div className="space-y-3">
-                  {contact.phone && (
-                    <a
-                      href={`tel:${contact.phone}`}
-                      className="flex items-center justify-center gap-2 rounded-2xl bg-red-600 px-4 py-3 text-sm font-extrabold text-white shadow-lg hover:bg-red-700 transition-all"
-                    >
-                      <PhoneCall className="h-4 w-4 animate-bounce" />
-                      GỌI NGAY: {contact.phone}
-                    </a>
-                  )}
-
-                  {contact.zalo && (
-                    <a
-                      href={contact.zalo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-md hover:bg-blue-700 transition-all"
-                    >
-                      <MessageSquare className="h-4 w-4" />
-                      Chat Zalo tư vấn miễn phí
-                    </a>
-                  )}
-                </div>
-              </div>
-
-              {/* Widget 3: Other Related News */}
+              {/* Widget 1: Other Related News (Tin tức khác) - On Top */}
               {others.length > 0 && (
                 <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-sm">
-                  <h3 className="font-extrabold text-slate-900 text-base mb-4" style={{ fontFamily: "var(--font-display)" }}>
-                    Tin tức khác
-                  </h3>
+                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <h3 className="font-extrabold text-slate-900 text-base" style={{ fontFamily: "var(--font-display)" }}>
+                      Tin tức khác
+                    </h3>
+                    <Link to="/tin-tuc" className="text-xs font-bold text-primary hover:underline">
+                      Xem tất cả
+                    </Link>
+                  </div>
                   <div className="space-y-4">
                     {others.map((n) => (
                       <Link
@@ -568,6 +462,32 @@ export function NewsDetailPage() {
                       </Link>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {/* Widget 2: Table of Contents (Mục lục bài viết) */}
+              {tocSections.length > 0 && (
+                <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-sm">
+                  <div className="flex items-center gap-2.5 font-extrabold text-slate-900 text-base mb-3 pb-3 border-b border-slate-100">
+                    <List className="h-5 w-5 text-primary" />
+                    <span>Mục lục bài viết</span>
+                  </div>
+                  <ul className="space-y-2.5 text-[13.5px]">
+                    {tocSections.map((sec, idx) => (
+                      <li key={idx}>
+                        <button
+                          onClick={() => {
+                            const el = document.getElementById(`section-${idx}`);
+                            if (el) el.scrollIntoView({ behavior: "smooth" });
+                          }}
+                          className="flex items-start gap-2 text-slate-700 hover:text-primary transition-colors text-left font-medium cursor-pointer group"
+                        >
+                          <span className="font-extrabold text-primary text-xs mt-0.5 shrink-0">{idx + 1}.</span>
+                          <span className="group-hover:underline line-clamp-2">{sec.question}</span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
 
