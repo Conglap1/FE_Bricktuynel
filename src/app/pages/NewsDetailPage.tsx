@@ -194,7 +194,6 @@ export function NewsDetailPage() {
         parentLink="/tin-tuc"
         eyebrow="Tin tức"
         title={article.title}
-        desc={article.publishedAt ? `Đăng ngày ${formatDate(article.publishedAt)} • Thuận Lợi Brick` : "Thuận Lợi Brick"}
         image={article.thumbnailPath || IMAGES.newsBanner}
       />
 
@@ -253,6 +252,32 @@ export function NewsDetailPage() {
                       </div>
                     </div>
                   </Reveal>
+                )}
+
+                {/* Mobile Table of Contents */}
+                {tocSections.length > 0 && (
+                  <div className="lg:hidden rounded-2xl border border-slate-200/90 bg-slate-50/80 p-5 mb-8 shadow-sm">
+                    <div className="flex items-center gap-2.5 font-extrabold text-slate-900 text-base mb-3 pb-2.5 border-b border-slate-200">
+                      <List className="h-5 w-5 text-primary" />
+                      <span>Mục lục bài viết</span>
+                    </div>
+                    <ul className="space-y-2.5 text-[13.5px]">
+                      {tocSections.map((sec, idx) => (
+                        <li key={idx}>
+                          <button
+                            onClick={() => {
+                              const el = document.getElementById(`section-${idx}`);
+                              if (el) el.scrollIntoView({ behavior: "smooth" });
+                            }}
+                            className="flex items-start gap-2 text-slate-700 hover:text-primary transition-colors text-left font-medium cursor-pointer group"
+                          >
+                            <span className="font-extrabold text-primary text-xs mt-0.5 shrink-0">{idx + 1}.</span>
+                            <span className="group-hover:underline line-clamp-2">{sec.question}</span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
 
                 {/* Top Attached Images */}
@@ -347,25 +372,19 @@ export function NewsDetailPage() {
                   )
                 )}
 
-                {/* Article Footer */}
-                <div className="mt-12 pt-8 border-t border-slate-200 space-y-6">
-                  {/* Author Card */}
-                  <div className="flex items-center gap-3.5 p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-white font-extrabold text-lg shadow-sm shrink-0">
-                      TL
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-slate-900 text-sm">Biên tập: Ban Truyền Thông Thuận Lợi</h4>
-                      <p className="text-xs text-slate-500 mt-0.5">Công ty TNHH Một Thành Viên Thuận Lợi Mộc Hóa</p>
-                    </div>
+                {/* Article Footer: Publication Date */}
+                {article.publishedAt && (
+                  <div className="mt-10 pt-6 border-t border-slate-200 flex items-center gap-2 text-xs sm:text-sm text-slate-500 font-medium">
+                    <Calendar className="h-4 w-4 text-primary" />
+                    <span>Đăng ngày {formatDate(article.publishedAt)}</span>
                   </div>
-                </div>
+                )}
 
               </article>
             </main>
 
-            {/* Right / Sticky Sidebar Column (4 cols) */}
-            <aside className="lg:col-span-4 space-y-8 sticky top-28 h-fit">
+            {/* Right / Sticky Sidebar Column (Desktop only: 4 cols) */}
+            <aside className="hidden lg:block lg:col-span-4 space-y-8 sticky top-28 h-fit">
 
               {/* Widget 1: Other Related News (Tin tức khác) - On Top */}
               {others.length > 0 && (
