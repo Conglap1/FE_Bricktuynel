@@ -7,70 +7,57 @@ import { useStore, type ProcessStep } from "../../lib/store";
 function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
   const left = i % 2 === 0;
 
-  // Optimized fast & synchronized timings
-  const baseDelay = i === 0 ? 0.1 : 0;
-  const duration = 0.6;
-  const imageDelay = baseDelay + 0.05; // Synchronized with text side to eliminate lag!
+  // Ultra-fluid timing: zero end stutter, instant synchronized landing
+  const baseDelay = i === 0 ? 0.08 : 0;
+  const duration = 0.45;
 
-  // 1. Red Pattern Graphic Runner: Glides smoothly in step flow direction
+  // 1. Red Pattern Graphic Runner: Pure smooth glide
   const patternRunnerVariants = {
     hidden: {
       opacity: 0,
-      x: left ? "-70%" : "70%",
-      scale: 0.92,
+      x: left ? -40 : 40,
     },
     visible: {
       opacity: 1,
       x: 0,
-      scale: 1,
       transition: {
         duration,
         delay: baseDelay,
-        ease: [0.16, 1, 0.3, 1],
+        ease: "easeOut",
       },
     },
   };
 
-  // 2. Text Content Wipe Reveal: Smooth inset reveal gliding in step direction
-  const cardWipeVariants = {
+  // 2. Text Content Card: Pure GPU opacity & translate (no clip-path mask snapping)
+  const cardVariants = {
     hidden: {
       opacity: 0,
-      x: left ? -22 : 22,
-      clipPath: left ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)",
+      x: left ? -30 : 30,
     },
     visible: {
       opacity: 1,
       x: 0,
-      clipPath: "inset(0 0% 0 0%)",
       transition: {
         duration,
         delay: baseDelay,
-        ease: [0.16, 1, 0.3, 1],
-        staggerChildren: 0.04,
+        ease: "easeOut",
       },
     },
   };
 
-  const textItemVariants = {
-    hidden: { opacity: 0, y: 8 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } },
-  };
-
-  // 3. Image Card Reveal: Animates in SAME direction ("cùng phía") as text side
+  // 3. Image Card: Pure GPU opacity & translate in exact unison with text card
   const imageCardVariants = {
     hidden: {
       opacity: 0,
-      x: left ? -22 : 22,
-      clipPath: left ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)",
+      x: left ? -30 : 30,
     },
     visible: {
       opacity: 1,
       x: 0,
-      clipPath: "inset(0 0% 0 0%)",
       transition: {
         duration,
-        delay: imageDelay,
-        ease: [0.16, 1, 0.3, 1],
+        delay: baseDelay,
+        ease: "easeOut",
       },
     },
   };
@@ -95,50 +82,42 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
 
           {/* 1. WHITE TEXT CARD */}
           <motion.div
-            variants={cardWipeVariants}
-            style={{ willChange: "transform, opacity, clip-path" }}
+            variants={cardVariants}
+            style={{ willChange: "transform, opacity" }}
             className={`group relative flex-1 overflow-hidden rounded-3xl border border-[#810C00]/15 bg-white/95 p-6 md:p-8 backdrop-blur-xl shadow-xl shadow-[#810C00]/5 transition-all duration-300 hover:border-[#810C00]/35 hover:shadow-2xl hover:shadow-[#810C00]/12 ${
               left ? "text-right -mr-6" : "text-left -ml-6"
             }`}
           >
             {/* Watermark Step Number */}
-            <motion.span
-              variants={textItemVariants}
+            <span
               className={`pointer-events-none absolute -bottom-6 font-black tracking-tighter text-[#810C00]/[0.05] transition-all duration-300 group-hover:text-[#810C00]/[0.12] ${
                 left ? "left-4" : "right-4"
               }`}
               style={{ fontFamily: "var(--font-display)", fontSize: "7.5rem", lineHeight: 1 }}
             >
               {s.step}
-            </motion.span>
+            </span>
 
             {/* Step Badge */}
-            <motion.div
-              variants={textItemVariants}
-              className={`relative z-10 flex items-center gap-3 ${left ? "justify-end" : ""}`}
-            >
+            <div className={`relative z-10 flex items-center gap-3 ${left ? "justify-end" : ""}`}>
               <span className="inline-flex items-center gap-2 rounded-full bg-[#810C00]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-widest text-[#810C00] border border-[#810C00]/20 shadow-sm">
                 <span className="h-2 w-2 rounded-full bg-[#810C00] animate-ping" />
                 Giai đoạn {s.step}
               </span>
-            </motion.div>
+            </div>
 
             {/* Title */}
-            <motion.h3
-              variants={textItemVariants}
+            <h3
               className="relative z-10 mt-4 text-[#3B020D] transition-colors duration-300 group-hover:text-[#810C00]"
               style={{ fontFamily: "var(--font-display)", fontSize: "1.45rem", fontWeight: 700, lineHeight: 1.3 }}
             >
               {s.title}
-            </motion.h3>
+            </h3>
 
             {/* Description */}
-            <motion.p
-              variants={textItemVariants}
-              className="relative z-10 mt-3 text-[14.5px] leading-relaxed text-[#560213]/80 font-normal"
-            >
+            <p className="relative z-10 mt-3 text-[14.5px] leading-relaxed text-[#560213]/80 font-normal">
               {s.desc}
-            </motion.p>
+            </p>
           </motion.div>
 
           {/* 2. RED PATTERN ARROW */}
@@ -164,7 +143,7 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
       <div className={left ? "order-2" : "order-1"}>
         <motion.div
           variants={imageCardVariants}
-          style={{ willChange: "transform, opacity, clip-path" }}
+          style={{ willChange: "transform, opacity" }}
           className="group relative overflow-hidden rounded-3xl border border-[#810C00]/15 bg-white p-2.5 shadow-xl transition-all duration-300 hover:border-[#810C00]/40 hover:shadow-2xl hover:shadow-[#810C00]/15"
         >
           <div className="overflow-hidden rounded-2xl relative">
