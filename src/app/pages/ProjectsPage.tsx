@@ -84,7 +84,7 @@ export function ProjectsPage() {
                   to={`/du-an/${featured.slug}`}
                   className="group flex flex-col lg:flex-row overflow-hidden rounded-3xl border border-slate-200/90 bg-white transition-all duration-300 hover:shadow-[0_24px_64px_rgba(86,2,19,0.12)] hover:border-red-900/30"
                 >
-                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100 lg:aspect-auto lg:w-[48%] lg:shrink-0">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100 lg:aspect-[16/10] lg:w-[48%] lg:shrink-0">
                     <ImageWithFallback
                       src={featured.image}
                       alt={featured.name}
