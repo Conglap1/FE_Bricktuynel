@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowUp, Facebook, Phone, Mail } from "lucide-react";
+import { ArrowUp, Phone } from "lucide-react";
 import { AnimatePresence } from "motion/react";
 import { motion } from "../../lib/motion";
 import { useStore } from "../../lib/store";
@@ -48,9 +48,7 @@ export function FloatingWidget() {
       : `https://zalo.me/${contact.zalo.replace(/\s+/g, "")}`
     : "https://zalo.me";
 
-  const facebookUrl = contact.facebook || "https://facebook.com";
   const tiktokUrl = contact.tiktok || "https://tiktok.com";
-  const emailUrl = contact.email ? `mailto:${contact.email}` : "mailto:kinhdoanh@gachthuanloi.vn";
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2.5 pointer-events-none">
@@ -84,21 +82,6 @@ export function FloatingWidget() {
           </span>
         </a>
 
-        {/* Facebook Button */}
-        <a
-          href={facebookUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          title="Facebook"
-          aria-label="Facebook"
-          className="group relative flex h-11 items-center justify-center rounded-full bg-[#1877F2] px-3 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#1464c9] hover:shadow-xl"
-        >
-          <Facebook className="h-5 w-5 shrink-0" />
-          <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-medium opacity-0 transition-all duration-300 group-hover:ml-2 group-hover:max-w-[100px] group-hover:opacity-100">
-            Facebook
-          </span>
-        </a>
-
         {/* TikTok Button */}
         <a
           href={tiktokUrl}
@@ -111,19 +94,6 @@ export function FloatingWidget() {
           <TiktokIcon className="h-5 w-5 shrink-0" />
           <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-medium opacity-0 transition-all duration-300 group-hover:ml-2 group-hover:max-w-[100px] group-hover:opacity-100">
             TikTok
-          </span>
-        </a>
-
-        {/* Email Button */}
-        <a
-          href={emailUrl}
-          title="Gửi Email liên hệ"
-          aria-label="Gửi Email liên hệ"
-          className="group relative flex h-11 items-center justify-center rounded-full bg-[#EA4335] px-3 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#D93025] hover:shadow-xl"
-        >
-          <Mail className="h-5 w-5 shrink-0" />
-          <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-medium opacity-0 transition-all duration-300 group-hover:ml-2 group-hover:max-w-[160px] group-hover:opacity-100">
-            {contact.email || "Gửi Email"}
           </span>
         </a>
       </div>
