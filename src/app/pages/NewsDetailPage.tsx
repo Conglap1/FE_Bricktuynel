@@ -101,7 +101,7 @@ const MOCK_SIDEBAR_PRODUCTS = [
   {
     name: "Gạch Tuynel 4 Lỗ",
     desc: "Quy cách 80x80x180mm, Mác 75, xây tường bao 100mm/200mm đanh chắc.",
-    image: "/images/quy_trinh/B9.2 Đóng sản phẩm.jpg",
+    image: IMAGES.clayBrick,
   },
   {
     name: "Gạch Đờm 2 Lỗ",
