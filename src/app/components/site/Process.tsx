@@ -7,68 +7,70 @@ import { useStore, type ProcessStep } from "../../lib/store";
 function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
   const left = i % 2 === 0;
 
-  // Extra delay for Step 1 (Giai đoạn 01) on page load so page finish rendering first
-  const baseDelay = i === 0 ? 0.5 : 0;
-  const textDuration = 1.2;
-  const imageDelay = baseDelay + textDuration; // Image ONLY starts AFTER text side finishes!
+  // Optimized fast & synchronized timings
+  const baseDelay = i === 0 ? 0.1 : 0;
+  const duration = 0.6;
+  const imageDelay = baseDelay + 0.05; // Synchronized with text side to eliminate lag!
 
-  // 1. Red Pattern Graphic Runner: Glides from outer web edge into center timeline node
+  // 1. Red Pattern Graphic Runner: Glides smoothly from outer web edge into center timeline node
   const patternRunnerVariants = {
     hidden: {
       opacity: 0,
-      x: left ? "-120%" : "120%",
-      scale: 0.9,
+      x: left ? "-70%" : "70%",
+      scale: 0.92,
     },
     visible: {
       opacity: 1,
       x: 0,
       scale: 1,
       transition: {
-        duration: textDuration,
+        duration,
         delay: baseDelay,
-        ease: [0.22, 1, 0.36, 1],
+        ease: [0.16, 1, 0.3, 1],
       },
     },
   };
 
-  // 2. Text Content Wipe Reveal: Unveils progressively in sync with the arrow glide
+  // 2. Text Content Wipe Reveal: Smooth inset reveal gliding towards center
   const cardWipeVariants = {
     hidden: {
       opacity: 0,
+      x: left ? -18 : 18,
       clipPath: left ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)",
     },
     visible: {
       opacity: 1,
+      x: 0,
       clipPath: "inset(0 0% 0 0%)",
       transition: {
-        duration: textDuration,
+        duration,
         delay: baseDelay,
-        ease: [0.22, 1, 0.36, 1],
-        staggerChildren: 0.1,
+        ease: [0.16, 1, 0.3, 1],
+        staggerChildren: 0.04,
       },
     },
   };
 
   const textItemVariants = {
-    hidden: { opacity: 0, y: 0 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+    hidden: { opacity: 0, y: 8 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } },
   };
 
-  // 3. Image Card Reveal: STRICTLY starts ONLY after the text side completes!
+  // 3. Image Card Reveal: Animates IN SYNC with text side towards center line
   const imageCardVariants = {
     hidden: {
       opacity: 0,
-      x: 0,
-      clipPath: left ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)",
+      x: left ? 18 : -18,
+      clipPath: left ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)",
     },
     visible: {
       opacity: 1,
       x: 0,
       clipPath: "inset(0 0% 0 0%)",
       transition: {
-        duration: 0.95,
+        duration,
         delay: imageDelay,
-        ease: [0.22, 1, 0.36, 1],
+        ease: [0.16, 1, 0.3, 1],
       },
     },
   };
@@ -94,14 +96,15 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
           {/* 1. WHITE TEXT CARD */}
           <motion.div
             variants={cardWipeVariants}
-            className={`group relative flex-1 overflow-hidden rounded-3xl border border-[#810C00]/15 bg-white/95 p-6 md:p-8 backdrop-blur-xl shadow-xl shadow-[#810C00]/5 transition-all duration-500 hover:border-[#810C00]/35 hover:shadow-2xl hover:shadow-[#810C00]/12 ${
+            style={{ willChange: "transform, opacity, clip-path" }}
+            className={`group relative flex-1 overflow-hidden rounded-3xl border border-[#810C00]/15 bg-white/95 p-6 md:p-8 backdrop-blur-xl shadow-xl shadow-[#810C00]/5 transition-all duration-300 hover:border-[#810C00]/35 hover:shadow-2xl hover:shadow-[#810C00]/12 ${
               left ? "text-right -mr-6" : "text-left -ml-6"
             }`}
           >
             {/* Watermark Step Number */}
             <motion.span
               variants={textItemVariants}
-              className={`pointer-events-none absolute -bottom-6 font-black tracking-tighter text-[#810C00]/[0.05] transition-all duration-500 group-hover:text-[#810C00]/[0.12] ${
+              className={`pointer-events-none absolute -bottom-6 font-black tracking-tighter text-[#810C00]/[0.05] transition-all duration-300 group-hover:text-[#810C00]/[0.12] ${
                 left ? "left-4" : "right-4"
               }`}
               style={{ fontFamily: "var(--font-display)", fontSize: "7.5rem", lineHeight: 1 }}
@@ -141,6 +144,7 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
           {/* 2. RED PATTERN ARROW */}
           <motion.div
             variants={patternRunnerVariants}
+            style={{ willChange: "transform, opacity" }}
             className={`shrink-0 flex items-center justify-center z-20 ${
               left ? "-mr-7" : "-ml-7"
             }`}
@@ -148,7 +152,7 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
             <img
               src="/images/logo/pattern-do.png"
               alt="Pattern Đỏ Chỉ Nhọn"
-              className={`w-[95px] md:w-[115px] h-auto object-contain filter drop-shadow-[0_4px_16px_rgba(129,12,0,0.35)] transition-transform duration-500 ${
+              className={`w-[95px] md:w-[115px] h-auto object-contain filter drop-shadow-[0_4px_16px_rgba(129,12,0,0.35)] transition-transform duration-300 ${
                 left ? "-rotate-90" : "rotate-90"
               }`}
             />
@@ -160,13 +164,14 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
       <div className={left ? "order-2" : "order-1"}>
         <motion.div
           variants={imageCardVariants}
-          className="group relative overflow-hidden rounded-3xl border border-[#810C00]/15 bg-white p-2.5 shadow-xl transition-all duration-500 hover:border-[#810C00]/40 hover:shadow-2xl hover:shadow-[#810C00]/15"
+          style={{ willChange: "transform, opacity, clip-path" }}
+          className="group relative overflow-hidden rounded-3xl border border-[#810C00]/15 bg-white p-2.5 shadow-xl transition-all duration-300 hover:border-[#810C00]/40 hover:shadow-2xl hover:shadow-[#810C00]/15"
         >
           <div className="overflow-hidden rounded-2xl relative">
             <ImageWithFallback
               src={s.image}
               alt={s.title}
-              className="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>
         </motion.div>
@@ -186,10 +191,11 @@ function ProcessStepItemMobile({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 20, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+      style={{ willChange: "transform, opacity" }}
       className="relative pl-11 sm:pl-16"
     >
       {/* Step Badge Node directly on Left Axis Line */}
