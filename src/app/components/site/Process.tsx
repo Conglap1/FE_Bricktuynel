@@ -7,15 +7,16 @@ import { useStore, type ProcessStep } from "../../lib/store";
 function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
   const left = i % 2 === 0;
 
-  // Ultra-fluid timing: zero end stutter, instant synchronized landing
+  // Ultra-fluid 0.4s single-pass motion with Material Ease-Out [0.2, 0, 0, 1] (No CSS conflict, zero pause-and-nudge)
   const baseDelay = i === 0 ? 0.08 : 0;
-  const duration = 0.45;
+  const duration = 0.4;
+  const ease = [0.2, 0, 0, 1];
 
   // 1. Red Pattern Graphic Runner: Pure smooth glide
   const patternRunnerVariants = {
     hidden: {
       opacity: 0,
-      x: left ? -40 : 40,
+      x: left ? -35 : 35,
     },
     visible: {
       opacity: 1,
@@ -23,16 +24,16 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
       transition: {
         duration,
         delay: baseDelay,
-        ease: "easeOut",
+        ease,
       },
     },
   };
 
-  // 2. Text Content Card: Pure GPU opacity & translate (no clip-path mask snapping)
+  // 2. Text Content Card: Pure GPU opacity & translate
   const cardVariants = {
     hidden: {
       opacity: 0,
-      x: left ? -30 : 30,
+      x: left ? -28 : 28,
     },
     visible: {
       opacity: 1,
@@ -40,7 +41,7 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
       transition: {
         duration,
         delay: baseDelay,
-        ease: "easeOut",
+        ease,
       },
     },
   };
@@ -49,7 +50,7 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
   const imageCardVariants = {
     hidden: {
       opacity: 0,
-      x: left ? -30 : 30,
+      x: left ? -28 : 28,
     },
     visible: {
       opacity: 1,
@@ -57,7 +58,7 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
       transition: {
         duration,
         delay: baseDelay,
-        ease: "easeOut",
+        ease,
       },
     },
   };
@@ -84,13 +85,13 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
           <motion.div
             variants={cardVariants}
             style={{ willChange: "transform, opacity" }}
-            className={`group relative flex-1 overflow-hidden rounded-3xl border border-[#810C00]/15 bg-white/95 p-6 md:p-8 backdrop-blur-xl shadow-xl shadow-[#810C00]/5 transition-all duration-300 hover:border-[#810C00]/35 hover:shadow-2xl hover:shadow-[#810C00]/12 ${
+            className={`group relative flex-1 overflow-hidden rounded-3xl border border-[#810C00]/15 bg-white/95 p-6 md:p-8 backdrop-blur-xl shadow-xl shadow-[#810C00]/5 hover:border-[#810C00]/35 hover:shadow-2xl hover:shadow-[#810C00]/12 ${
               left ? "text-right -mr-6" : "text-left -ml-6"
             }`}
           >
             {/* Watermark Step Number */}
             <span
-              className={`pointer-events-none absolute -bottom-6 font-black tracking-tighter text-[#810C00]/[0.05] transition-all duration-300 group-hover:text-[#810C00]/[0.12] ${
+              className={`pointer-events-none absolute -bottom-6 font-black tracking-tighter text-[#810C00]/[0.05] transition-colors duration-300 group-hover:text-[#810C00]/[0.12] ${
                 left ? "left-4" : "right-4"
               }`}
               style={{ fontFamily: "var(--font-display)", fontSize: "7.5rem", lineHeight: 1 }}
@@ -131,7 +132,7 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
             <img
               src="/images/logo/pattern-do.png"
               alt="Pattern Đỏ Chỉ Nhọn"
-              className={`w-[95px] md:w-[115px] h-auto object-contain filter drop-shadow-[0_4px_16px_rgba(129,12,0,0.35)] transition-transform duration-300 ${
+              className={`w-[95px] md:w-[115px] h-auto object-contain filter drop-shadow-[0_4px_16px_rgba(129,12,0,0.35)] ${
                 left ? "-rotate-90" : "rotate-90"
               }`}
             />
@@ -144,7 +145,7 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
         <motion.div
           variants={imageCardVariants}
           style={{ willChange: "transform, opacity" }}
-          className="group relative overflow-hidden rounded-3xl border border-[#810C00]/15 bg-white p-2.5 shadow-xl transition-all duration-300 hover:border-[#810C00]/40 hover:shadow-2xl hover:shadow-[#810C00]/15"
+          className="group relative overflow-hidden rounded-3xl border border-[#810C00]/15 bg-white p-2.5 shadow-xl hover:border-[#810C00]/40 hover:shadow-2xl hover:shadow-[#810C00]/15"
         >
           <div className="overflow-hidden rounded-2xl relative">
             <ImageWithFallback
