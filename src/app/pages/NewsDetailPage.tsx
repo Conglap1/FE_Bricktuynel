@@ -192,9 +192,9 @@ export function NewsDetailPage() {
         crumb="Chi tiết bài viết"
         parentCrumb="Tin tức & Sự kiện"
         parentLink="/tin-tuc"
-        eyebrow="Tin tức & Sự kiện"
-        title="Tin tức & Sự kiện"
-        desc="Cập nhật thông tin chi tiết về sản xuất, công nghệ gạch Tuynel và hoạt động từ Thuận Lợi Brick."
+        eyebrow="Tin tức"
+        title={article.title}
+        desc={article.publishedAt ? `Đăng ngày ${formatDate(article.publishedAt)} • Thuận Lợi Brick` : "Thuận Lợi Brick"}
         image={article.thumbnailPath || IMAGES.newsBanner}
       />
 
@@ -233,37 +233,6 @@ export function NewsDetailPage() {
               </div>
 
               <article itemscope itemtype="https://schema.org/NewsArticle">
-                {/* Article Header (Title & Meta Info) */}
-                <Reveal>
-                  <div className="mb-8 pb-6 border-b border-slate-100">
-                    <div className="flex flex-wrap items-center gap-3 text-[13px] text-slate-500 mb-3 font-medium">
-                      {article.publishedAt && (
-                        <span className="flex items-center gap-1.5 font-medium text-slate-600">
-                          <Calendar className="h-4 w-4 text-primary" />
-                          {formatDate(article.publishedAt)}
-                        </span>
-                      )}
-                      <span className="inline-block h-1 w-1 rounded-full bg-slate-300" />
-                      <span className="flex items-center gap-1.5 font-medium text-amber-700">
-                        <Clock className="h-4 w-4 text-amber-600" />
-                        3 phút đọc
-                      </span>
-                      <span className="inline-block h-1 w-1 rounded-full bg-slate-300" />
-                      <span className="flex items-center gap-1.5 font-medium text-slate-500">
-                        <User className="h-4 w-4 text-slate-400" />
-                        Thuận Lợi Brick
-                      </span>
-                    </div>
-
-                    <h1
-                      className="text-2xl sm:text-3xl lg:text-[2.1rem] font-extrabold text-slate-900 leading-[1.3] tracking-tight"
-                      style={{ fontFamily: "var(--font-display)" }}
-                      itemprop="headline"
-                    >
-                      {article.title}
-                    </h1>
-                  </div>
-                </Reveal>
                 
                 {/* Sapo / Lead Summary Box */}
                 {article.summary && (
