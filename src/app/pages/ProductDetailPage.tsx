@@ -247,13 +247,13 @@ export function ProductDetailPage() {
           <div className="mx-auto max-w-[1240px] px-6">
             <SectionHeading eyebrow="Sản phẩm khác" title="Khám phá thêm" align="center" />
 
-            <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <Stagger className="mt-12 flex flex-wrap justify-center gap-6">
               {otherProducts.map((p) => (
                 <motion.div
                   key={p.id}
                   variants={staggerItem}
                   whileHover={{ y: -6 }}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-shadow hover:shadow-[0_16px_48px_rgba(0,0,0,0.09)]"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-shadow hover:shadow-[0_16px_48px_rgba(0,0,0,0.09)] w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] max-w-[320px] sm:max-w-none"
                 >
                   <Link to={`/san-pham/${p.slug}`} className="relative block aspect-[4/3] overflow-hidden bg-secondary">
                     <ImageWithFallback

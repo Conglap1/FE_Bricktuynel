@@ -65,7 +65,7 @@ export function ProductsPage() {
             </div>
           </Reveal>
 
-          <Stagger className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5" gap={0.08}>
+          <Stagger className="flex flex-wrap justify-center gap-4" gap={0.08}>
             {filteredProducts.map((p) => {
               const specs = buildSpecs(p);
               return (
@@ -74,7 +74,7 @@ export function ProductsPage() {
                   variants={staggerItem}
                   whileHover={{ y: -10 }}
                   transition={{ type: "spring", stiffness: 280, damping: 22 }}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-[0_2px_18px_rgba(0,0,0,0.04)] transition-shadow hover:shadow-[0_24px_60px_rgba(0,0,0,0.10)]"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-[0_2px_18px_rgba(0,0,0,0.04)] transition-shadow hover:shadow-[0_24px_60px_rgba(0,0,0,0.10)] w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.75rem)] lg:w-[calc(20%-0.8rem)] max-w-[320px] sm:max-w-none"
                 >
                   <Link to={`/san-pham/${p.slug}`} className="relative block aspect-[5/4] overflow-hidden bg-secondary">
                     <ImageWithFallback
