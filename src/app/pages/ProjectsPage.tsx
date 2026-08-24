@@ -84,7 +84,7 @@ export function ProjectsPage() {
                   to={`/du-an/${featured.slug}`}
                   className="group flex flex-col lg:flex-row overflow-hidden rounded-3xl border border-slate-200/90 bg-white transition-all duration-300 hover:shadow-[0_24px_64px_rgba(86,2,19,0.12)] hover:border-red-900/30"
                 >
-                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100 lg:aspect-auto lg:w-[50%] lg:shrink-0">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100 lg:aspect-auto lg:w-[48%] lg:shrink-0">
                     <ImageWithFallback
                       src={featured.image}
                       alt={featured.name}
@@ -94,21 +94,21 @@ export function ProjectsPage() {
 
                   <div className="flex flex-col justify-between p-8 lg:p-10 flex-1">
                     <div>
-                      <div className="flex flex-wrap items-center gap-4 text-[13px] text-slate-500 mb-3">
+                      <div className="flex flex-wrap items-center gap-3 text-[12.5px] text-slate-500 mb-3">
                         <span className="flex items-center gap-1.5 font-semibold text-primary">
-                          <MapPin className="h-4 w-4" />
+                          <MapPin className="h-3.5 w-3.5" />
                           {featured.location}
                         </span>
                         {featured.completedDate && (
                           <span className="flex items-center gap-1.5 font-medium text-slate-400">
-                            <Calendar className="h-4 w-4" />
+                            <Calendar className="h-3.5 w-3.5" />
                             Hoàn thành: {formatDateShort(featured.completedDate)}
                           </span>
                         )}
                       </div>
 
                       <h2
-                        className="text-slate-900 transition-colors group-hover:text-primary"
+                        className="text-foreground transition-colors group-hover:text-primary"
                         style={{ fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)", fontWeight: 800, lineHeight: 1.25, fontFamily: "var(--font-display)" }}
                       >
                         {featured.name}
