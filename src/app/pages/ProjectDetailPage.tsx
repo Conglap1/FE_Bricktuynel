@@ -95,7 +95,7 @@ export function ProjectDetailPage() {
   return (
     <>
       <PageHeader
-        crumb={project.name}
+        crumb="Chi tiết dự án"
         parentCrumb="Dự án"
         parentLink="/du-an"
         eyebrow="Chi tiết công trình"
