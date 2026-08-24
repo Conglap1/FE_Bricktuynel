@@ -12,7 +12,7 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
   const duration = 0.6;
   const imageDelay = baseDelay + 0.05; // Synchronized with text side to eliminate lag!
 
-  // 1. Red Pattern Graphic Runner: Glides smoothly from outer web edge into center timeline node
+  // 1. Red Pattern Graphic Runner: Glides smoothly in step flow direction
   const patternRunnerVariants = {
     hidden: {
       opacity: 0,
@@ -31,11 +31,11 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
     },
   };
 
-  // 2. Text Content Wipe Reveal: Smooth inset reveal gliding towards center
+  // 2. Text Content Wipe Reveal: Smooth inset reveal gliding in step direction
   const cardWipeVariants = {
     hidden: {
       opacity: 0,
-      x: left ? -18 : 18,
+      x: left ? -22 : 22,
       clipPath: left ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)",
     },
     visible: {
@@ -56,12 +56,12 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
     visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } },
   };
 
-  // 3. Image Card Reveal: Animates IN SYNC with text side towards center line
+  // 3. Image Card Reveal: Animates in SAME direction ("cùng phía") as text side
   const imageCardVariants = {
     hidden: {
       opacity: 0,
-      x: left ? 18 : -18,
-      clipPath: left ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)",
+      x: left ? -22 : 22,
+      clipPath: left ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)",
     },
     visible: {
       opacity: 1,
