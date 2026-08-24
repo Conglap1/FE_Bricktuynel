@@ -100,7 +100,6 @@ export function ProjectDetailPage() {
         parentLink="/du-an"
         eyebrow="Chi tiết công trình"
         title={project.name}
-        desc={project.shortDescription || `Công trình tại ${project.location}${project.completedDate ? `, hoàn thành ${project.completedDate}` : ""}.`}
       />
 
       <section className="bg-white py-10 md:py-16">
