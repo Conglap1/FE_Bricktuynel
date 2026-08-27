@@ -9,7 +9,7 @@ export interface MachineryItem {
   image: string;
 }
 
-/* Chỉ giữ lại các hình ảnh MÁY MÓC / THIẾT BỊ thực tế */
+/* 6 hình ảnh MÁY MÓC / THIẾT BỊ thực tế - 100% không trùng lặp */
 export const MACHINERY_LIST: MachineryItem[] = [
   {
     id: "machinery-01",
@@ -19,33 +19,33 @@ export const MACHINERY_LIST: MachineryItem[] = [
   },
   {
     id: "machinery-02",
-    name: "Máy Ép Đùn Chân Không",
-    desc: "Máy ép đùn công nghệ cao hút sạch bọt khí, nén gạch mộc đanh chắc.",
-    image: IMAGES.procStep04,
-  },
-  {
-    id: "machinery-03",
     name: "Máy Cắt Gạch Tự Động PLC",
     desc: "Hệ thống máy cắt gạch lập trình PLC cắt chính xác từng viên gạch.",
     image: IMAGES.procStep05,
   },
   {
-    id: "machinery-04",
+    id: "machinery-03",
     name: "Hệ Thống Lò Nung Tuynel (1.050°C)",
     desc: "Lò nung Tuynel liên tục nhiệt độ cao giúp gạch chín đều đanh chắc.",
     image: IMAGES.procStep07,
   },
   {
-    id: "machinery-05",
+    id: "machinery-04",
     name: "Cánh Tay Robot Bốc Xếp",
     desc: "Cánh tay robot công nghiệp tự động bốc xếp gạch đóng Pallet.",
     image: "/images/cach_tay_robot.jpg",
   },
   {
-    id: "machinery-06",
-    name: "Dây Chuyền Sản Xuất Tự Động",
-    desc: "Dây chuyền máy móc tự động hóa đồng bộ từ tạo hình đến thành phẩm.",
+    id: "machinery-05",
+    name: "Máy Ép Đùn & Dây Chuyền Sản Xuất",
+    desc: "Máy ép đùn công nghệ cao hút chân không và dây chuyền tự động hóa đồng bộ.",
     image: "/images/day_chuyen_san_xuat.png",
+  },
+  {
+    id: "machinery-06",
+    name: "Hệ Thống Điện Mặt Trời Áp Mái",
+    desc: "Hệ thống năng lượng mặt trời áp mái cung cấp nguồn điện sạch vận hành nhà máy.",
+    image: "/images/nang_luong_mat_troi_1.jpg",
   },
 ];
 
@@ -70,7 +70,7 @@ export function MachineryShowcase() {
           </h2>
         </div>
 
-        {/* Clean Grid of 6 Machinery Cards */}
+        {/* Clean Grid of 6 Unique Machinery Cards */}
         <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {MACHINERY_LIST.map((item) => (
             <motion.div
