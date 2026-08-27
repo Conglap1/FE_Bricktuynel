@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Sun, Bot, Image as ImageIcon } from "lucide-react";
+import { Sun, Bot, Factory, Image as ImageIcon } from "lucide-react";
 import { Stagger, staggerItem, motion } from "../../lib/motion";
 import { SectionHeading } from "./SectionHeading";
 
@@ -7,29 +7,6 @@ const SOLAR_IMAGES = [
   "/images/nang_luong_mat_troi_1.jpg",
   "/images/nang_luong_mat_troi_2.jpg",
 ];
-
-// Icon Cối Nhào Công Nghiệp (Industrial Pugmill / Mixing Vat Icon)
-function PugmillIcon({ className = "h-5 w-5 text-primary" }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      {/* Thùng / Cối nhào */}
-      <path d="M4 7h16" />
-      <path d="M5 7l1.5 10a2 2 0 0 0 2 1.7h7a2 2 0 0 0 2-1.7L19 7" />
-      {/* Trục nhào & cánh khuấy bên trong cối */}
-      <path d="M12 3v6" />
-      <path d="M8 11.5h8" />
-      <path d="M9.5 15h5" />
-    </svg>
-  );
-}
 
 export function TechShowcase() {
   const [solarIdx, setSolarIdx] = useState(0);
@@ -59,11 +36,12 @@ export function TechShowcase() {
       type: "slideshow",
     },
     {
-      id: "coi-nhao",
-      icon: <PugmillIcon className="h-5 w-5 text-primary" />,
-      name: "Cối Nhào Hiện Đại",
-      desc: "Hệ thống cối nhào luyện đất sét công nghệ cao trộn đều nguyên liệu với độ ẩm lý tưởng, đảm bảo độ nén bền vững.",
-      type: "empty",
+      id: "day-chuyen-san-xuat",
+      icon: <Factory className="h-5 w-5 text-primary" />,
+      name: "Dây Chuyền Sản Xuất Hiện Đại",
+      desc: "Dây chuyền sản xuất tự động hóa đồng bộ công nghệ cao, tối ưu hóa năng suất và đảm bảo chất lượng gạch đạt chuẩn tuyệt đối.",
+      type: "single-image",
+      imageSrc: "/images/day_chuyen_san_xuat.png",
     },
   ];
 
