@@ -9,60 +9,43 @@ export interface MachineryItem {
   image: string;
 }
 
+/* Chỉ giữ lại các hình ảnh MÁY MÓC / THIẾT BỊ thực tế */
 export const MACHINERY_LIST: MachineryItem[] = [
   {
     id: "machinery-01",
-    name: "Hệ Thống Xử Lý Nguyên Liệu",
-    desc: "Xe xúc và hệ thống băng tải phân loại đất sét tự động.",
-    image: IMAGES.procStep01,
-  },
-  {
-    id: "machinery-02",
-    name: "Kho Sấy Ủ Nguyên Liệu",
-    desc: "Kho ủ đất sét vi khí hậu giúp ổn định độ dẻo và độ ẩm.",
-    image: IMAGES.procStep02,
-  },
-  {
-    id: "machinery-03",
     name: "Máy Nhào Trộn 2 Trục",
     desc: "Cối nhào trộn công nghiệp công suất lớn nhào dẻo phối trộn phụ gia.",
     image: IMAGES.procStep03,
   },
   {
-    id: "machinery-04",
+    id: "machinery-02",
     name: "Máy Ép Đùn Chân Không",
     desc: "Máy ép đùn công nghệ cao hút sạch bọt khí, nén gạch mộc đanh chắc.",
     image: IMAGES.procStep04,
   },
   {
-    id: "machinery-05",
+    id: "machinery-03",
     name: "Máy Cắt Gạch Tự Động PLC",
-    desc: "Hệ thống cắt gạch lập trình PLC cắt chính xác từng viên gạch.",
+    desc: "Hệ thống máy cắt gạch lập trình PLC cắt chính xác từng viên gạch.",
     image: IMAGES.procStep05,
   },
   {
-    id: "machinery-06",
-    name: "Hệ Thống Hầm Sấy",
-    desc: "Hầm sấy tự động tuần hoàn nhiệt tận thu từ lò nung.",
-    image: IMAGES.procStep06,
-  },
-  {
-    id: "machinery-07",
-    name: "Lò Nung Tuynel (1.050°C)",
+    id: "machinery-04",
+    name: "Hệ Thống Lò Nung Tuynel (1.050°C)",
     desc: "Lò nung Tuynel liên tục nhiệt độ cao giúp gạch chín đều đanh chắc.",
     image: IMAGES.procStep07,
   },
   {
-    id: "machinery-08",
-    name: "Hệ Thống Hạ Nhiệt",
-    desc: "Khu vực hạ nhiệt tự động kiểm soát chống sốc nhiệt cho gạch.",
-    image: IMAGES.procStep08,
-  },
-  {
-    id: "machinery-09",
+    id: "machinery-05",
     name: "Cánh Tay Robot Bốc Xếp",
     desc: "Cánh tay robot công nghiệp tự động bốc xếp gạch đóng Pallet.",
     image: "/images/cach_tay_robot.jpg",
+  },
+  {
+    id: "machinery-06",
+    name: "Dây Chuyền Sản Xuất Tự Động",
+    desc: "Dây chuyền máy móc tự động hóa đồng bộ từ tạo hình đến thành phẩm.",
+    image: "/images/day_chuyen_san_xuat.png",
   },
 ];
 
@@ -87,7 +70,7 @@ export function MachineryShowcase() {
           </h2>
         </div>
 
-        {/* Clean Grid of Machinery Cards */}
+        {/* Clean Grid of 6 Machinery Cards */}
         <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {MACHINERY_LIST.map((item) => (
             <motion.div
