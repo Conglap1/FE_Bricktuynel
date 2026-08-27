@@ -1,6 +1,7 @@
 import { PageHeader } from "../components/site/PageHeader";
 import { IMAGES } from "../lib/data";
 import { Process } from "../components/site/Process";
+import { MachineryShowcase } from "../components/site/MachineryShowcase";
 import { LogoMarquee } from "../components/site/LogoMarquee";
 import { CTABand } from "../components/site/CTABand";
 
@@ -15,8 +16,10 @@ export function ProcessPage() {
         image={IMAGES.aboutBanner}
       />
       <Process />
+      <MachineryShowcase />
       <LogoMarquee />
       <CTABand />
     </>
   );
 }
+
