@@ -27,9 +27,11 @@ const HIGHLIGHTS = [
   "Giao hàng toàn quốc, đóng pallet quấn màng",
 ];
 
+import { DetailSkeleton } from "../components/ui/LoadingState";
+
 export function ProductDetailPage() {
   const { slug } = useParams<{ slug: string }>();
-  const { products } = useStore();
+  const { products, isLoading } = useStore();
 
   const product = products.find((p) => p.slug === slug && p.isActive);
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
@@ -63,6 +65,10 @@ export function ProductDetailPage() {
     }, 10000);
     return () => clearInterval(timer);
   }, [allImages.length]);
+
+  if (isLoading) {
+    return <DetailSkeleton />;
+  }
 
   if (!product) {
     return (

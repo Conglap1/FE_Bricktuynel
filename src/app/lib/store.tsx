@@ -106,6 +106,7 @@ export type StoreState = {
   contact: ContactInfo;
   partners: Partner[];
   contactRequests: ContactRequest[];
+  isLoading: boolean;
 };
 
 type StoreActions = {
@@ -157,6 +158,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     } catch {}
   }, []);
 
+  const [isLoading, setIsLoading] = useState(true);
   const [products, setProductsRaw] = useState<Product[]>([]);
   const [categories, setCategoriesRaw] = useState<Category[]>(CATEGORIES);
   const [process, setProcessRaw] = useState<ProcessStep[]>(PROCESS);
@@ -208,6 +210,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   // Fetch all real data strictly from .NET 9 API
   const refreshAll = useCallback(async () => {
+    setIsLoading(true);
     try {
       const [resContact, resProducts, resProjects, resNews, resPartners] = await Promise.all([
         fetch(`${API_BASE_URL}/contact-info`).catch(() => null),
@@ -226,6 +229,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       await refreshContactRequests(false);
     } catch (err) {
       console.warn("Backend API fetch error:", err);
+    } finally {
+      setIsLoading(false);
     }
   }, [refreshContactRequests]);
 
@@ -263,6 +268,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         contact,
         partners,
         contactRequests,
+        isLoading,
         setProducts,
         setCategories,
         setProcess,

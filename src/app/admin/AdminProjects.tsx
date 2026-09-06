@@ -36,8 +36,10 @@ function formatDateDisplay(d?: string) {
   return d;
 }
 
+import { TableSkeleton } from "../components/ui/LoadingState";
+
 export function AdminProjects() {
-  const { projects, setProjects } = useStore();
+  const { projects, setProjects, isLoading } = useStore();
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<ProjectItem | null>(null);
   const [form, setForm] = useState<ProjectForm>(EMPTY);
@@ -283,63 +285,69 @@ export function AdminProjects() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {projects.map((p) => {
-              const displayImg = p.image || (p.images && p.images[0]) || "";
-              const imgCount = p.images?.length || (p.image ? 1 : 0);
-              return (
-                <tr
-                  key={p.id}
-                  onClick={() => openEdit(p)}
-                  className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${!p.isActive ? "opacity-40" : ""}`}
-                >
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-3">
-                      {displayImg && (
-                        <img
-                          src={getImageUrl(displayImg)}
-                          alt={p.name}
-                          className="h-10 w-16 rounded-lg object-cover bg-[#C76B86]/15"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
-                          }}
-                        />
-                      )}
-                      <div>
-                        <div className="font-semibold text-[#560213]">{p.name}</div>
-                        <div className="text-[11px] text-[#810C00]">{p.slug} • {imgCount} ảnh</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-1 text-[#560213]/70"><MapPin className="h-3.5 w-3.5" />{p.location}</div>
-                  </td>
-                  <td className="px-5 py-4 text-[#560213]/70">{formatDateDisplay(p.completedDate)}</td>
-                  <td className="px-5 py-4">
-                    <div className="flex items-center justify-end gap-2">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          openEdit(p);
-                        }}
-                        className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
-                        title="Sửa dự án"
-                      >
-                        <Pencil className="h-3.5 w-3.5" />
-                      </button>
-                      <button
-                        onClick={(e) => handleDelete(p, e)}
-                        className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
-                        title="Xoá dự án"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-            {projects.length === 0 && (
-              <tr><td colSpan={5} className="py-12 text-center text-[#810C00]">Chưa có dự án nào</td></tr>
+            {isLoading ? (
+              <TableSkeleton rows={5} cols={5} />
+            ) : (
+              <>
+                {projects.map((p) => {
+                  const displayImg = p.image || (p.images && p.images[0]) || "";
+                  const imgCount = p.images?.length || (p.image ? 1 : 0);
+                  return (
+                    <tr
+                      key={p.id}
+                      onClick={() => openEdit(p)}
+                      className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${!p.isActive ? "opacity-40" : ""}`}
+                    >
+                      <td className="px-5 py-4">
+                        <div className="flex items-center gap-3">
+                          {displayImg && (
+                            <img
+                              src={getImageUrl(displayImg)}
+                              alt={p.name}
+                              className="h-10 w-16 rounded-lg object-cover bg-[#C76B86]/15"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
+                              }}
+                            />
+                          )}
+                          <div>
+                            <div className="font-semibold text-[#560213]">{p.name}</div>
+                            <div className="text-[11px] text-[#810C00]">{p.slug} • {imgCount} ảnh</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-5 py-4">
+                        <div className="flex items-center gap-1 text-[#560213]/70"><MapPin className="h-3.5 w-3.5" />{p.location}</div>
+                      </td>
+                      <td className="px-5 py-4 text-[#560213]/70">{formatDateDisplay(p.completedDate)}</td>
+                      <td className="px-5 py-4">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openEdit(p);
+                            }}
+                            className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
+                            title="Sửa dự án"
+                          >
+                            <Pencil className="h-3.5 w-3.5" />
+                          </button>
+                          <button
+                            onClick={(e) => handleDelete(p, e)}
+                            className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
+                            title="Xoá dự án"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+                {projects.length === 0 && (
+                  <tr><td colSpan={5} className="py-12 text-center text-[#810C00]">Chưa có dự án nào</td></tr>
+                )}
+              </>
             )}
           </tbody>
         </table>

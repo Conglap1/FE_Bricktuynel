@@ -4,8 +4,10 @@ import { toast } from "sonner";
 import { useStore, API_BASE_URL } from "../lib/store";
 import type { ContactRequest } from "../lib/store";
 
+import { TableSkeleton } from "../components/ui/LoadingState";
+
 export function AdminContactRequests() {
-  const { contactRequests, setContactRequests, refreshContactRequests } = useStore();
+  const { contactRequests, setContactRequests, refreshContactRequests, isLoading } = useStore();
   const [detailReq, setDetailReq] = useState<ContactRequest | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -91,65 +93,71 @@ export function AdminContactRequests() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {contactRequests?.map((r) => (
-              <tr
-                key={r.id}
-                onClick={() => setDetailReq(r)}
-                className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${r.isRead ? "opacity-60" : ""}`}
-              >
-                <td className="px-5 py-4">
-                  <div className="font-semibold text-[#560213]">{r.fullName}</div>
-                  <div className="text-[12px] text-[#560213]/70">{r.phone}</div>
-                </td>
-                <td className="px-5 py-4 text-[#560213]/80">{r.email || "—"}</td>
-                <td className="px-5 py-4">
-                  <div className="max-w-[200px] truncate text-[#560213]/80">
-                    {r.content || "—"}
-                  </div>
-                </td>
-                <td className="px-5 py-4 text-[13px] text-[#560213]/70" style={{ fontFamily: "var(--font-mono)" }}>
-                  {r.createdAt ? new Date(r.createdAt).toLocaleDateString("vi-VN") : "—"}
-                </td>
-                <td className="px-5 py-4">
-                  {r.isRead
-                    ? <span className="rounded-full bg-[#C76B86]/15 px-2.5 py-0.5 text-[12px] font-medium text-[#560213]/70">Đã đọc</span>
-                    : <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-[12px] font-medium text-amber-700">Chưa đọc</span>}
-                </td>
-                <td className="px-5 py-4">
-                  <div className="flex items-center justify-end gap-2">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setDetailReq(r);
-                      }}
-                      title="Xem chi tiết"
-                      className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
-                    >
-                      <MessageSquare className="h-3.5 w-3.5" />
-                    </button>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleRead(r);
-                      }}
-                      title={r.isRead ? "Đánh dấu chưa đọc" : "Đánh dấu đã đọc"}
-                      className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
-                    >
-                      {r.isRead ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
-                    </button>
-                    <button
-                      onClick={(e) => handleDelete(r, e)}
-                      title="Xoá yêu cầu"
-                      className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {(!contactRequests || contactRequests.length === 0) && (
-              <tr><td colSpan={6} className="py-12 text-center text-[#810C00]">Chưa có yêu cầu nào</td></tr>
+            {isLoading ? (
+              <TableSkeleton rows={5} cols={6} />
+            ) : (
+              <>
+                {contactRequests?.map((r) => (
+                  <tr
+                    key={r.id}
+                    onClick={() => setDetailReq(r)}
+                    className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${r.isRead ? "opacity-60" : ""}`}
+                  >
+                    <td className="px-5 py-4">
+                      <div className="font-semibold text-[#560213]">{r.fullName}</div>
+                      <div className="text-[12px] text-[#560213]/70">{r.phone}</div>
+                    </td>
+                    <td className="px-5 py-4 text-[#560213]/80">{r.email || "—"}</td>
+                    <td className="px-5 py-4">
+                      <div className="max-w-[200px] truncate text-[#560213]/80">
+                        {r.content || "—"}
+                      </div>
+                    </td>
+                    <td className="px-5 py-4 text-[13px] text-[#560213]/70" style={{ fontFamily: "var(--font-mono)" }}>
+                      {r.createdAt ? new Date(r.createdAt).toLocaleDateString("vi-VN") : "—"}
+                    </td>
+                    <td className="px-5 py-4">
+                      {r.isRead
+                        ? <span className="rounded-full bg-[#C76B86]/15 px-2.5 py-0.5 text-[12px] font-medium text-[#560213]/70">Đã đọc</span>
+                        : <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-[12px] font-medium text-amber-700">Chưa đọc</span>}
+                    </td>
+                    <td className="px-5 py-4">
+                      <div className="flex items-center justify-end gap-2">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setDetailReq(r);
+                          }}
+                          title="Xem chi tiết"
+                          className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
+                        >
+                          <MessageSquare className="h-3.5 w-3.5" />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleRead(r);
+                          }}
+                          title={r.isRead ? "Đánh dấu chưa đọc" : "Đánh dấu đã đọc"}
+                          className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
+                        >
+                          {r.isRead ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                        </button>
+                        <button
+                          onClick={(e) => handleDelete(r, e)}
+                          title="Xoá yêu cầu"
+                          className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+                {(!contactRequests || contactRequests.length === 0) && (
+                  <tr><td colSpan={6} className="py-12 text-center text-[#810C00]">Chưa có yêu cầu nào</td></tr>
+                )}
+              </>
             )}
           </tbody>
         </table>

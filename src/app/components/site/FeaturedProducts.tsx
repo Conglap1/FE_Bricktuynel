@@ -15,8 +15,10 @@ function buildSpecs(p: Product) {
   ].filter((s): s is { label: string; value: string } => s !== null);
 }
 
+import { CardSkeleton } from "../ui/LoadingState";
+
 export function FeaturedProducts() {
-  const { products: PRODUCTS } = useStore();
+  const { products: PRODUCTS, isLoading } = useStore();
   const featuredProducts = PRODUCTS.filter((p) => p.isActive && p.isFeatured);
 
   return (
@@ -29,7 +31,12 @@ export function FeaturedProducts() {
           align="center"
         />
 
-        <Stagger className="mt-16 flex flex-wrap justify-center gap-4" gap={0.08}>
+        {isLoading ? (
+          <div className="mt-16">
+            <CardSkeleton count={5} />
+          </div>
+        ) : (
+          <Stagger className="mt-16 flex flex-wrap justify-center gap-4" gap={0.08}>
           {featuredProducts.map((p) => {
             const specs = buildSpecs(p);
             return (
@@ -93,6 +100,7 @@ export function FeaturedProducts() {
             );
           })}
         </Stagger>
+        )}
       </div>
     </section>
   );

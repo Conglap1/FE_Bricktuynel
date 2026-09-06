@@ -11,8 +11,10 @@ const EMPTY: PartnerForm = { name: "", logoPath: "", website: "", displayOrder: 
 
 function uid() { return Date.now(); }
 
+import { TableSkeleton } from "../components/ui/LoadingState";
+
 export function AdminPartners() {
-  const { partners, setPartners } = useStore();
+  const { partners, setPartners, isLoading } = useStore();
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Partner | null>(null);
   const [form, setForm] = useState<PartnerForm>(EMPTY);
@@ -118,76 +120,82 @@ export function AdminPartners() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {partners?.map((p) => (
-              <tr
-                key={p.id}
-                onClick={() => openEdit(p)}
-                className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${!p.isActive ? "opacity-40" : ""}`}
-              >
-                <td className="px-5 py-4">
-                  <div className="flex items-center gap-3">
-                    {p.logoPath && (
-                      <img
-                        src={getImageUrl(p.logoPath)}
-                        alt={p.name}
-                        className="h-10 w-16 rounded-lg object-contain bg-[#C76B86]/15"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
-                        }}
-                      />
-                    )}
-                    <div className="font-semibold text-[#560213] leading-snug">{p.name}</div>
-                  </div>
-                </td>
+            {isLoading ? (
+              <TableSkeleton rows={5} cols={5} />
+            ) : (
+              <>
+                {partners?.map((p) => (
+                  <tr
+                    key={p.id}
+                    onClick={() => openEdit(p)}
+                    className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${!p.isActive ? "opacity-40" : ""}`}
+                  >
+                    <td className="px-5 py-4">
+                      <div className="flex items-center gap-3">
+                        {p.logoPath && (
+                          <img
+                            src={getImageUrl(p.logoPath)}
+                            alt={p.name}
+                            className="h-10 w-16 rounded-lg object-contain bg-[#C76B86]/15"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
+                            }}
+                          />
+                        )}
+                        <div className="font-semibold text-[#560213] leading-snug">{p.name}</div>
+                      </div>
+                    </td>
 
-                <td className="px-5 py-4 text-[13px] text-[#560213]/70">
-                  {p.website ? (
-                    <a
-                      href={p.website}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="hover:underline text-blue-600"
-                    >
-                      {p.website}
-                    </a>
-                  ) : (
-                    "—"
-                  )}
-                </td>
-                <td className="px-5 py-4 text-[13px] text-[#560213]/70">
-                  {p.displayOrder}
-                </td>
-                <td className="px-5 py-4">
-                  {p.isActive
-                    ? <span className="rounded-full bg-[#C76B86]/20 px-2.5 py-0.5 text-[12px] font-medium text-[#560213]">Hiển thị</span>
-                    : <span className="rounded-full bg-[#C76B86]/15 px-2.5 py-0.5 text-[12px] font-medium text-[#560213]/70">Ẩn</span>}
-                </td>
-                <td className="px-5 py-4">
-                  <div className="flex items-center justify-end gap-2">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openEdit(p);
-                      }}
-                      className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
-                      title="Sửa đối tác"
-                    >
-                      <Pencil className="h-3.5 w-3.5" />
-                    </button>
-                    <button
-                      onClick={(e) => handleDelete(p, e)}
-                      className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
-                      title="Xoá đối tác"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {(!partners || partners.length === 0) && (
-              <tr><td colSpan={5} className="py-12 text-center text-[#810C00]">Chưa có đối tác nào</td></tr>
+                    <td className="px-5 py-4 text-[13px] text-[#560213]/70">
+                      {p.website ? (
+                        <a
+                          href={p.website}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="hover:underline text-blue-600"
+                        >
+                          {p.website}
+                        </a>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
+                    <td className="px-5 py-4 text-[13px] text-[#560213]/70">
+                      {p.displayOrder}
+                    </td>
+                    <td className="px-5 py-4">
+                      {p.isActive
+                        ? <span className="rounded-full bg-[#C76B86]/20 px-2.5 py-0.5 text-[12px] font-medium text-[#560213]">Hiển thị</span>
+                        : <span className="rounded-full bg-[#C76B86]/15 px-2.5 py-0.5 text-[12px] font-medium text-[#560213]/70">Ẩn</span>}
+                    </td>
+                    <td className="px-5 py-4">
+                      <div className="flex items-center justify-end gap-2">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openEdit(p);
+                          }}
+                          className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
+                          title="Sửa đối tác"
+                        >
+                          <Pencil className="h-3.5 w-3.5" />
+                        </button>
+                        <button
+                          onClick={(e) => handleDelete(p, e)}
+                          className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
+                          title="Xoá đối tác"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+                {(!partners || partners.length === 0) && (
+                  <tr><td colSpan={5} className="py-12 text-center text-[#810C00]">Chưa có đối tác nào</td></tr>
+                )}
+              </>
             )}
           </tbody>
         </table>

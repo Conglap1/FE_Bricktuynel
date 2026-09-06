@@ -115,9 +115,11 @@ const MOCK_SIDEBAR_PRODUCTS = [
   },
 ];
 
+import { DetailSkeleton } from "../components/ui/LoadingState";
+
 export function NewsDetailPage() {
   const { slug } = useParams<{ slug: string }>();
-  const { news, products, contact } = useStore();
+  const { news, products, contact, isLoading } = useStore();
   const { openQuote } = useQuote();
   const [copied, setCopied] = useState(false);
 
@@ -144,6 +146,10 @@ export function NewsDetailPage() {
       console.error(e);
     }
   };
+
+  if (isLoading) {
+    return <DetailSkeleton />;
+  }
 
   if (!article) {
     return (

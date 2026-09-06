@@ -9,6 +9,8 @@ import { IMAGES } from "../lib/data";
 import { Reveal, Stagger, staggerItem, motion } from "../lib/motion";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
+import { CardSkeleton } from "../components/ui/LoadingState";
+
 function formatDate(iso: string) {
   try {
     return new Date(iso).toLocaleDateString("vi-VN", { day: "2-digit", month: "long", year: "numeric" });
@@ -16,7 +18,7 @@ function formatDate(iso: string) {
 }
 
 export function NewsPage() {
-  const { news } = useStore();
+  const { news, isLoading } = useStore();
   const [search, setSearch] = useState("");
 
   const visible = useMemo(() => {
@@ -63,7 +65,11 @@ export function NewsPage() {
             </div>
           </Reveal>
 
-          {/* Featured Hero Article */}
+          {isLoading ? (
+            <CardSkeleton count={6} />
+          ) : (
+            <>
+              {/* Featured Hero Article */}
           {featured && (
             <Reveal>
               <div className="mb-14">
@@ -173,12 +179,14 @@ export function NewsPage() {
             <div className="py-20 text-center bg-white rounded-3xl border border-slate-200 shadow-sm">
               <p className="text-slate-500 font-medium text-base">Không tìm thấy bài viết nào phù hợp với từ khóa "{search}".</p>
               <button
-                onClick={() => { setSearch(""); setActiveCategory("Tất cả"); }}
+                onClick={() => setSearch("")}
                 className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-xs font-bold text-white shadow-md hover:bg-primary/90 transition-all cursor-pointer"
               >
                 Xóa bộ lọc tìm kiếm
               </button>
             </div>
+          )}
+            </>
           )}
         </div>
       </section>

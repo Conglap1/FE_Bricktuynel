@@ -4,9 +4,10 @@ import { motion, MotionLink } from "../../lib/motion";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { SectionHeading } from "./SectionHeading";
 import { useStore } from "../../lib/store";
+import { CardSkeleton } from "../ui/LoadingState";
 
 export function Projects() {
-  const { projects: PROJECTS } = useStore();
+  const { projects: PROJECTS, isLoading } = useStore();
   const visible = PROJECTS.filter((p) => p.isActive);
 
   return (
@@ -17,7 +18,12 @@ export function Projects() {
           title={<>Những công trình<br />được xây bằng niềm tin</>}
         />
 
-        <motion.div layout className="mt-14 grid auto-rows-[220px] grid-cols-2 gap-5 md:grid-cols-4">
+        {isLoading ? (
+          <div className="mt-14">
+            <CardSkeleton count={4} />
+          </div>
+        ) : (
+          <motion.div layout className="mt-14 grid auto-rows-[220px] grid-cols-2 gap-5 md:grid-cols-4">
           <AnimatePresence mode="popLayout">
             {visible.map((p, i) => (
               <MotionLink
@@ -65,6 +71,7 @@ export function Projects() {
             ))}
           </AnimatePresence>
         </motion.div>
+        )}
       </div>
     </section>
   );

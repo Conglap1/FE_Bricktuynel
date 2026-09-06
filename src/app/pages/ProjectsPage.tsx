@@ -16,6 +16,8 @@ import { IMAGES } from "../lib/data";
 import { Reveal, Stagger, staggerItem, motion } from "../lib/motion";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
+import { CardSkeleton } from "../components/ui/LoadingState";
+
 function formatDateShort(iso: string) {
   if (!iso) return "";
   if (iso.includes("T")) {
@@ -26,7 +28,7 @@ function formatDateShort(iso: string) {
 }
 
 export function ProjectsPage() {
-  const { projects } = useStore();
+  const { projects, isLoading } = useStore();
   const [search, setSearch] = useState("");
 
   const visible = useMemo(() => {
@@ -76,7 +78,11 @@ export function ProjectsPage() {
             </div>
           </Reveal>
 
-          {/* Featured Hero Project */}
+          {isLoading ? (
+            <CardSkeleton count={6} />
+          ) : (
+            <>
+              {/* Featured Hero Project */}
           {featured && (
             <Reveal>
               <div className="mb-14">
@@ -194,6 +200,8 @@ export function ProjectsPage() {
                 Xóa từ khóa tìm kiếm
               </button>
             </div>
+          )}
+            </>
           )}
 
         </div>

@@ -4,13 +4,15 @@ import { SectionHeading } from "./SectionHeading";
 import { Reveal, Stagger, staggerItem, motion } from "../../lib/motion";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 
+import { Skeleton } from "../ui/skeleton";
+
 export function PartnersSection({ title = "Đối tác & Đại lý chiến lược", showHeading = true }: { title?: string; showHeading?: boolean }) {
-  const { partners } = useStore();
+  const { partners, isLoading } = useStore();
 
   const activePartners = partners.filter((p) => p.isActive);
 
   const list = activePartners;
-  if (list.length === 0) return null;
+  if (!isLoading && list.length === 0) return null;
 
   return (
     <section id="partners-section" className="relative bg-white py-20 md:py-28 overflow-hidden border-t border-border">
@@ -58,7 +60,16 @@ export function PartnersSection({ title = "Đối tác & Đại lý chiến lư�
         </Reveal>
 
         {/* Partners Grid */}
-        <Stagger className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5">
+        {isLoading ? (
+          <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 animate-pulse">
+            {Array.from({ length: 6 }).map((_, idx) => (
+              <div key={idx} className="flex flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-6 h-28">
+                <Skeleton className="h-10 w-24 rounded bg-slate-200" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <Stagger className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5">
           {list.map((p) => {
             const logoUrl = getImageUrl(p.logoPath);
             return (
@@ -104,6 +115,7 @@ export function PartnersSection({ title = "Đối tác & Đại lý chiến lư�
             );
           })}
         </Stagger>
+        )}
       </div>
     </section>
   );

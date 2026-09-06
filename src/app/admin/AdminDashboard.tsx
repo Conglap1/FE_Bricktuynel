@@ -16,8 +16,10 @@ import {
 } from "lucide-react";
 import { useStore } from "../lib/store";
 
+import { StatCardSkeleton, TableSkeleton } from "../components/ui/LoadingState";
+
 export function AdminDashboard() {
-  const { products, projects, news, partners, contactRequests, refreshAll } = useStore();
+  const { products, projects, news, partners, contactRequests, refreshAll, isLoading } = useStore();
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const unreadRequests = contactRequests.filter((r) => !r.isRead).length;
@@ -137,34 +139,38 @@ export function AdminDashboard() {
       </div>
 
       {/* ── Real KPI Stat Cards ── */}
-      <div className="grid gap-2.5 grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 shrink-0">
-        {stats.map((s) => (
-          <RouterLink
-            key={s.label}
-            to={s.to}
-            className={`group relative overflow-hidden rounded-xl border bg-white p-2.5 sm:p-3 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${s.color}`}
-          >
-            <div className="flex items-center justify-between">
-              <span className={`grid h-7 sm:h-8.5 w-7 sm:w-8.5 place-items-center rounded-lg shadow-sm ${s.iconBg}`}>
-                <s.icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              </span>
-              {s.badge && (
-                <span className="rounded-full bg-red-600 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-bold text-white shadow-sm">
-                  {s.badge}
+      {isLoading ? (
+        <StatCardSkeleton count={5} />
+      ) : (
+        <div className="grid gap-2.5 grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 shrink-0">
+          {stats.map((s) => (
+            <RouterLink
+              key={s.label}
+              to={s.to}
+              className={`group relative overflow-hidden rounded-xl border bg-white p-2.5 sm:p-3 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${s.color}`}
+            >
+              <div className="flex items-center justify-between">
+                <span className={`grid h-7 sm:h-8.5 w-7 sm:w-8.5 place-items-center rounded-lg shadow-sm ${s.iconBg}`}>
+                  <s.icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 </span>
-              )}
-            </div>
-
-            <div className="mt-1.5 sm:mt-2">
-              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 group-hover:text-[#810C00] transition-colors">
-                {s.value}
+                {s.badge && (
+                  <span className="rounded-full bg-red-600 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-bold text-white shadow-sm">
+                    {s.badge}
+                  </span>
+                )}
               </div>
-              <div className="text-[11px] sm:text-xs font-semibold text-slate-700 mt-0.5 truncate">{s.label}</div>
-              <div className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 truncate">{s.subtext}</div>
-            </div>
-          </RouterLink>
-        ))}
-      </div>
+
+              <div className="mt-1.5 sm:mt-2">
+                <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 group-hover:text-[#810C00] transition-colors">
+                  {s.value}
+                </div>
+                <div className="text-[11px] sm:text-xs font-semibold text-slate-700 mt-0.5 truncate">{s.label}</div>
+                <div className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 truncate">{s.subtext}</div>
+              </div>
+            </RouterLink>
+          ))}
+        </div>
+      )}
 
       {/* ── Main Content Grid: Recent Customer Inquiries & Content Overview ── */}
       <div className="grid gap-3.5 lg:grid-cols-3 flex-1 min-h-0">

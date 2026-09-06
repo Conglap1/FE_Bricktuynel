@@ -15,8 +15,10 @@ import {
 import { toast } from "sonner";
 import { useStore, API_BASE_URL, getAuthHeaders, type ContactInfo } from "../lib/store";
 
+import { InlineSpinner } from "../components/ui/LoadingState";
+
 export function AdminContact() {
-  const { contact, setContact } = useStore();
+  const { contact, setContact, isLoading } = useStore();
   const [form, setForm] = useState<ContactInfo>({ ...contact });
 
   useEffect(() => {
@@ -46,6 +48,14 @@ export function AdminContact() {
       setContact(form);
       toast.success("Đã lưu thông tin liên hệ (offline)");
     }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="p-6 lg:p-8 space-y-6 max-w-7xl mx-auto">
+        <InlineSpinner text="Đang tải thông tin liên hệ từ CSDL..." />
+      </div>
+    );
   }
 
   return (

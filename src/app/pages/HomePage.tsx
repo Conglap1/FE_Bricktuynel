@@ -35,9 +35,11 @@ function SeeMore({ to, label, dark = false, bg = "" }: { to: string; label: stri
   );
 }
 
+import { CardSkeleton } from "../components/ui/LoadingState";
+
 /* ─── 1. News teaser (right after hero) ─── */
 function NewsTeaser() {
-  const { news } = useStore();
+  const { news, isLoading } = useStore();
   const visible = news.filter((n) => n.isActive).slice(0, 3);
   return (
     <section className="bg-secondary/40 py-16 md:py-20">
@@ -55,7 +57,11 @@ function NewsTeaser() {
             Xem tất cả <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
-        <Stagger className="grid gap-5 md:grid-cols-3">
+
+        {isLoading ? (
+          <CardSkeleton count={3} />
+        ) : (
+          <Stagger className="grid gap-5 md:grid-cols-3">
           {visible.map((n) => (
             <motion.div key={n.id} variants={staggerItem}>
               <Link
@@ -84,6 +90,7 @@ function NewsTeaser() {
             </motion.div>
           ))}
         </Stagger>
+        )}
       </div>
     </section>
   );

@@ -40,9 +40,11 @@ function autoLinkify(text: string) {
   );
 }
 
+import { DetailSkeleton } from "../components/ui/LoadingState";
+
 export function ProjectDetailPage() {
   const { slug } = useParams<{ slug: string }>();
-  const { projects } = useStore();
+  const { projects, isLoading } = useStore();
 
   const project = projects.find((p) => p.slug === slug && p.isActive);
   const otherProjects = projects.filter((p) => p.isActive && p.id !== project?.id).slice(0, 3);
@@ -78,6 +80,10 @@ export function ProjectDetailPage() {
     }, 10000);
     return () => clearInterval(timer);
   }, [allImages.length]);
+
+  if (isLoading) {
+    return <DetailSkeleton />;
+  }
 
   if (!project) {
     return (

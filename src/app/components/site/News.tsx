@@ -14,8 +14,19 @@ function formatDate(iso: string) {
   }
 }
 
+import { CardSkeleton } from "../ui/LoadingState";
+
+function formatDate(iso: string) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" });
+  } catch {
+    return iso;
+  }
+}
+
 export function News() {
-  const { news: NEWS } = useStore();
+  const { news: NEWS, isLoading } = useStore();
   const visible = NEWS.filter((n) => n.isActive);
 
   return (
@@ -29,7 +40,12 @@ export function News() {
           </Link>
         </div>
 
-        <Stagger className="mt-14 grid gap-6 md:grid-cols-3">
+        {isLoading ? (
+          <div className="mt-14">
+            <CardSkeleton count={3} />
+          </div>
+        ) : (
+          <Stagger className="mt-14 grid gap-6 md:grid-cols-3">
           {visible.map((n) => (
             <motion.div key={n.id} variants={staggerItem}>
             <Link
@@ -67,6 +83,7 @@ export function News() {
             </motion.div>
           ))}
         </Stagger>
+        )}
       </div>
     </section>
   );

@@ -3,8 +3,10 @@ import { Save, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useStore, DEFAULT_ABOUT, type AboutData } from "../lib/store";
 
+import { InlineSpinner } from "../components/ui/LoadingState";
+
 export function AdminAbout() {
-  const { about, setAbout } = useStore();
+  const { about, setAbout, isLoading } = useStore();
   const [form, setForm] = useState<AboutData>({ ...about, points: [...about.points] });
 
   function handleSave() {
@@ -27,6 +29,14 @@ export function AdminAbout() {
   function handleReset() {
     setForm({ ...DEFAULT_ABOUT, points: [...DEFAULT_ABOUT.points] });
     toast("Đã khôi phục mặc định");
+  }
+
+  if (isLoading) {
+    return (
+      <div className="p-8 max-w-3xl">
+        <InlineSpinner text="Đang tải dữ liệu giới thiệu..." />
+      </div>
+    );
   }
 
   return (

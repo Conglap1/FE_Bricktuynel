@@ -31,8 +31,10 @@ function fmtDate(iso: string) {
   try { return new Date(iso).toLocaleDateString("vi-VN"); } catch { return iso; }
 }
 
+import { TableSkeleton } from "../components/ui/LoadingState";
+
 export function AdminNews() {
-  const { news, setNews } = useStore();
+  const { news, setNews, isLoading } = useStore();
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<NewsItem | null>(null);
   const [form, setForm] = useState<NewsForm>(EMPTY);
@@ -217,72 +219,78 @@ export function AdminNews() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {news.map((n) => (
-              <tr
-                key={n.id}
-                onClick={() => openEdit(n)}
-                className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${!n.isActive ? "opacity-40" : ""}`}
-              >
-                <td className="px-5 py-4">
-                  <div className="flex items-center gap-3">
-                    {n.thumbnailPath && (
-                      <img
-                        src={getImageUrl(n.thumbnailPath)}
-                        alt={n.title}
-                        className="h-10 w-16 rounded-lg object-cover bg-[#C76B86]/15"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
-                        }}
-                      />
-                    )}
-                    <div>
-                      <div className="font-semibold text-[#560213] leading-snug">{n.title}</div>
-                      <div className="text-[11px] text-[#810C00]">{n.slug}</div>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-5 py-4 text-xs font-semibold text-[#560213]">
-                  {n.sections && n.sections.length > 0 ? (
-                    <span className="rounded-full bg-[#810C00]/10 px-2.5 py-1 text-[#810C00]">
-                      {n.sections.length} mục
-                    </span>
-                  ) : (
-                    <span className="text-muted-foreground">—</span>
-                  )}
-                </td>
-                <td className="px-5 py-4 text-[13px] text-[#560213]/70" style={{ fontFamily: "var(--font-mono)" }}>
-                  {fmtDate(n.publishedAt ?? "")}
-                </td>
-                <td className="px-5 py-4">
-                  {n.isActive
-                    ? <span className="rounded-full bg-[#C76B86]/20 px-2.5 py-0.5 text-[12px] font-medium text-[#560213]">Hiển thị</span>
-                    : <span className="rounded-full bg-[#C76B86]/15 px-2.5 py-0.5 text-[12px] font-medium text-[#560213]/70">Ẩn</span>}
-                </td>
-                <td className="px-5 py-4">
-                  <div className="flex items-center justify-end gap-2">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openEdit(n);
-                      }}
-                      className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
-                      title="Sửa bài viết"
-                    >
-                      <Pencil className="h-3.5 w-3.5" />
-                    </button>
-                    <button
-                      onClick={(e) => handleDelete(n, e)}
-                      className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
-                      title="Xoá bài viết"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {news.length === 0 && (
-              <tr><td colSpan={5} className="py-12 text-center text-[#810C00]">Chưa có bài viết nào</td></tr>
+            {isLoading ? (
+              <TableSkeleton rows={5} cols={5} />
+            ) : (
+              <>
+                {news.map((n) => (
+                  <tr
+                    key={n.id}
+                    onClick={() => openEdit(n)}
+                    className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${!n.isActive ? "opacity-40" : ""}`}
+                  >
+                    <td className="px-5 py-4">
+                      <div className="flex items-center gap-3">
+                        {n.thumbnailPath && (
+                          <img
+                            src={getImageUrl(n.thumbnailPath)}
+                            alt={n.title}
+                            className="h-10 w-16 rounded-lg object-cover bg-[#C76B86]/15"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
+                            }}
+                          />
+                        )}
+                        <div>
+                          <div className="font-semibold text-[#560213] leading-snug">{n.title}</div>
+                          <div className="text-[11px] text-[#810C00]">{n.slug}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-5 py-4 text-xs font-semibold text-[#560213]">
+                      {n.sections && n.sections.length > 0 ? (
+                        <span className="rounded-full bg-[#810C00]/10 px-2.5 py-1 text-[#810C00]">
+                          {n.sections.length} mục
+                        </span>
+                      ) : (
+                        <span className="text-muted-foreground">—</span>
+                      )}
+                    </td>
+                    <td className="px-5 py-4 text-[13px] text-[#560213]/70" style={{ fontFamily: "var(--font-mono)" }}>
+                      {fmtDate(n.publishedAt ?? "")}
+                    </td>
+                    <td className="px-5 py-4">
+                      {n.isActive
+                        ? <span className="rounded-full bg-[#C76B86]/20 px-2.5 py-0.5 text-[12px] font-medium text-[#560213]">Hiển thị</span>
+                        : <span className="rounded-full bg-[#C76B86]/15 px-2.5 py-0.5 text-[12px] font-medium text-[#560213]/70">Ẩn</span>}
+                    </td>
+                    <td className="px-5 py-4">
+                      <div className="flex items-center justify-end gap-2">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openEdit(n);
+                          }}
+                          className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
+                          title="Sửa bài viết"
+                        >
+                          <Pencil className="h-3.5 w-3.5" />
+                        </button>
+                        <button
+                          onClick={(e) => handleDelete(n, e)}
+                          className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
+                          title="Xoá bài viết"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+                {news.length === 0 && (
+                  <tr><td colSpan={5} className="py-12 text-center text-[#810C00]">Chưa có bài viết nào</td></tr>
+                )}
+              </>
             )}
           </tbody>
         </table>

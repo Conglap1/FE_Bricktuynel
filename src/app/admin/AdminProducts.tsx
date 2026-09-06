@@ -36,8 +36,10 @@ function toSlug(name: string) {
     .trim().replace(/\s+/g, "-");
 }
 
+import { TableSkeleton } from "../components/ui/LoadingState";
+
 export function AdminProducts() {
-  const { products, setProducts } = useStore();
+  const { products, setProducts, isLoading } = useStore();
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Product | null>(null);
   const [form, setForm] = useState<ProductForm>(EMPTY);
@@ -286,70 +288,76 @@ export function AdminProducts() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {products.map((p) => {
-              const displayImg = p.image || (p.images && p.images[0]) || "";
-              const imgCount = p.images?.length || (p.image ? 1 : 0);
-              return (
-                <tr
-                  key={p.id}
-                  onClick={() => openEdit(p)}
-                  className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${!p.isActive ? "opacity-40" : ""}`}
-                >
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-3">
-                      {displayImg && (
-                        <img
-                          src={getImageUrl(displayImg)}
-                          alt={p.name}
-                          className="h-10 w-14 rounded-lg object-cover bg-[#C76B86]/15"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
-                          }}
-                        />
-                      )}
-                      <div>
-                        <div className="font-semibold text-[#560213] flex items-center gap-2">
-                          {p.name}
-                          {p.isFeatured && (
-                            <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold text-amber-800">
-                              Nổi bật
-                            </span>
+            {isLoading ? (
+              <TableSkeleton rows={5} cols={6} />
+            ) : (
+              <>
+                {products.map((p) => {
+                  const displayImg = p.image || (p.images && p.images[0]) || "";
+                  const imgCount = p.images?.length || (p.image ? 1 : 0);
+                  return (
+                    <tr
+                      key={p.id}
+                      onClick={() => openEdit(p)}
+                      className={`cursor-pointer transition-colors hover:bg-[#810C00]/10 ${!p.isActive ? "opacity-40" : ""}`}
+                    >
+                      <td className="px-5 py-4">
+                        <div className="flex items-center gap-3">
+                          {displayImg && (
+                            <img
+                              src={getImageUrl(displayImg)}
+                              alt={p.name}
+                              className="h-10 w-14 rounded-lg object-cover bg-[#C76B86]/15"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
+                              }}
+                            />
                           )}
+                          <div>
+                            <div className="font-semibold text-[#560213] flex items-center gap-2">
+                              {p.name}
+                              {p.isFeatured && (
+                                <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold text-amber-800">
+                                  Nổi bật
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-[11px] text-[#810C00]">{p.slug} • {imgCount} ảnh</div>
+                          </div>
                         </div>
-                        <div className="text-[11px] text-[#810C00]">{p.slug} • {imgCount} ảnh</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-5 py-4 text-[#560213]/80">{p.length}×{p.width}×{p.height}</td>
-                  <td className="px-5 py-4 text-[#560213]/80 font-medium">{p.brickGrade ?? "—"}</td>
-                  <td className="px-5 py-4 text-[#560213]/80">{p.compressionStrength != null ? `${p.compressionStrength} MPa` : "—"}</td>
-                  <td className="px-5 py-4 text-[#560213]/80">{p.flexuralStrength != null ? `${p.flexuralStrength} MPa` : "—"}</td>
-                  <td className="px-5 py-4">
-                    <div className="flex items-center justify-end gap-2">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          openEdit(p);
-                        }}
-                        className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
-                        title="Sửa sản phẩm"
-                      >
-                        <Pencil className="h-3.5 w-3.5" />
-                      </button>
-                      <button
-                        onClick={(e) => handleDelete(p, e)}
-                        className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
-                        title="Xoá sản phẩm"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-            {products.length === 0 && (
-              <tr><td colSpan={6} className="py-12 text-center text-[#810C00]">Chưa có sản phẩm nào</td></tr>
+                      </td>
+                      <td className="px-5 py-4 text-[#560213]/80">{p.length}×{p.width}×{p.height}</td>
+                      <td className="px-5 py-4 text-[#560213]/80 font-medium">{p.brickGrade ?? "—"}</td>
+                      <td className="px-5 py-4 text-[#560213]/80">{p.compressionStrength != null ? `${p.compressionStrength} MPa` : "—"}</td>
+                      <td className="px-5 py-4 text-[#560213]/80">{p.flexuralStrength != null ? `${p.flexuralStrength} MPa` : "—"}</td>
+                      <td className="px-5 py-4">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openEdit(p);
+                            }}
+                            className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
+                            title="Sửa sản phẩm"
+                          >
+                            <Pencil className="h-3.5 w-3.5" />
+                          </button>
+                          <button
+                            onClick={(e) => handleDelete(p, e)}
+                            className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-red-500 hover:text-red-500"
+                            title="Xoá sản phẩm"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+                {products.length === 0 && (
+                  <tr><td colSpan={6} className="py-12 text-center text-[#810C00]">Chưa có sản phẩm nào</td></tr>
+                )}
+              </>
             )}
           </tbody>
         </table>
