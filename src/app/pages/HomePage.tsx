@@ -7,7 +7,7 @@ import { CTABand } from "../components/site/CTABand";
 import { Reveal, Stagger, staggerItem, motion } from "../lib/motion";
 import { SectionHeading } from "../components/site/SectionHeading";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { useStore } from "../lib/store";
+import { useStore, stripHtml } from "../lib/store";
 
 function formatDate(iso: string) {
   try {
@@ -77,7 +77,7 @@ function NewsTeaser() {
                     {n.title}
                   </h3>
                   {n.summary && (
-                    <p className="mt-1 text-[12px] text-muted-foreground line-clamp-2">{n.summary}</p>
+                    <p className="mt-1 text-[12px] text-muted-foreground line-clamp-2">{stripHtml(n.summary)}</p>
                   )}
                 </div>
               </Link>

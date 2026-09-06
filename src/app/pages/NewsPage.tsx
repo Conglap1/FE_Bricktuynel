@@ -4,7 +4,7 @@ import { Calendar, ArrowRight, Search, Sparkles, Clock, Tag } from "lucide-react
 import { PageHeader } from "../components/site/PageHeader";
 import { CTABand } from "../components/site/CTABand";
 import { LogoMarquee } from "../components/site/LogoMarquee";
-import { useStore } from "../lib/store";
+import { useStore, stripHtml } from "../lib/store";
 import { IMAGES } from "../lib/data";
 import { Reveal, Stagger, staggerItem, motion } from "../lib/motion";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
@@ -26,7 +26,7 @@ export function NewsPage() {
         return (
           !search ||
           n.title.toLowerCase().includes(search.toLowerCase()) ||
-          (n.summary && n.summary.toLowerCase().includes(search.toLowerCase()))
+          (n.summary && stripHtml(n.summary).toLowerCase().includes(search.toLowerCase()))
         );
       })
       .sort((a, b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? ""));
@@ -104,7 +104,7 @@ export function NewsPage() {
                       </h2>
 
                       {featured.summary && (
-                        <p className="mt-4 text-[15px] leading-relaxed text-slate-600 line-clamp-3">{featured.summary}</p>
+                        <p className="mt-4 text-[15px] leading-relaxed text-slate-600 line-clamp-3">{stripHtml(featured.summary)}</p>
                       )}
                     </div>
 
@@ -152,7 +152,7 @@ export function NewsPage() {
                         </h3>
 
                         {n.summary && (
-                          <p className="mt-2.5 text-[13.5px] leading-relaxed text-slate-600 line-clamp-2">{n.summary}</p>
+                          <p className="mt-2.5 text-[13.5px] leading-relaxed text-slate-600 line-clamp-2">{stripHtml(n.summary)}</p>
                         )}
 
                         <div className="mt-6 flex-1" />

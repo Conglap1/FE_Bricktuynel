@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { motion, Stagger, staggerItem } from "../../lib/motion";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { SectionHeading } from "./SectionHeading";
-import { useStore } from "../../lib/store";
+import { useStore, stripHtml } from "../../lib/store";
 
 function formatDate(iso: string) {
   try {
@@ -54,7 +54,7 @@ export function News() {
                 </h3>
                 {n.summary && (
                   <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground line-clamp-2">
-                    {n.summary}
+                    {stripHtml(n.summary)}
                   </p>
                 )}
                 <div className="flex-1" />

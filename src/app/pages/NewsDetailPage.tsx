@@ -22,7 +22,7 @@ import {
   ShieldCheck,
   Building2
 } from "lucide-react";
-import { useStore, getImageUrl } from "../lib/store";
+import { useStore, getImageUrl, stripHtml } from "../lib/store";
 import { IMAGES } from "../lib/data";
 import { useQuote } from "../components/site/QuoteContext";
 import { PageHeader } from "../components/site/PageHeader";
@@ -511,7 +511,7 @@ export function NewsDetailPage() {
                       </h3>
                       {n.summary && (
                         <p className="mt-2 text-[13px] leading-relaxed text-slate-600 line-clamp-2">
-                          {n.summary}
+                          {stripHtml(n.summary)}
                         </p>
                       )}
                       <div className="mt-5 flex-1" />
