@@ -32,6 +32,46 @@ export function CardSkeleton({ count = 5 }: { count?: number }) {
   );
 }
 
+/* Page List Skeleton for ProjectsPage and NewsPage (1 Featured Hero Banner + 3 Grid Cards below) */
+export function PageListSkeleton() {
+  return (
+    <div className="space-y-14 w-full animate-pulse">
+      {/* Featured Hero Skeleton Banner */}
+      <div className="flex flex-col lg:flex-row overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+        <Skeleton className="aspect-[16/9] lg:aspect-[16/10] w-full lg:w-[48%] shrink-0 bg-slate-200" />
+        <div className="flex flex-1 flex-col justify-between p-8 lg:p-10 space-y-6">
+          <div className="space-y-3">
+            <Skeleton className="h-3.5 w-32 bg-slate-200" />
+            <Skeleton className="h-8 w-4/5 bg-slate-200" />
+            <Skeleton className="h-4 w-full bg-slate-200/70" />
+            <Skeleton className="h-4 w-2/3 bg-slate-200/70" />
+          </div>
+          <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
+            <Skeleton className="h-4 w-36 bg-slate-200/60" />
+            <Skeleton className="h-10 w-36 rounded-full bg-slate-200" />
+          </div>
+        </div>
+      </div>
+
+      {/* 3-Column Grid Skeletons */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full">
+        {Array.from({ length: 3 }).map((_, idx) => (
+          <div key={idx} className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 space-y-4 shadow-sm">
+            <Skeleton className="aspect-[16/10] w-full rounded-xl bg-slate-200" />
+            <Skeleton className="h-3.5 w-24 bg-slate-200" />
+            <Skeleton className="h-5 w-4/5 bg-slate-200" />
+            <Skeleton className="h-3.5 w-full bg-slate-200/60" />
+            <div className="pt-4 border-t border-slate-100 flex justify-between items-center mt-auto">
+              <Skeleton className="h-4 w-28 bg-slate-200" />
+              <Skeleton className="h-4 w-4 bg-slate-200" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* News cards skeleton (3 columns) */
 export function NewsCardSkeleton({ count = 3 }: { count?: number }) {
   return (

@@ -16,7 +16,7 @@ import { IMAGES } from "../lib/data";
 import { Reveal, Stagger, staggerItem, motion } from "../lib/motion";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
-import { CardSkeleton } from "../components/ui/LoadingState";
+import { PageListSkeleton } from "../components/ui/LoadingState";
 
 function formatDateShort(iso: string) {
   if (!iso) return "";
@@ -79,7 +79,7 @@ export function ProjectsPage() {
           </Reveal>
 
           {isLoading ? (
-            <CardSkeleton count={6} />
+            <PageListSkeleton />
           ) : (
             <>
               {/* Featured Hero Project */}
