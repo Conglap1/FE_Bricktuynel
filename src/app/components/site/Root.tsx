@@ -8,14 +8,11 @@ import { Footer } from "./Footer";
 import { QuoteDialog } from "./QuoteDialog";
 import { ScrollToTop } from "./ScrollToTop";
 import { FloatingWidget } from "./FloatingWidget";
-import { StoreProvider } from "../../lib/store";
-
 export function Root() {
   const location = useLocation();
   const outlet = useOutlet();
 
   return (
-    <StoreProvider>
     <QuoteProvider>
       <div className="min-h-screen w-full overflow-x-clip bg-background text-foreground">
         <ScrollToTop />
@@ -39,7 +36,6 @@ export function Root() {
         <FloatingWidget />
       </div>
     </QuoteProvider>
-    </StoreProvider>
   );
 }
 

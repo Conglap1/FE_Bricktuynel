@@ -21,14 +21,8 @@ import { AdminNews } from "./admin/AdminNews";
 import { AdminContact } from "./admin/AdminContact";
 import { AdminPartners } from "./admin/AdminPartners";
 import { AdminContactRequests } from "./admin/AdminContactRequests";
-import { StoreProvider } from "./lib/store";
-
 function AdminWrapper() {
-  return (
-    <StoreProvider>
-      <AdminRoot />
-    </StoreProvider>
-  );
+  return <AdminRoot />;
 }
 
 export const router = createHashRouter([

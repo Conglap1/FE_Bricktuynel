@@ -208,42 +208,78 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // Fetch all real data strictly from .NET 9 API
-  const refreshAll = useCallback(async () => {
+  // Fetch all real data strictly from .NET 9 API with return status indicating success
+  const refreshAll = useCallback(async (): Promise<boolean> => {
     setIsLoading(true);
+    let hasData = false;
     try {
       const [resContact, resProducts, resProjects, resNews, resPartners] = await Promise.all([
-        fetch(`${API_BASE_URL}/contact-info`).catch(() => null),
-        fetch(`${API_BASE_URL}/products`).catch(() => null),
-        fetch(`${API_BASE_URL}/projects`).catch(() => null),
-        fetch(`${API_BASE_URL}/news`).catch(() => null),
-        fetch(`${API_BASE_URL}/partners`).catch(() => null),
+        fetch(`${API_BASE_URL}/contact-info`).catch((err) => { console.warn("[API Warmup] Contact info fetch failed:", err); return null; }),
+        fetch(`${API_BASE_URL}/products`).catch((err) => { console.warn("[API Warmup] Products fetch failed:", err); return null; }),
+        fetch(`${API_BASE_URL}/projects`).catch((err) => { console.warn("[API Warmup] Projects fetch failed:", err); return null; }),
+        fetch(`${API_BASE_URL}/news`).catch((err) => { console.warn("[API Warmup] News fetch failed:", err); return null; }),
+        fetch(`${API_BASE_URL}/partners`).catch((err) => { console.warn("[API Warmup] Partners fetch failed:", err); return null; }),
       ]);
 
       if (resContact?.ok) setContactRaw(await resContact.json());
-      if (resProducts?.ok) setProductsRaw(await resProducts.json());
-      if (resProjects?.ok) setProjectsRaw(await resProjects.json());
-      if (resNews?.ok) setNewsRaw(await resNews.json());
+      
+      if (resProducts?.ok) {
+        const prodData = await resProducts.json();
+        setProductsRaw(prodData);
+        if (Array.isArray(prodData) && prodData.length > 0) hasData = true;
+      }
+      if (resProjects?.ok) {
+        const projData = await resProjects.json();
+        setProjectsRaw(projData);
+        if (Array.isArray(projData) && projData.length > 0) hasData = true;
+      }
+      if (resNews?.ok) {
+        const newsData = await resNews.json();
+        setNewsRaw(newsData);
+        if (Array.isArray(newsData) && newsData.length > 0) hasData = true;
+      }
       if (resPartners?.ok) setPartnersRaw(await resPartners.json());
 
       await refreshContactRequests(false);
+      return hasData;
     } catch (err) {
       console.warn("Backend API fetch error:", err);
+      return false;
     } finally {
       setIsLoading(false);
     }
   }, [refreshContactRequests]);
 
-  // Initial load and continuous real-time polling every 3 seconds
+  // Initial load with automatic retry for Azure Cold Starts
   useEffect(() => {
-    refreshAll();
+    let isMounted = true;
+    let attempts = 0;
+    const maxRetries = 5;
+
+    const initialFetchWithRetry = async () => {
+      const success = await refreshAll();
+      // If initial fetch returned no data (likely Azure App Service Cold Start), retry automatically
+      if (!success && isMounted && attempts < maxRetries) {
+        attempts++;
+        const delayMs = attempts * 3000; // 3s, 6s, 9s, 12s, 15s
+        console.warn(`[Cold Start Detection] Backend is waking up. Retrying fetch in ${delayMs / 1000}s (Attempt ${attempts}/${maxRetries})...`);
+        setTimeout(() => {
+          if (isMounted) initialFetchWithRetry();
+        }, delayMs);
+      }
+    };
+
+    initialFetchWithRetry();
 
     // Auto-poll every 3 seconds for immediate real-time synchronization across devices
     const pollInterval = setInterval(() => {
       refreshContactRequests(true);
     }, 3000);
 
-    return () => clearInterval(pollInterval);
+    return () => {
+      isMounted = false;
+      clearInterval(pollInterval);
+    };
   }, [refreshAll, refreshContactRequests]);
 
   const setProducts = useCallback((v: Product[]) => setProductsRaw(v), []);
