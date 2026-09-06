@@ -9,7 +9,7 @@ import { IMAGES } from "../lib/data";
 import { Reveal, Stagger, staggerItem, motion } from "../lib/motion";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
-import { CardSkeleton } from "../components/ui/LoadingState";
+import { NewsCardSkeleton } from "../components/ui/LoadingState";
 
 function formatDate(iso: string) {
   try {
@@ -66,7 +66,7 @@ export function NewsPage() {
           </Reveal>
 
           {isLoading ? (
-            <CardSkeleton count={6} />
+            <NewsCardSkeleton count={6} />
           ) : (
             <>
               {/* Featured Hero Article */}

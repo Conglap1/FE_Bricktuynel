@@ -35,7 +35,7 @@ function SeeMore({ to, label, dark = false, bg = "" }: { to: string; label: stri
   );
 }
 
-import { CardSkeleton } from "../components/ui/LoadingState";
+import { NewsTeaserSkeleton } from "../components/ui/LoadingState";
 
 /* ─── 1. News teaser (right after hero) ─── */
 function NewsTeaser() {
@@ -59,7 +59,7 @@ function NewsTeaser() {
         </div>
 
         {isLoading ? (
-          <CardSkeleton count={3} />
+          <NewsTeaserSkeleton count={3} />
         ) : (
           <Stagger className="grid gap-5 md:grid-cols-3">
           {visible.map((n) => (

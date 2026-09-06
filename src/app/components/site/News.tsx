@@ -14,7 +14,7 @@ function formatDate(iso: string) {
   }
 }
 
-import { CardSkeleton } from "../ui/LoadingState";
+import { NewsCardSkeleton } from "../ui/LoadingState";
 
 function formatDate(iso: string) {
   try {
@@ -42,7 +42,7 @@ export function News() {
 
         {isLoading ? (
           <div className="mt-14">
-            <CardSkeleton count={3} />
+            <NewsCardSkeleton count={3} />
           </div>
         ) : (
           <Stagger className="mt-14 grid gap-6 md:grid-cols-3">

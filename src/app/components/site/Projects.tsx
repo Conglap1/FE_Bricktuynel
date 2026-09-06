@@ -4,7 +4,7 @@ import { motion, MotionLink } from "../../lib/motion";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { SectionHeading } from "./SectionHeading";
 import { useStore } from "../../lib/store";
-import { CardSkeleton } from "../ui/LoadingState";
+import { ProjectGridSkeleton } from "../ui/LoadingState";
 
 export function Projects() {
   const { projects: PROJECTS, isLoading } = useStore();
@@ -20,7 +20,7 @@ export function Projects() {
 
         {isLoading ? (
           <div className="mt-14">
-            <CardSkeleton count={4} />
+            <ProjectGridSkeleton count={4} />
           </div>
         ) : (
           <motion.div layout className="mt-14 grid auto-rows-[220px] grid-cols-2 gap-5 md:grid-cols-4">
