@@ -175,8 +175,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   // Function to refresh contact requests with optional real-time toast alert
   const refreshContactRequests = useCallback(async (notifyIfNew = true) => {
+    const headers = getAuthHeaders();
+    if (!headers.Authorization) return;
     try {
-      const res = await fetch(`${API_BASE_URL}/contact-requests`);
+      const res = await fetch(`${API_BASE_URL}/contact-requests`, { headers });
       if (res.ok) {
         const data: ContactRequest[] = await res.json();
         if (Array.isArray(data)) {
