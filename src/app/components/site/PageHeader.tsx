@@ -33,7 +33,7 @@ export function PageHeader({
   }, [image]);
 
   return (
-    <section className={`relative overflow-hidden bg-[#560213] pb-28 pt-36 md:pb-36 md:pt-48 min-h-[440px] md:min-h-[520px] flex flex-col justify-center ${className}`}>
+    <section className={`relative overflow-hidden bg-[#560213] pb-20 pt-32 md:pb-24 md:pt-40 min-h-[380px] md:min-h-[440px] flex flex-col justify-center ${className}`}>
       {/* Background image & Dark Overlay */}
       <div className="absolute inset-0">
         <img
@@ -48,7 +48,7 @@ export function PageHeader({
       </div>
 
       <div className="relative mx-auto max-w-[1240px] px-6 w-full text-left">
-        <div className="max-w-2xl sm:max-w-[680px]">
+        <div className="max-w-4xl md:max-w-5xl">
           {/* Nổi bật thanh breadcrumb trên cùng */}
           <motion.nav
             initial={{ opacity: 0, y: 12 }}
@@ -76,8 +76,8 @@ export function PageHeader({
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mt-6 text-white font-extrabold drop-shadow-md text-left sm:text-justify sm:[text-align-last:left] [text-wrap:pretty]"
-            style={{ fontSize: "clamp(1.75rem, 5vw, 3.4rem)", lineHeight: 1.12, fontWeight: 800 }}
+            className="mt-5 text-white font-extrabold drop-shadow-md text-left [text-wrap:balance] leading-tight"
+            style={{ fontSize: "clamp(1.5rem, 3.8vw, 2.75rem)", fontWeight: 800 }}
           >
             {title}
           </motion.h1>
@@ -87,7 +87,7 @@ export function PageHeader({
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16 }}
-              className="mt-5 text-[17px] leading-relaxed text-white/90 drop-shadow-sm text-left sm:text-justify sm:[text-align-last:left]"
+              className="mt-4 max-w-3xl text-[16px] sm:text-[17px] leading-relaxed text-white/90 drop-shadow-sm text-left"
             >
               {desc}
             </motion.p>

@@ -47,10 +47,10 @@ export function Hero() {
           </span>
         </motion.div>
 
-        <div className="max-w-3xl sm:max-w-[700px]">
+        <div className="max-w-4xl">
           <h1
-            className="text-white text-left sm:text-justify sm:[text-align-last:left]"
-            style={{ fontSize: "clamp(1.85rem, 5.5vw, 5.2rem)", lineHeight: 1.12, fontWeight: 800 }}
+            className="text-white text-left"
+            style={{ fontSize: "clamp(1.85rem, 5.2vw, 4.5rem)", lineHeight: 1.12, fontWeight: 800 }}
           >
             <span className="inline-block whitespace-nowrap">Nền móng vững chắc</span>{" "}
             <br className="hidden sm:block" />
@@ -66,7 +66,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.7 }}
-            className="mt-6 text-[17px] leading-relaxed text-white/75 text-left sm:text-justify sm:[text-align-last:left]"
+            className="mt-6 max-w-2xl text-[17px] leading-relaxed text-white/75 text-left"
           >
             Chuyên sản xuất gạch đất sét nung Tuynel đạt chuẩn QCVN — cung ứng
             hàng triệu viên mỗi tháng cho các công trình dân dụng và công nghiệp
