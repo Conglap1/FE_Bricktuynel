@@ -47,30 +47,32 @@ export function Hero() {
           </span>
         </motion.div>
 
-        <h1
-          className="max-w-4xl text-white"
-          style={{ fontSize: "clamp(1.85rem, 5.5vw, 5.2rem)", lineHeight: 1.12, fontWeight: 800 }}
-        >
-          <span className="inline-block whitespace-nowrap">Nền móng vững chắc</span>{" "}
-          <br className="hidden sm:block" />
-          <span className="inline-block whitespace-nowrap">
-            cho{" "}
-            <span className="bg-gradient-to-r from-[#C76B86] to-[#e8a0b4] bg-clip-text text-transparent">
-              mọi công trình
+        <div className="max-w-3xl sm:max-w-[700px]">
+          <h1
+            className="text-white text-left sm:text-justify sm:[text-align-last:left]"
+            style={{ fontSize: "clamp(1.85rem, 5.5vw, 5.2rem)", lineHeight: 1.12, fontWeight: 800 }}
+          >
+            <span className="inline-block whitespace-nowrap">Nền móng vững chắc</span>{" "}
+            <br className="hidden sm:block" />
+            <span className="inline-block whitespace-nowrap">
+              cho{" "}
+              <span className="bg-gradient-to-r from-[#C76B86] to-[#e8a0b4] bg-clip-text text-transparent">
+                mọi công trình
+              </span>
             </span>
-          </span>
-        </h1>
+          </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.7 }}
-          className="mt-6 max-w-[52ch] text-[17px] leading-relaxed text-white/75"
-        >
-          Chuyên sản xuất gạch đất sét nung Tuynel đạt chuẩn QCVN — cung ứng
-          hàng triệu viên mỗi tháng cho các công trình dân dụng và công nghiệp
-          trên toàn quốc.
-        </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.7 }}
+            className="mt-6 text-[17px] leading-relaxed text-white/75 text-left sm:text-justify sm:[text-align-last:left]"
+          >
+            Chuyên sản xuất gạch đất sét nung Tuynel đạt chuẩn QCVN — cung ứng
+            hàng triệu viên mỗi tháng cho các công trình dân dụng và công nghiệp
+            trên toàn quốc.
+          </motion.p>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

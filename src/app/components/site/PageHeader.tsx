@@ -48,49 +48,51 @@ export function PageHeader({
       </div>
 
       <div className="relative mx-auto max-w-[1240px] px-6 w-full text-left">
-        {/* Nổi bật thanh breadcrumb trên cùng */}
-        <motion.nav
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="inline-flex items-center gap-2 text-[13px] font-semibold rounded-full bg-black/40 backdrop-blur-md px-4 py-1.5 border border-white/20 text-white shadow-lg"
-        >
-          {parentCrumb ? (
-            <>
-              {parentLink ? (
-                <Link to={parentLink} className="text-white/80 transition-colors hover:text-white">
-                  {parentCrumb}
-                </Link>
-              ) : (
-                <span className="text-white/80">{parentCrumb}</span>
-              )}
-              <ChevronRight className="h-3.5 w-3.5 text-white/60" />
+        <div className="max-w-2xl sm:max-w-[680px]">
+          {/* Nổi bật thanh breadcrumb trên cùng */}
+          <motion.nav
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 text-[13px] font-semibold rounded-full bg-black/40 backdrop-blur-md px-4 py-1.5 border border-white/20 text-white shadow-lg"
+          >
+            {parentCrumb ? (
+              <>
+                {parentLink ? (
+                  <Link to={parentLink} className="text-white/80 transition-colors hover:text-white">
+                    {parentCrumb}
+                  </Link>
+                ) : (
+                  <span className="text-white/80">{parentCrumb}</span>
+                )}
+                <ChevronRight className="h-3.5 w-3.5 text-white/60" />
+                <span className="text-white font-bold">{crumb}</span>
+              </>
+            ) : (
               <span className="text-white font-bold">{crumb}</span>
-            </>
-          ) : (
-            <span className="text-white font-bold">{crumb}</span>
-          )}
-        </motion.nav>
+            )}
+          </motion.nav>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mt-6 max-w-3xl text-white font-extrabold drop-shadow-md"
-          style={{ fontSize: "clamp(1.75rem, 5vw, 3.6rem)", lineHeight: 1.08, fontWeight: 800 }}
-        >
-          {title}
-        </motion.h1>
-
-        {desc && (
-          <motion.p
+          <motion.h1
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.16 }}
-            className="mt-5 max-w-2xl text-[17px] leading-relaxed text-white/90 drop-shadow-sm"
+            transition={{ delay: 0.1 }}
+            className="mt-6 text-white font-extrabold drop-shadow-md text-left sm:text-justify sm:[text-align-last:left] [text-wrap:pretty]"
+            style={{ fontSize: "clamp(1.75rem, 5vw, 3.4rem)", lineHeight: 1.12, fontWeight: 800 }}
           >
-            {desc}
-          </motion.p>
-        )}
+            {title}
+          </motion.h1>
+
+          {desc && (
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.16 }}
+              className="mt-5 text-[17px] leading-relaxed text-white/90 drop-shadow-sm text-left sm:text-justify sm:[text-align-last:left]"
+            >
+              {desc}
+            </motion.p>
+          )}
+        </div>
       </div>
 
       {/* Brand Scroll Down Cue */}
