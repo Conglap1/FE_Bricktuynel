@@ -75,7 +75,7 @@ export function Contact() {
     {
       icon: MapPin,
       label: "ĐỊA CHỈ NHÀ MÁY",
-      value: contact.address || "KCN Mỹ Phước, Bến Cát, Bình Dương",
+      value: contact.address || "Ấp Mới, Xã Bình Tân, TX. Kiến Tường, Long An",
 
       actionText: "Xem bản đồ",
       actionHref: "#google-map-section",

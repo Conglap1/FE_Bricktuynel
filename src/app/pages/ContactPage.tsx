@@ -8,11 +8,18 @@ import { IMAGES } from "../lib/data";
 function GoogleMap() {
   const { contact } = useStore();
   
+  const DEFAULT_MAP_URL =
+    "https://maps.google.com/maps?q=C%C3%B4ng+ty+TNHH+M%E1%BB%99t+Th%C3%A0nh+Vi%C3%AAn+Thu%E1%BA%A5n+L%E1%BB%A3i+M%E1%BB%99c+H%C3%B3a,+B%C3%ACnh+Hi%E1%BB%87p,+Ki%E1%BA%BFn+T%C6%B0%E1%BB%9Dng,+Long+An&t=&z=15&ie=UTF8&iwloc=&output=embed";
+
   // Tự động bóc tách URL nếu người dùng dán cả đoạn mã <iframe src="..."></iframe>
   const getEmbedUrl = (raw: string) => {
-    if (!raw) return "";
+    if (!raw) return DEFAULT_MAP_URL;
+    if (raw.includes("My+Phuoc") || raw.includes("Binh+Duong") || raw.includes("Ben+Cat")) {
+      return DEFAULT_MAP_URL;
+    }
     const match = raw.match(/src=["']([^"']+)["']/i);
-    return match ? match[1] : raw.trim();
+    const url = (match ? match[1] : raw).trim();
+    return url || DEFAULT_MAP_URL;
   };
 
   const mapSrc = getEmbedUrl(contact.googleMapEmbed);

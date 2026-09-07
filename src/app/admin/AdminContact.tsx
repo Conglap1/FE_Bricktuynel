@@ -235,8 +235,8 @@ export function AdminContact() {
                 placeholder="https://maps.google.com/maps?q=... hoặc dán toàn bộ đoạn thẻ <iframe ...>"
                 className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm font-medium text-slate-900 outline-none transition-colors focus:border-[#810C00] focus:bg-white focus:ring-1 focus:ring-[#810C00] resize-none"
               />
-              <p className="mt-1 text-xs text-slate-500">
-                Mẹo: Vào Google Maps → Chia sẻ → Nhúng bản đồ → Sao chép HTML rồi dán vào đây.
+              <p className="mt-1 text-xs text-slate-500 leading-normal">
+                💡 <strong>Để vị trí định vị chuẩn 100% không bị lệch:</strong> Vào Google Maps tìm đúng vị trí nhà máy → Chọn <strong>Chia sẻ (Share)</strong> → Chọn tab <strong>Nhúng bản đồ (Embed a map)</strong> → Chọn <strong>Sao chép HTML (Copy HTML)</strong> rồi dán trực tiếp vào đây.
               </p>
             </div>
 
