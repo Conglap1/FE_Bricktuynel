@@ -33,7 +33,7 @@ export function PageHeader({
   }, [image]);
 
   return (
-    <section className={`relative overflow-hidden bg-[#560213] pb-20 pt-32 md:pb-24 md:pt-36 min-h-[360px] md:min-h-[420px] flex flex-col justify-center ${className}`}>
+    <section className={`relative overflow-hidden bg-[#560213] pb-28 pt-36 md:pb-36 md:pt-48 min-h-[440px] md:min-h-[520px] flex flex-col justify-center ${className}`}>
       {/* Background image & Dark Overlay */}
       <div className="absolute inset-0">
         <img

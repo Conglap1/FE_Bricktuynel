@@ -200,7 +200,6 @@ export function NewsDetailPage() {
         parentLink="/tin-tuc"
         eyebrow="Tin tức"
         title={article.title}
-        desc={article.summary}
         image={article.thumbnailPath || IMAGES.newsBanner}
       />
 

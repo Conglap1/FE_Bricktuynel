@@ -106,8 +106,6 @@ export function ProjectDetailPage() {
         parentLink="/du-an"
         eyebrow="Chi tiết công trình"
         title={project.name}
-        desc={project.shortDescription}
-        image={project.image}
       />
 
       <section className="bg-white py-10 md:py-16">
