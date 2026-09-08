@@ -43,12 +43,14 @@ export function Footer() {
     { icon: TiktokIcon, label: "TikTok", href: tiktokUrl },
   ];
 
-  const rawAddr = contact.address || "Ấp Cải Đôi, Xã Bình Hiệp, TX. Kiến Tường, Long An";
+  const rawAddr = contact.address || "";
   const displayAddress = rawAddr
-    .replace(/^Số nhà \d+,\s*/i, "")
-    .replace("Tỉnh Tây Ninh, Bình Hiệp, ", "")
-    .replace("Thị xã Kiến Tường", "TX. Kiến Tường")
-    .replace("Tỉnh Long An", "Long An");
+    ? rawAddr
+        .replace(/^Số nhà \d+,\s*/i, "")
+        .replace("Tỉnh Tây Ninh, Bình Hiệp, ", "")
+        .replace("Thị xã Kiến Tường", "TX. Kiến Tường")
+        .replace("Tỉnh Long An", "Long An")
+    : "";
 
   return (
     <footer className="relative overflow-hidden bg-[#560213] text-white/70">

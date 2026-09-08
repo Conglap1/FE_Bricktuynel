@@ -16,9 +16,6 @@ function GoogleMap() {
   // Tự động bóc tách URL nếu người dùng dán cả đoạn mã <iframe src="..."></iframe>
   const getEmbedUrl = (raw: string) => {
     if (!raw) return DEFAULT_MAP_URL;
-    if (raw.includes("My+Phuoc") || raw.includes("Binh+Duong") || raw.includes("Ben+Cat")) {
-      return DEFAULT_MAP_URL;
-    }
     const match = raw.match(/src=["']([^"']+)["']/i);
     const url = (match ? match[1] : raw).trim();
     return url || DEFAULT_MAP_URL;
@@ -26,7 +23,7 @@ function GoogleMap() {
 
   const mapSrc = getEmbedUrl(contact.googleMapEmbed);
   const directMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    contact.address || "Ấp Mới, Xã Bình Tân, Thị xã Kiến Tường, Tỉnh Long An"
+    contact.address || "Thuận Lợi Mộc Hóa"
   )}`;
 
   return (

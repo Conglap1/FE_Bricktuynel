@@ -31,14 +31,16 @@ export function CTABand() {
                   Nhận báo giá ngay
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
-                <MagneticButton
-                  as="a"
-                  href={`tel:${(contact.phone || "").replace(/\s/g, '')}`}
-                  strength={0.2}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-white/15"
-                >
-                  <Phone className="h-4 w-4" /> {contact.phone}
-                </MagneticButton>
+                {contact.phone && (
+                  <MagneticButton
+                    as="a"
+                    href={`tel:${contact.phone.replace(/\s/g, '')}`}
+                    strength={0.2}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-white/15"
+                  >
+                    <Phone className="h-4 w-4" /> {contact.phone}
+                  </MagneticButton>
+                )}
               </div>
             </div>
           </div>

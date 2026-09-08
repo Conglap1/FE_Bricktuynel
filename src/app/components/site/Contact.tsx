@@ -6,7 +6,7 @@ import { useStore, API_BASE_URL } from "../../lib/store";
 import { CATEGORIES } from "../../lib/data";
 
 export function Contact() {
-  const { contact, products, refreshContactRequests } = useStore();
+  const { contact, products, refreshContactRequests, isLoading } = useStore();
   const [sent, setSent] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -18,25 +18,27 @@ export function Contact() {
 
   // Derive available product list: prioritize active dynamic products, fallback to categories/default if empty
   const activeProducts = products.filter((p) => p.isActive);
-  const productOptions =
+
+  // Filter products by category or name if user types
+  const availableProductNames =
     activeProducts.length > 0
-      ? activeProducts.map((p) => ({ id: String(p.id), name: p.name, image: p.image }))
-      : CATEGORIES.map((c) => ({ id: c.id, name: c.name, image: c.image }));
+      ? activeProducts.map((p) => p.name)
+      : CATEGORIES.map((c) => c.name);
+
+  const filteredOptions = availableProductNames.filter((name) =>
+    name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   // Close dropdown on outside click
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setIsSelectOpen(false);
       }
-    }
+    };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  const filteredOptions = productOptions.filter((opt) =>
-    opt.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   const toggleProductSelection = (name: string) => {
     setSelectedProducts((prev) =>
@@ -53,9 +55,9 @@ export function Contact() {
     {
       icon: Phone,
       label: "SỐ ĐIỆN THOẠI TƯ VẤN",
-      value: contact.phone || "0918 701 472",
+      value: contact.phone || "",
       actionText: "Gọi ngay",
-      actionHref: `tel:${(contact.phone || "0918701472").replace(/\s/g, "")}`,
+      actionHref: contact.phone ? `tel:${contact.phone.replace(/\s/g, "")}` : "",
       gradient: "from-[#800A23] to-[#560213]",
       badge: (
         <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-700 border border-emerald-500/20">
@@ -66,16 +68,16 @@ export function Contact() {
     {
       icon: Mail,
       label: "EMAIL BÁO GIÁ & HỖ TRỢ",
-      value: contact.email || "kinhdoanh@gachthuanloi.vn",
+      value: contact.email || "",
 
       actionText: "Gửi email",
-      actionHref: `mailto:${contact.email || "kinhdoanh@gachthuanloi.vn"}`,
+      actionHref: contact.email ? `mailto:${contact.email}` : "",
       gradient: "from-[#A02842] to-[#6E0A21]",
     },
     {
       icon: MapPin,
       label: "ĐỊA CHỈ NHÀ MÁY",
-      value: contact.address || "Ấp Mới, Xã Bình Tân, TX. Kiến Tường, Long An",
+      value: contact.address || "",
 
       actionText: "Xem bản đồ",
       actionHref: "#google-map-section",
@@ -89,7 +91,7 @@ export function Contact() {
     {
       icon: Clock,
       label: "GIỜ LÀM VIỆC",
-      value: contact.workingHours || "Thứ 2 – Thứ 7 · 07:30 – 17:30",
+      value: contact.workingHours || "",
 
       actionText: "Giờ phục vụ",
       gradient: "from-[#A02842] to-[#560213]",
@@ -188,7 +190,11 @@ export function Contact() {
                             }`}
                             title={isEmail ? card.value : undefined}
                           >
-                            {card.value}
+                            {isLoading ? (
+                              <div className="h-5 w-3/4 animate-pulse rounded bg-slate-200 my-1" />
+                            ) : (
+                              card.value || ""
+                            )}
                           </div>
                           {card.subText && (
                             <p className="mt-1.5 text-[12px] leading-normal text-muted-foreground/80">

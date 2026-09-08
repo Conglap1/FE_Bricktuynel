@@ -116,7 +116,7 @@ export function AdminContact() {
                 type="text"
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
-                placeholder="KCN Mỹ Phước, Bến Cát, Bình Dương"
+                placeholder="Nhập địa chỉ nhà máy / trụ sở..."
                 className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm font-medium text-slate-900 outline-none transition-colors focus:border-[#810C00] focus:bg-white focus:ring-1 focus:ring-[#810C00]"
               />
             </div>
@@ -130,7 +130,7 @@ export function AdminContact() {
                 type="text"
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                placeholder="0918 701 472"
+                placeholder="Nhập số điện thoại..."
                 className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm font-medium text-slate-900 outline-none transition-colors focus:border-[#810C00] focus:bg-white focus:ring-1 focus:ring-[#810C00]"
               />
             </div>
@@ -145,7 +145,7 @@ export function AdminContact() {
                   type="email"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  placeholder="kinhdoanh@gachthuanloi.vn"
+                  placeholder="Nhập email liên hệ..."
                   className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm font-medium text-slate-900 outline-none transition-colors focus:border-[#810C00] focus:bg-white focus:ring-1 focus:ring-[#810C00]"
                 />
               </div>

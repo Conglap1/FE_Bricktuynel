@@ -39,8 +39,8 @@ export function FloatingWidget() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const phoneNum = contact.phone || "0918 701 472";
-  const telUrl = `tel:${phoneNum.replace(/\s+/g, "")}`;
+  const phoneNum = contact.phone || "";
+  const telUrl = phoneNum ? `tel:${phoneNum.replace(/\s+/g, "")}` : "#";
 
   const zaloUrl = contact.zalo
     ? contact.zalo.startsWith("http")
@@ -55,17 +55,19 @@ export function FloatingWidget() {
       {/* Floating social contact stack */}
       <div className="flex flex-col gap-2.5 pointer-events-auto items-end">
         {/* Phone Button */}
-        <a
-          href={telUrl}
-          title={`Gọi điện: ${phoneNum}`}
-          aria-label={`Gọi điện: ${phoneNum}`}
-          className="group relative flex h-11 items-center justify-center rounded-full bg-[#16A34A] px-3 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#15803D] hover:shadow-xl"
-        >
-          <Phone className="h-5 w-5 shrink-0" />
-          <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-semibold opacity-0 transition-all duration-300 group-hover:ml-2 group-hover:max-w-[140px] group-hover:opacity-100">
-            {phoneNum}
-          </span>
-        </a>
+        {phoneNum && (
+          <a
+            href={telUrl}
+            title={`Gọi điện: ${phoneNum}`}
+            aria-label={`Gọi điện: ${phoneNum}`}
+            className="group relative flex h-11 items-center justify-center rounded-full bg-[#16A34A] px-3 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#15803D] hover:shadow-xl"
+          >
+            <Phone className="h-5 w-5 shrink-0" />
+            <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-semibold opacity-0 transition-all duration-300 group-hover:ml-2 group-hover:max-w-[140px] group-hover:opacity-100">
+              {phoneNum}
+            </span>
+          </a>
+        )}
 
         {/* Zalo Button */}
         <a

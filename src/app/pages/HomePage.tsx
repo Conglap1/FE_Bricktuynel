@@ -243,27 +243,27 @@ function ProjectsTeaser() {
 
 /* ─── 6. Contact preview ─── */
 function ContactTeaser() {
-  const { contact } = useStore();
+  const { contact, isLoading } = useStore();
   const INFO = [
     {
       icon: Phone,
       label: "Điện thoại liên hệ",
-      value: contact.phone || "0918 701 472",
+      value: contact.phone || "",
       actionText: "Gọi ngay",
-      href: `tel:${(contact.phone || "0918701472").replace(/\s/g, "")}`,
+      href: contact.phone ? `tel:${contact.phone.replace(/\s/g, "")}` : undefined,
     },
     {
       icon: Mail,
       label: "Email báo giá",
-      value: contact.email || "kinhdoanh@gachthuanloi.vn",
+      value: contact.email || "",
       actionText: "Gửi mail",
-      href: `mailto:${contact.email || "kinhdoanh@gachthuanloi.vn"}`,
+      href: contact.email ? `mailto:${contact.email}` : undefined,
       isEmail: true,
     },
     {
       icon: MapPin,
       label: "Địa chỉ Nhà máy",
-      value: contact.address || "KCN Mỹ Phước, Bến Cát, Bình Dương",
+      value: contact.address || "",
       actionText: "Xem vị trí",
       href: "#google-map-section",
       onClick: (e: React.MouseEvent) => {
@@ -275,7 +275,7 @@ function ContactTeaser() {
     {
       icon: Clock,
       label: "Giờ làm việc",
-      value: contact.workingHours || "Thứ 2 – Thứ 7 · 07:30 – 17:30",
+      value: contact.workingHours || "",
       actionText: "Giờ phục vụ",
     },
   ];
@@ -343,7 +343,11 @@ function ContactTeaser() {
                         <div className={`mt-1.5 font-bold tracking-tight text-white leading-relaxed group-hover:text-white transition-colors ${
                           it.isEmail ? "text-[14px] sm:text-[15px] break-all sm:break-normal" : "text-[15px] sm:text-[16px]"
                         }`}>
-                          {it.value}
+                          {isLoading ? (
+                            <div className="h-5 w-3/4 animate-pulse rounded bg-white/20 my-1" />
+                          ) : (
+                            it.value || ""
+                          )}
                         </div>
                         {it.subText && (
                           <p className="mt-2 text-[12px] text-white/60 leading-normal">
