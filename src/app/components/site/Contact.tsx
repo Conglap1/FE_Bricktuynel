@@ -185,8 +185,8 @@ export function Contact() {
                             {card.label}
                           </div>
                           <div
-                            className={`mt-1.5 font-bold tracking-tight text-foreground transition-colors ${
-                              isEmail ? "text-[13px] sm:text-[13.5px] lg:text-[14px] break-all leading-snug" : "text-[15px] sm:text-[16px] leading-relaxed"
+                            className={`mt-1.5 font-bold text-foreground transition-colors ${
+                              isEmail ? "text-[11px] sm:text-[11.5px] md:text-[12px] lg:text-[12.5px] whitespace-nowrap tracking-tighter sm:tracking-tight" : "text-[15px] sm:text-[16px] leading-relaxed tracking-tight"
                             }`}
                             title={isEmail ? card.value : undefined}
                           >

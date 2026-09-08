@@ -340,8 +340,8 @@ function ContactTeaser() {
                         <div className="text-[11px] font-bold uppercase tracking-wider text-white/50" style={{ fontFamily: "var(--font-mono)" }}>
                           {it.label}
                         </div>
-                        <div className={`mt-1.5 font-bold tracking-tight text-white transition-colors ${
-                          it.isEmail ? "text-[13px] sm:text-[13.5px] lg:text-[14px] break-all leading-snug" : "text-[15px] sm:text-[16px] leading-relaxed"
+                        <div className={`mt-1.5 font-bold text-white transition-colors ${
+                          it.isEmail ? "text-[11px] sm:text-[11.5px] md:text-[12px] lg:text-[12.5px] whitespace-nowrap tracking-tighter sm:tracking-tight" : "text-[15px] sm:text-[16px] leading-relaxed tracking-tight"
                         }`}>
                           {isLoading ? (
                             <div className="h-5 w-3/4 animate-pulse rounded bg-white/20 my-1" />
