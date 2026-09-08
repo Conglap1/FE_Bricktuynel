@@ -107,7 +107,7 @@ export function AdminContactRequests() {
                       <div className="font-semibold text-[#560213]">{r.fullName}</div>
                       <div className="text-[12px] text-[#560213]/70">{r.phone}</div>
                     </td>
-                    <td className="px-5 py-4 text-[#560213]/80">{r.email || "—"}</td>
+                    <td className="px-5 py-4 text-[#560213]/80 break-all">{r.email || "—"}</td>
                     <td className="px-5 py-4">
                       <div className="max-w-[200px] truncate text-[#560213]/80">
                         {r.content || "—"}
@@ -184,7 +184,7 @@ export function AdminContactRequests() {
                 </div>
                 <div>
                   <label className="text-[12px] font-semibold text-[#560213]/70">Email</label>
-                  <div className="text-sm text-[#560213]">{detailReq.email || "—"}</div>
+                  <div className="text-sm text-[#560213] break-all">{detailReq.email || "—"}</div>
                 </div>
               </div>
               <div>

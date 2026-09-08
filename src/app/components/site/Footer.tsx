@@ -149,7 +149,7 @@ export function Footer() {
                   </span>
                   <span>
                     <strong className="text-white/90">Email:</strong>{" "}
-                    <a href={`mailto:${contact.email}`} className="text-white/90 hover:text-[#C76B86] transition-colors">
+                    <a href={`mailto:${contact.email}`} className="text-white/90 hover:text-[#C76B86] transition-colors break-all">
                       {contact.email}
                     </a>
                   </span>
