@@ -30,7 +30,7 @@ export function usePageTitle() {
     }
 
     if (pathname === "/nang-luc") {
-      document.title = formatPageTitle("Năng Lực");
+      document.title = formatPageTitle("Năng Lực & Thành Tựu");
       return;
     }
 
