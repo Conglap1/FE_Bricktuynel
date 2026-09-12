@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Eye, EyeOff, Trash2, X, MessageSquare, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
-import { useStore, API_BASE_URL } from "../lib/store";
+import { useStore, API_BASE_URL, getAuthHeaders } from "../lib/store";
 import type { ContactRequest } from "../lib/store";
 
 import { TableSkeleton } from "../components/ui/LoadingState";
@@ -22,7 +22,10 @@ export function AdminContactRequests() {
     e?.stopPropagation();
     if (!window.confirm(`Bạn có chắc chắn muốn xoá yêu cầu từ "${r.fullName}" không?`)) return;
     try {
-      const res = await fetch(`${API_BASE_URL}/contact-requests/${r.id}`, { method: "DELETE" });
+      const res = await fetch(`${API_BASE_URL}/contact-requests/${r.id}`, {
+        method: "DELETE",
+        headers: getAuthHeaders(),
+      });
       if (res.ok) {
         setContactRequests(contactRequests.filter((item) => item.id !== r.id));
         toast.success("Đã xoá yêu cầu liên hệ");
@@ -39,7 +42,10 @@ export function AdminContactRequests() {
 
   async function toggleRead(req: ContactRequest) {
     try {
-      const res = await fetch(`${API_BASE_URL}/contact-requests/${req.id}/mark-read`, { method: "PUT" });
+      const res = await fetch(`${API_BASE_URL}/contact-requests/${req.id}/mark-read`, {
+        method: "PUT",
+        headers: getAuthHeaders(),
+      });
       if (res.ok) {
         const updated = await res.json();
         setContactRequests(contactRequests.map((r) => (r.id === req.id ? updated : r)));
