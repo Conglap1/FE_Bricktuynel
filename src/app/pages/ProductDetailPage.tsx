@@ -28,6 +28,7 @@ const HIGHLIGHTS = [
 ];
 
 import { DetailSkeleton } from "../components/ui/LoadingState";
+import { formatPageTitle } from "../lib/usePageTitle";
 
 export function ProductDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -35,6 +36,12 @@ export function ProductDetailPage() {
 
   const product = products.find((p) => p.slug === slug && p.isActive);
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
+
+  useEffect(() => {
+    if (product?.name) {
+      document.title = formatPageTitle(product.name);
+    }
+  }, [product?.name]);
 
   // Consolidate images
   const allImages = product

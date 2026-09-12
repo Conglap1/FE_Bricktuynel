@@ -1,6 +1,7 @@
 import { useLocation, useOutlet } from "react-router";
 import { AnimatePresence } from "motion/react";
 import { motion } from "../../lib/motion";
+import { usePageTitle } from "../../lib/usePageTitle";
 import { QuoteProvider } from "./QuoteContext";
 import { CursorSpotlight } from "./CursorSpotlight";
 import { Navbar } from "./Navbar";
@@ -9,6 +10,7 @@ import { QuoteDialog } from "./QuoteDialog";
 import { ScrollToTop } from "./ScrollToTop";
 import { FloatingWidget } from "./FloatingWidget";
 export function Root() {
+  usePageTitle();
   const location = useLocation();
   const outlet = useOutlet();
 

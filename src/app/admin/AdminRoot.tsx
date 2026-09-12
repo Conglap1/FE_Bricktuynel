@@ -29,7 +29,10 @@ const NAV = [
   { to: "/admin/yeu-cau", label: "Yêu cầu liên hệ", icon: MessageSquare },
 ];
 
+import { usePageTitle } from "../lib/usePageTitle";
+
 export function AdminRoot() {
+  usePageTitle();
   const navigate = useNavigate();
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(() => {

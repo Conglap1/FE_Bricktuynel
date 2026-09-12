@@ -3,9 +3,12 @@ import { useNavigate } from "react-router";
 import { Eye, EyeOff, KeyRound, ShieldAlert, CheckCircle2, X } from "lucide-react";
 import { API_BASE_URL } from "../lib/store";
 
+import { usePageTitle } from "../lib/usePageTitle";
+
 export const ADMIN_AUTH_KEY = "tsb_admin_auth";
 
 export function AdminLogin() {
+  usePageTitle();
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);

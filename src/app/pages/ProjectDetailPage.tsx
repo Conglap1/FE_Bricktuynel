@@ -41,12 +41,20 @@ function autoLinkify(text: string) {
 }
 
 import { DetailSkeleton } from "../components/ui/LoadingState";
+import { formatPageTitle } from "../lib/usePageTitle";
 
 export function ProjectDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const { projects, isLoading } = useStore();
 
   const project = projects.find((p) => p.slug === slug && p.isActive);
+
+  useEffect(() => {
+    if (project?.title) {
+      document.title = formatPageTitle(project.title);
+    }
+  }, [project?.title]);
+
   const otherProjects = projects.filter((p) => p.isActive && p.id !== project?.id).slice(0, 3);
 
   const [selectedIdx, setSelectedIdx] = useState<number>(0);

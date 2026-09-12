@@ -116,6 +116,7 @@ const MOCK_SIDEBAR_PRODUCTS = [
 ];
 
 import { DetailSkeleton } from "../components/ui/LoadingState";
+import { formatPageTitle } from "../lib/usePageTitle";
 
 export function NewsDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -131,7 +132,7 @@ export function NewsDetailPage() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     if (article) {
-      document.title = `${article.title} - Gạch Tuynel Thuận Lợi`;
+      document.title = formatPageTitle(article.title);
     }
   }, [slug, article]);
 
