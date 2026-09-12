@@ -50,10 +50,11 @@ export function ProjectDetailPage() {
   const project = projects.find((p) => p.slug === slug && p.isActive);
 
   useEffect(() => {
-    if (project?.title) {
-      document.title = formatPageTitle(project.title);
+    const projectTitle = project?.name || (project as any)?.title;
+    if (projectTitle) {
+      document.title = formatPageTitle(projectTitle);
     }
-  }, [project?.title]);
+  }, [project?.name]);
 
   const otherProjects = projects.filter((p) => p.isActive && p.id !== project?.id).slice(0, 3);
 
