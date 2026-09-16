@@ -1,4 +1,4 @@
-import { createHashRouter } from "react-router";
+import { createBrowserRouter } from "react-router";
 import { Root } from "./components/site/Root";
 import { HomePage } from "./pages/HomePage";
 import { AboutPage } from "./pages/AboutPage";
@@ -25,7 +25,7 @@ function AdminWrapper() {
   return <AdminRoot />;
 }
 
-export const router = createHashRouter([
+export const router = createBrowserRouter([
   {
     path: "/",
     Component: Root,
