@@ -37,7 +37,7 @@ export function LogoMarquee() {
     return p.website ? (
       <a
         key={`${keyPrefix}-${p.id}-${index}`}
-        href={p.website}
+        href={p.website.startsWith("http") ? p.website : `https://${p.website}`}
         target="_blank"
         rel="noopener noreferrer"
         className="group shrink-0 cursor-pointer text-decoration-none"

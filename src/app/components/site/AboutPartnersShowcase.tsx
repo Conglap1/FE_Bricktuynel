@@ -56,7 +56,7 @@ export function AboutPartnersShowcase() {
             return p.website ? (
               <a
                 key={p.id}
-                href={p.website}
+                href={p.website.startsWith("http") ? p.website : `https://${p.website}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-decoration-none"

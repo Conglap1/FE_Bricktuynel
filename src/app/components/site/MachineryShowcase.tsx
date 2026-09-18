@@ -39,7 +39,7 @@ export const MACHINERY_LIST: MachineryItem[] = [
     id: "machinery-05",
     name: "Máy Ép Đùn & Dây Chuyền Sản Xuất",
     desc: "Máy ép đùn công nghệ cao hút chân không và dây chuyền tự động hóa đồng bộ.",
-    image: "/images/day_chuyen_san_xuat.png",
+    image: "/images/day_chuyen_san_xuat.webp",
   },
   {
     id: "machinery-06",

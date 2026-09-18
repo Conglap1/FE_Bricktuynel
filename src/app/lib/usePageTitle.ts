@@ -49,13 +49,8 @@ export function usePageTitle() {
       return;
     }
 
-    if (pathname === "/du-an") {
+    if (pathname === "/du-an" || pathname.startsWith("/du-an/")) {
       document.title = formatPageTitle("Dự Án");
-      return;
-    }
-
-    if (pathname.startsWith("/du-an/")) {
-      document.title = formatPageTitle("Chi Tiết Dự Án");
       return;
     }
 

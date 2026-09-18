@@ -36,6 +36,18 @@
           }
         })();
       </script>
+      <script>
+        (function() {
+          // Tự động chuyển hướng URL cũ có hash (#/du-an, #/tin-tuc, #/admin,...) sang URL sạch chuẩn SEO
+          var hash = window.location.hash;
+          if (hash && hash.startsWith('#/')) {
+            var targetPath = hash.slice(1);
+            if (targetPath.length > 0) {
+              window.history.replaceState(null, '', targetPath);
+            }
+          }
+        })();
+      </script>
       <meta name="description" content="Nhà máy Gạch Tuynel Thuận Lợi tại Mộc Hóa - Long An. Chuyên sản xuất và phân phối gạch tuynel chất lượng cao: gạch ống 4 lỗ, gạch đơmi, gạch thẻ uy tín, giá tốt cho công trình." />
       <meta name="robots" content="index, follow" />
       <meta property="og:type" content="website" />

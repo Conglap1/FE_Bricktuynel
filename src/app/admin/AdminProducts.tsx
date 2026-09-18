@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Plus, Pencil, Trash2, X, Save, Upload, Star, Loader2, Image as ImageIcon, Check } from "lucide-react";
+import { Plus, Pencil, Trash2, X, Save, Upload, Star, Loader2, Image as ImageIcon, Check, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useStore, API_BASE_URL, getAuthHeaders, getImageUrl, FALLBACK_IMAGE } from "../lib/store";
 import { compressImageFile } from "../lib/imageCompressor";
@@ -322,7 +322,19 @@ export function AdminProducts() {
                                 </span>
                               )}
                             </div>
-                            <div className="text-[11px] text-[#810C00]">{p.slug} • {imgCount} ảnh</div>
+                            <div className="text-[11px] text-[#810C00]">
+                              <a
+                                href={`/san-pham/${p.slug}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="hover:underline font-mono"
+                                title="Xem sản phẩm trên website"
+                              >
+                                {p.slug}
+                              </a>
+                              {" • "}{imgCount} ảnh
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -332,6 +344,16 @@ export function AdminProducts() {
                       <td className="px-5 py-4 text-[#560213]/80">{p.flexuralStrength != null ? `${p.flexuralStrength} MPa` : "—"}</td>
                       <td className="px-5 py-4">
                         <div className="flex items-center justify-end gap-2">
+                          <a
+                            href={`/san-pham/${p.slug}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
+                            title="Xem sản phẩm trên website"
+                          >
+                            <Eye className="h-3.5 w-3.5" />
+                          </a>
                           <button
                             onClick={(e) => {
                               e.stopPropagation();

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, Pencil, Trash2, X, Save, Image as ImageIcon } from "lucide-react";
+import { Plus, Pencil, Trash2, X, Save, Image as ImageIcon, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useStore, API_BASE_URL, getAuthHeaders, getImageUrl, FALLBACK_IMAGE } from "../lib/store";
 import type { NewsItem, NewsSectionItem, NewsImageItem } from "../lib/store";
@@ -243,7 +243,18 @@ export function AdminNews() {
                         )}
                         <div>
                           <div className="font-semibold text-[#560213] leading-snug">{n.title}</div>
-                          <div className="text-[11px] text-[#810C00]">{n.slug}</div>
+                          <div className="text-[11px] text-[#810C00]">
+                            <a
+                              href={`/tin-tuc/${n.slug}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="hover:underline font-mono"
+                              title="Xem bài viết trên website"
+                            >
+                              {n.slug}
+                            </a>
+                          </div>
                         </div>
                       </div>
                     </td>
@@ -266,6 +277,16 @@ export function AdminNews() {
                     </td>
                     <td className="px-5 py-4">
                       <div className="flex items-center justify-end gap-2">
+                        <a
+                          href={`/tin-tuc/${n.slug}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="rounded-lg border border-[#810C00]/20 p-1.5 text-[#810C00] hover:border-slate-900 hover:text-[#560213]"
+                          title="Xem bài viết trên website"
+                        >
+                          <Eye className="h-3.5 w-3.5" />
+                        </a>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();

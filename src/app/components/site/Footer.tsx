@@ -1,4 +1,4 @@
-import { Facebook, ArrowUp, MapPin, Phone, Mail, Clock, Building2, FileText } from "lucide-react";
+import { ArrowUp, MapPin, Phone, Mail, Clock, Building2, FileText } from "lucide-react";
 import { Link } from "react-router";
 import { IMAGES } from "../../lib/data";
 import { useStore } from "../../lib/store";
@@ -32,13 +32,11 @@ export function Footer() {
     ? contact.zalo.startsWith("http")
       ? contact.zalo
       : `https://zalo.me/${contact.zalo.replace(/\s+/g, "")}`
-    : "#";
+    : "https://zalo.me";
 
-  const facebookUrl = contact.facebook || "#";
-  const tiktokUrl = contact.tiktok || "#";
+  const tiktokUrl = contact.tiktok || "https://tiktok.com";
 
   const socialLinks = [
-    { icon: Facebook, label: "Facebook", href: facebookUrl },
     { icon: ZaloIcon, label: "Zalo", href: zaloUrl },
     { icon: TiktokIcon, label: "TikTok", href: tiktokUrl },
   ];

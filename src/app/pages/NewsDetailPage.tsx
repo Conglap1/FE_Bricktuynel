@@ -238,7 +238,7 @@ export function NewsDetailPage() {
                 </button>
               </div>
 
-              <article itemscope itemtype="https://schema.org/NewsArticle">
+              <article itemScope itemType="https://schema.org/NewsArticle">
                 
                 {/* Sapo / Lead Summary Box */}
                 {article.summary && (
@@ -269,20 +269,23 @@ export function NewsDetailPage() {
                       <span>Mục lục bài viết</span>
                     </div>
                     <ul className="space-y-2.5 text-[13.5px]">
-                      {tocSections.map((sec, idx) => (
-                        <li key={idx}>
-                          <button
-                            onClick={() => {
-                              const el = document.getElementById(`section-${idx}`);
-                              if (el) el.scrollIntoView({ behavior: "smooth" });
-                            }}
-                            className="flex items-start gap-2 text-slate-700 hover:text-primary transition-colors text-left font-medium cursor-pointer group"
-                          >
-                            <span className="font-extrabold text-primary text-xs mt-0.5 shrink-0">{idx + 1}.</span>
-                            <span className="group-hover:underline line-clamp-2">{sec.question}</span>
-                          </button>
-                        </li>
-                      ))}
+                      {tocSections.map((sec, idx) => {
+                        const realIdx = article.sections ? article.sections.indexOf(sec) : idx;
+                        return (
+                          <li key={idx}>
+                            <button
+                              onClick={() => {
+                                const el = document.getElementById(`section-${realIdx >= 0 ? realIdx : idx}`);
+                                if (el) el.scrollIntoView({ behavior: "smooth" });
+                              }}
+                              className="flex items-start gap-2 text-slate-700 hover:text-primary transition-colors text-left font-medium cursor-pointer group"
+                            >
+                              <span className="font-extrabold text-primary text-xs mt-0.5 shrink-0">{idx + 1}.</span>
+                              <span className="group-hover:underline line-clamp-2">{sec.question}</span>
+                            </button>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 )}
@@ -444,20 +447,23 @@ export function NewsDetailPage() {
                     <span>Mục lục bài viết</span>
                   </div>
                   <ul className="space-y-2.5 text-[13.5px]">
-                    {tocSections.map((sec, idx) => (
-                      <li key={idx}>
-                        <button
-                          onClick={() => {
-                            const el = document.getElementById(`section-${idx}`);
-                            if (el) el.scrollIntoView({ behavior: "smooth" });
-                          }}
-                          className="flex items-start gap-2 text-slate-700 hover:text-primary transition-colors text-left font-medium cursor-pointer group"
-                        >
-                          <span className="font-extrabold text-primary text-xs mt-0.5 shrink-0">{idx + 1}.</span>
-                          <span className="group-hover:underline line-clamp-2">{sec.question}</span>
-                        </button>
-                      </li>
-                    ))}
+                    {tocSections.map((sec, idx) => {
+                      const realIdx = article.sections ? article.sections.indexOf(sec) : idx;
+                      return (
+                        <li key={idx}>
+                          <button
+                            onClick={() => {
+                              const el = document.getElementById(`section-${realIdx >= 0 ? realIdx : idx}`);
+                              if (el) el.scrollIntoView({ behavior: "smooth" });
+                            }}
+                            className="flex items-start gap-2 text-slate-700 hover:text-primary transition-colors text-left font-medium cursor-pointer group"
+                          >
+                            <span className="font-extrabold text-primary text-xs mt-0.5 shrink-0">{idx + 1}.</span>
+                            <span className="group-hover:underline line-clamp-2">{sec.question}</span>
+                          </button>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               )}

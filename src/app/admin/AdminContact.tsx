@@ -27,13 +27,14 @@ export function AdminContact() {
 
   async function handleSave() {
     try {
+      const payload = { ...form, facebook: "" };
       const res = await fetch(`${API_BASE_URL}/contact-info`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           ...getAuthHeaders(),
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
 
       if (res.ok) {
@@ -175,21 +176,7 @@ export function AdminContact() {
           </div>
 
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="mb-1.5 block text-sm font-semibold text-slate-700 flex items-center gap-2">
-                  <Globe className="h-4 w-4 text-blue-600" />
-                  Facebook Page / Messenger
-                </label>
-                <input
-                  type="text"
-                  value={form.facebook}
-                  onChange={(e) => setForm({ ...form, facebook: e.target.value })}
-                  placeholder="https://facebook.com/..."
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm font-medium text-slate-900 outline-none transition-colors focus:border-[#810C00] focus:bg-white focus:ring-1 focus:ring-[#810C00]"
-                />
-              </div>
-
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="mb-1.5 block text-sm font-semibold text-slate-700 flex items-center gap-2">
                   <PhoneCall className="h-4 w-4 text-blue-500" />
@@ -199,24 +186,24 @@ export function AdminContact() {
                   type="text"
                   value={form.zalo}
                   onChange={(e) => setForm({ ...form, zalo: e.target.value })}
-                  placeholder="https://zalo.me/..."
+                  placeholder="https://zalo.me/... hoặc 0918..."
                   className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm font-medium text-slate-900 outline-none transition-colors focus:border-[#810C00] focus:bg-white focus:ring-1 focus:ring-[#810C00]"
                 />
               </div>
-            </div>
 
-            <div>
-              <label className="mb-1.5 block text-sm font-semibold text-slate-700 flex items-center gap-2">
-                <Globe className="h-4 w-4 text-slate-900" />
-                Đường dẫn TikTok
-              </label>
-              <input
-                type="text"
-                value={form.tiktok}
-                onChange={(e) => setForm({ ...form, tiktok: e.target.value })}
-                placeholder="https://tiktok.com/@..."
-                className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm font-medium text-slate-900 outline-none transition-colors focus:border-[#810C00] focus:bg-white focus:ring-1 focus:ring-[#810C00]"
-              />
+              <div>
+                <label className="mb-1.5 block text-sm font-semibold text-slate-700 flex items-center gap-2">
+                  <Globe className="h-4 w-4 text-slate-900" />
+                  Đường dẫn TikTok
+                </label>
+                <input
+                  type="text"
+                  value={form.tiktok}
+                  onChange={(e) => setForm({ ...form, tiktok: e.target.value })}
+                  placeholder="https://tiktok.com/@..."
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm font-medium text-slate-900 outline-none transition-colors focus:border-[#810C00] focus:bg-white focus:ring-1 focus:ring-[#810C00]"
+                />
+              </div>
             </div>
 
             <div>

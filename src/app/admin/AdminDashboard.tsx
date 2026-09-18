@@ -125,7 +125,7 @@ export function AdminDashboard() {
             </button>
 
             <a
-              href="#/"
+              href="/"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 px-2.5 py-1.5 text-xs font-bold text-slate-950 shadow-md transition-all active:scale-95"

@@ -41,7 +41,7 @@ export function TechShowcase() {
       name: "Dây Chuyền Sản Xuất Hiện Đại",
       desc: "Dây chuyền sản xuất tự động hóa đồng bộ công nghệ cao, tối ưu hóa năng suất và đảm bảo chất lượng gạch đạt chuẩn tuyệt đối.",
       type: "single-image",
-      imageSrc: "/images/day_chuyen_san_xuat.png",
+      imageSrc: "/images/day_chuyen_san_xuat.webp",
     },
   ];
 

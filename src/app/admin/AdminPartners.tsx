@@ -149,7 +149,7 @@ export function AdminPartners() {
                     <td className="px-5 py-4 text-[13px] text-[#560213]/70">
                       {p.website ? (
                         <a
-                          href={p.website}
+                          href={p.website.startsWith("http") ? p.website : `https://${p.website}`}
                           target="_blank"
                           rel="noreferrer"
                           onClick={(e) => e.stopPropagation()}

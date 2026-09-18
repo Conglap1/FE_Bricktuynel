@@ -1,5 +1,5 @@
 import { useState, useRef, type FormEvent } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { Eye, EyeOff, KeyRound, ShieldAlert, CheckCircle2, X } from "lucide-react";
 import { API_BASE_URL } from "../lib/store";
 
@@ -268,9 +268,9 @@ export function AdminLogin() {
         </form>
 
         <div className="mt-6 text-center">
-          <a href="#/" className="text-[13px] text-white/60 hover:text-white transition-colors">
+          <Link to="/" className="text-[13px] text-white/60 hover:text-white transition-colors">
             ← Quay lại website
-          </a>
+          </Link>
         </div>
       </div>
 

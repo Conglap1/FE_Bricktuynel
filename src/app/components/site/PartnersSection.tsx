@@ -101,7 +101,7 @@ export function PartnersSection({ title = "Đối tác & Đại lý chiến lư�
 
                 {p.website && (
                   <a
-                    href={p.website}
+                    href={p.website.startsWith("http") ? p.website : `https://${p.website}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground hover:text-primary transition-colors"

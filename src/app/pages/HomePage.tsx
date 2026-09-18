@@ -221,7 +221,7 @@ function ProjectsTeaser() {
           {visible.map((p) => (
             <motion.div key={p.id} variants={staggerItem}>
               <Link
-                to={`/du-an/${p.slug}`}
+                to={`/du-an#${p.slug}`}
                 className="group relative flex h-52 overflow-hidden rounded-2xl border border-border bg-secondary"
               >
                 <ImageWithFallback src={p.image} alt={p.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -269,7 +269,14 @@ function ContactTeaser() {
       onClick: (e: React.MouseEvent) => {
         e.preventDefault();
         const el = document.getElementById("google-map-section");
-        if (el) el.scrollIntoView({ behavior: "smooth" });
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        } else {
+          const directMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+            contact.address || "Thuận Lợi Mộc Hóa"
+          )}`;
+          window.open(directMapUrl, "_blank");
+        }
       },
     },
     {

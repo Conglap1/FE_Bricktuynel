@@ -16,15 +16,6 @@ function formatDate(iso: string) {
 
 import { NewsCardSkeleton } from "../ui/LoadingState";
 
-function formatDate(iso: string) {
-  try {
-    const d = new Date(iso);
-    return d.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" });
-  } catch {
-    return iso;
-  }
-}
-
 export function News() {
   const { news: NEWS, isLoading } = useStore();
   const visible = NEWS.filter((n) => n.isActive);

@@ -1,28 +1,46 @@
-import { createBrowserRouter } from "react-router";
+import { lazy, Suspense } from "react";
+import { createBrowserRouter, Navigate } from "react-router";
 import { Root } from "./components/site/Root";
 import { HomePage } from "./pages/HomePage";
-import { AboutPage } from "./pages/AboutPage";
-import { CapacityPage } from "./pages/CapacityPage";
-import { ProductsPage } from "./pages/ProductsPage";
-import { ProductDetailPage } from "./pages/ProductDetailPage";
-import { ProcessPage } from "./pages/ProcessPage";
-import { ProjectsPage } from "./pages/ProjectsPage";
-import { ProjectDetailPage } from "./pages/ProjectDetailPage";
-import { NewsPage } from "./pages/NewsPage";
-import { NewsDetailPage } from "./pages/NewsDetailPage";
-import { ContactPage } from "./pages/ContactPage";
-import { NotFoundPage } from "./pages/NotFoundPage";
-import { AdminRoot } from "./admin/AdminRoot";
-import { AdminLogin } from "./admin/AdminLogin";
-import { AdminDashboard } from "./admin/AdminDashboard";
-import { AdminProducts } from "./admin/AdminProducts";
-import { AdminProjects } from "./admin/AdminProjects";
-import { AdminNews } from "./admin/AdminNews";
-import { AdminContact } from "./admin/AdminContact";
-import { AdminPartners } from "./admin/AdminPartners";
-import { AdminContactRequests } from "./admin/AdminContactRequests";
+import { InlineSpinner } from "./components/ui/LoadingState";
+
+// Lazy-loaded public pages for code-splitting
+const AboutPage = lazy(() => import("./pages/AboutPage").then((m) => ({ default: m.AboutPage })));
+const CapacityPage = lazy(() => import("./pages/CapacityPage").then((m) => ({ default: m.CapacityPage })));
+const ProductsPage = lazy(() => import("./pages/ProductsPage").then((m) => ({ default: m.ProductsPage })));
+const ProductDetailPage = lazy(() => import("./pages/ProductDetailPage").then((m) => ({ default: m.ProductDetailPage })));
+const ProcessPage = lazy(() => import("./pages/ProcessPage").then((m) => ({ default: m.ProcessPage })));
+const ProjectsPage = lazy(() => import("./pages/ProjectsPage").then((m) => ({ default: m.ProjectsPage })));
+const NewsPage = lazy(() => import("./pages/NewsPage").then((m) => ({ default: m.NewsPage })));
+const NewsDetailPage = lazy(() => import("./pages/NewsDetailPage").then((m) => ({ default: m.NewsDetailPage })));
+const ContactPage = lazy(() => import("./pages/ContactPage").then((m) => ({ default: m.ContactPage })));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage").then((m) => ({ default: m.NotFoundPage })));
+
+// Lazy-loaded Admin pages (reduces client landing page bundle by >60%)
+const AdminRoot = lazy(() => import("./admin/AdminRoot").then((m) => ({ default: m.AdminRoot })));
+const AdminLogin = lazy(() => import("./admin/AdminLogin").then((m) => ({ default: m.AdminLogin })));
+const AdminDashboard = lazy(() => import("./admin/AdminDashboard").then((m) => ({ default: m.AdminDashboard })));
+const AdminProducts = lazy(() => import("./admin/AdminProducts").then((m) => ({ default: m.AdminProducts })));
+const AdminProjects = lazy(() => import("./admin/AdminProjects").then((m) => ({ default: m.AdminProjects })));
+const AdminNews = lazy(() => import("./admin/AdminNews").then((m) => ({ default: m.AdminNews })));
+const AdminContact = lazy(() => import("./admin/AdminContact").then((m) => ({ default: m.AdminContact })));
+const AdminPartners = lazy(() => import("./admin/AdminPartners").then((m) => ({ default: m.AdminPartners })));
+const AdminContactRequests = lazy(() => import("./admin/AdminContactRequests").then((m) => ({ default: m.AdminContactRequests })));
+
 function AdminWrapper() {
-  return <AdminRoot />;
+  return (
+    <Suspense fallback={<InlineSpinner text="Đang tải trang quản trị..." />}>
+      <AdminRoot />
+    </Suspense>
+  );
+}
+
+function LoginWrapper() {
+  return (
+    <Suspense fallback={<InlineSpinner text="Đang tải..." />}>
+      <AdminLogin />
+    </Suspense>
+  );
 }
 
 export const router = createBrowserRouter([
@@ -37,7 +55,7 @@ export const router = createBrowserRouter([
       { path: "san-pham/:slug", Component: ProductDetailPage },
       { path: "quy-trinh", Component: ProcessPage },
       { path: "du-an", Component: ProjectsPage },
-      { path: "du-an/:slug", Component: ProjectDetailPage },
+      { path: "du-an/:slug", Component: () => <Navigate to="/du-an" replace /> },
       { path: "tin-tuc", Component: NewsPage },
       { path: "tin-tuc/:slug", Component: NewsDetailPage },
       { path: "lien-he", Component: ContactPage },
@@ -46,7 +64,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/admin/login",
-    Component: AdminLogin,
+    Component: LoginWrapper,
   },
   {
     path: "/admin",

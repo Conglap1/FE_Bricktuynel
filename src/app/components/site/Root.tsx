@@ -9,6 +9,9 @@ import { Footer } from "./Footer";
 import { QuoteDialog } from "./QuoteDialog";
 import { ScrollToTop } from "./ScrollToTop";
 import { FloatingWidget } from "./FloatingWidget";
+import { Suspense } from "react";
+import { InlineSpinner } from "../ui/LoadingState";
+
 export function Root() {
   usePageTitle();
   const location = useLocation();
@@ -29,7 +32,9 @@ export function Root() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
-              {outlet}
+              <Suspense fallback={<InlineSpinner text="Đang tải trang..." />}>
+                {outlet}
+              </Suspense>
             </motion.div>
           </AnimatePresence>
         </main>

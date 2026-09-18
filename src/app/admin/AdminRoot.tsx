@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { NavLink, Outlet, useNavigate, Navigate, useLocation } from "react-router";
+import { InlineSpinner } from "../components/ui/LoadingState";
 import { ADMIN_AUTH_KEY } from "./AdminLogin";
 import {
   LayoutDashboard,
@@ -139,7 +140,9 @@ export function AdminRoot() {
 
         <div className="border-t border-white/10 p-3 space-y-1">
           <a
-            href="#/"
+            href="/"
+            target="_blank"
+            rel="noreferrer"
             className="flex items-center gap-3 rounded-lg px-3.5 py-3 text-[13.5px] text-white/60 transition-colors hover:text-white hover:bg-white/10"
           >
             <ChevronRight className="h-4 w-4 rotate-180 shrink-0" />
@@ -238,7 +241,9 @@ export function AdminRoot() {
           </button>
 
           <a
-            href="#/"
+            href="/"
+            target="_blank"
+            rel="noreferrer"
             title={isCollapsed ? "Xem website" : undefined}
             className={`flex items-center ${
               isCollapsed ? "justify-center px-2.5 py-2.5" : "gap-3 px-3 py-2.5"
@@ -262,7 +267,9 @@ export function AdminRoot() {
 
       {/* ── Main Content Area ── */}
       <main className="flex-1 h-full overflow-y-auto bg-[#ffffff]">
-        <Outlet />
+        <Suspense fallback={<InlineSpinner text="Đang tải dữ liệu..." />}>
+          <Outlet />
+        </Suspense>
       </main>
       <Toaster richColors position="bottom-right" />
     </div>
