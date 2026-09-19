@@ -1,4 +1,4 @@
-import { useState, useRef, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { useNavigate, Link } from "react-router";
 import { Eye, EyeOff, KeyRound, ShieldAlert, CheckCircle2, X } from "lucide-react";
 import { API_BASE_URL } from "../lib/store";
@@ -15,10 +15,6 @@ export function AdminLogin() {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
-  // 5-second long press state (stealth / silent)
-  const holdTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const isLongPressTriggeredRef = useRef<boolean>(false);
-
   // Change password modal state
   const [showChangePassModal, setShowChangePassModal] = useState(false);
   const [changePassUsername, setChangePassUsername] = useState("admin");
@@ -29,43 +25,8 @@ export function AdminLogin() {
   const [changePassError, setChangePassError] = useState("");
   const [changePassSuccess, setChangePassSuccess] = useState("");
 
-  const startHold = () => {
-    isLongPressTriggeredRef.current = false;
-
-    if (holdTimeoutRef.current) clearTimeout(holdTimeoutRef.current);
-
-    holdTimeoutRef.current = setTimeout(() => {
-      isLongPressTriggeredRef.current = true;
-
-      if (typeof window !== "undefined" && "vibrate" in navigator) {
-        navigator.vibrate(200);
-      }
-
-      // Open Change Password Modal
-      setChangePassError("");
-      setChangePassSuccess("");
-      setOldPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
-      setShowChangePassModal(true);
-    }, 5000);
-  };
-
-  const cancelHold = () => {
-    if (holdTimeoutRef.current) {
-      clearTimeout(holdTimeoutRef.current);
-      holdTimeoutRef.current = null;
-    }
-  };
-
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    // If long press was triggered, don't execute normal submit
-    if (isLongPressTriggeredRef.current) {
-      isLongPressTriggeredRef.current = false;
-      return;
-    }
 
     setLoading(true);
     setErrorMsg("");
@@ -90,13 +51,15 @@ export function AdminLogin() {
 
       if (res.ok) {
         const data = await res.json();
-        if (data.success) {
-          sessionStorage.setItem(ADMIN_AUTH_KEY, data.token || "1");
+        if (data.success && data.token) {
+          sessionStorage.setItem(ADMIN_AUTH_KEY, data.token);
           navigate("/admin", { replace: true });
           return;
         } else {
-          setErrorMsg(data.message || "Đăng nhập thất bại");
+          setErrorMsg(data.message || "Đăng nhập thất bại: Không nhận được mã xác thực hợp lệ");
         }
+      } else if (res.status === 429) {
+        setErrorMsg("Bạn đã gửi quá nhiều yêu cầu đăng nhập liên tiếp. Vui lòng đợi 1 phút trước khi thử lại.");
       } else {
         const data = await res.json().catch(() => null);
         setErrorMsg(data?.message || "Tài khoản hoặc mật khẩu không chính xác");
@@ -249,17 +212,11 @@ export function AdminLogin() {
             </div>
           )}
 
-          {/* Submit button with silent 5s hold */}
+          {/* Submit button */}
           <div className="relative mt-6">
             <button
               type="submit"
               disabled={loading}
-              onMouseDown={startHold}
-              onMouseUp={cancelHold}
-              onMouseLeave={cancelHold}
-              onTouchStart={startHold}
-              onTouchEnd={cancelHold}
-              onTouchCancel={cancelHold}
               className="w-full rounded-xl bg-[#810C00] py-3.5 text-[15px] font-bold text-white transition-all hover:opacity-90 active:scale-[0.99] disabled:opacity-50 select-none cursor-pointer"
             >
               {loading ? "Đang đăng nhập…" : "Đăng nhập"}
@@ -267,10 +224,24 @@ export function AdminLogin() {
           </div>
         </form>
 
-        <div className="mt-6 text-center">
-          <Link to="/" className="text-[13px] text-white/60 hover:text-white transition-colors">
+        <div className="mt-6 flex items-center justify-between px-1 text-[13px]">
+          <Link to="/" className="text-white/60 hover:text-white transition-colors">
             ← Quay lại website
           </Link>
+          <button
+            type="button"
+            onClick={() => {
+              setChangePassError("");
+              setChangePassSuccess("");
+              setOldPassword("");
+              setNewPassword("");
+              setConfirmPassword("");
+              setShowChangePassModal(true);
+            }}
+            className="text-white/60 hover:text-white transition-colors cursor-pointer"
+          >
+            Đổi mật khẩu
+          </button>
         </div>
       </div>
 
