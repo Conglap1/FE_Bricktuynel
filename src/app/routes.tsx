@@ -4,17 +4,16 @@ import { Root } from "./components/site/Root";
 import { HomePage } from "./pages/HomePage";
 import { InlineSpinner } from "./components/ui/LoadingState";
 
-// Lazy-loaded public pages for code-splitting
-const AboutPage = lazy(() => import("./pages/AboutPage").then((m) => ({ default: m.AboutPage })));
-const CapacityPage = lazy(() => import("./pages/CapacityPage").then((m) => ({ default: m.CapacityPage })));
-const ProductsPage = lazy(() => import("./pages/ProductsPage").then((m) => ({ default: m.ProductsPage })));
-const ProductDetailPage = lazy(() => import("./pages/ProductDetailPage").then((m) => ({ default: m.ProductDetailPage })));
-const ProcessPage = lazy(() => import("./pages/ProcessPage").then((m) => ({ default: m.ProcessPage })));
-const ProjectsPage = lazy(() => import("./pages/ProjectsPage").then((m) => ({ default: m.ProjectsPage })));
-const NewsPage = lazy(() => import("./pages/NewsPage").then((m) => ({ default: m.NewsPage })));
-const NewsDetailPage = lazy(() => import("./pages/NewsDetailPage").then((m) => ({ default: m.NewsDetailPage })));
-const ContactPage = lazy(() => import("./pages/ContactPage").then((m) => ({ default: m.ContactPage })));
-const NotFoundPage = lazy(() => import("./pages/NotFoundPage").then((m) => ({ default: m.NotFoundPage })));
+import { AboutPage } from "./pages/AboutPage";
+import { CapacityPage } from "./pages/CapacityPage";
+import { ProductsPage } from "./pages/ProductsPage";
+import { ProductDetailPage } from "./pages/ProductDetailPage";
+import { ProcessPage } from "./pages/ProcessPage";
+import { ProjectsPage } from "./pages/ProjectsPage";
+import { NewsPage } from "./pages/NewsPage";
+import { NewsDetailPage } from "./pages/NewsDetailPage";
+import { ContactPage } from "./pages/ContactPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 // Lazy-loaded Admin pages (reduces client landing page bundle by >60%)
 const AdminRoot = lazy(() => import("./admin/AdminRoot").then((m) => ({ default: m.AdminRoot })));

@@ -146,6 +146,43 @@ export const DEFAULT_CONTACT: ContactInfo = {
   workingHours: "",
 };
 
+const PUBLIC_CACHE_KEY = "tsb_public_cache_v1";
+
+interface PublicCacheData {
+  products: Product[];
+  projects: ProjectItem[];
+  news: NewsItem[];
+  partners: Partner[];
+  contact: ContactInfo;
+  about: AboutData;
+}
+
+function getStoredCache(): PublicCacheData | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(PUBLIC_CACHE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+function updateStoredCache(patch: Partial<PublicCacheData>) {
+  if (typeof window === "undefined") return;
+  try {
+    const prev = getStoredCache() || {
+      products: [],
+      projects: [],
+      news: [],
+      partners: [],
+      contact: DEFAULT_CONTACT,
+      about: DEFAULT_ABOUT,
+    };
+    localStorage.setItem(PUBLIC_CACHE_KEY, JSON.stringify({ ...prev, ...patch }));
+  } catch {}
+}
+
 const Ctx = createContext<(StoreState & StoreActions) | null>(null);
 
 export function StoreProvider({ children }: { children: ReactNode }) {
@@ -158,16 +195,19 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     } catch {}
   }, []);
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [products, setProductsRaw] = useState<Product[]>([]);
+  const initialCache = useRef(getStoredCache()).current;
+  const hasCache = Boolean(initialCache && initialCache.products && initialCache.products.length > 0);
+
+  const [isLoading, setIsLoading] = useState(!hasCache);
+  const [products, setProductsRaw] = useState<Product[]>(() => initialCache?.products ?? []);
   const [categories, setCategoriesRaw] = useState<Category[]>(CATEGORIES);
   const [process, setProcessRaw] = useState<ProcessStep[]>(PROCESS);
-  const [projects, setProjectsRaw] = useState<ProjectItem[]>([]);
-  const [news, setNewsRaw] = useState<NewsItem[]>([]);
+  const [projects, setProjectsRaw] = useState<ProjectItem[]>(() => initialCache?.projects ?? []);
+  const [news, setNewsRaw] = useState<NewsItem[]>(() => initialCache?.news ?? []);
 
-  const [about, setAboutRaw] = useState<AboutData>(DEFAULT_ABOUT);
-  const [contact, setContactRaw] = useState<ContactInfo>(DEFAULT_CONTACT);
-  const [partners, setPartnersRaw] = useState<Partner[]>([]);
+  const [about, setAboutRaw] = useState<AboutData>(() => initialCache?.about ?? DEFAULT_ABOUT);
+  const [contact, setContactRaw] = useState<ContactInfo>(() => initialCache?.contact ?? DEFAULT_CONTACT);
+  const [partners, setPartnersRaw] = useState<Partner[]>(() => initialCache?.partners ?? []);
   const [contactRequests, setContactRequestsRaw] = useState<ContactRequest[]>([]);
 
   // Track seen request IDs to detect brand new incoming requests
@@ -212,7 +252,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   // Fetch all real data strictly from .NET 9 API with return status indicating success
   const refreshAll = useCallback(async (): Promise<boolean> => {
-    setIsLoading(true);
+    // Only show full skeleton loading if there is zero cached data to display
+    if (!getStoredCache()?.products?.length) {
+      setIsLoading(true);
+    }
     let hasData = false;
     try {
       const [resContact, resProducts, resProjects, resNews, resPartners] = await Promise.all([
@@ -223,24 +266,47 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         fetch(`${API_BASE_URL}/partners`).catch((err) => { console.warn("[API Warmup] Partners fetch failed:", err); return null; }),
       ]);
 
-      if (resContact?.ok) setContactRaw(await resContact.json());
+      const cachePatch: Partial<PublicCacheData> = {};
+
+      if (resContact?.ok) {
+        const contactData = await resContact.json();
+        setContactRaw(contactData);
+        cachePatch.contact = contactData;
+      }
       
       if (resProducts?.ok) {
         const prodData = await resProducts.json();
         setProductsRaw(prodData);
-        if (Array.isArray(prodData) && prodData.length > 0) hasData = true;
+        if (Array.isArray(prodData) && prodData.length > 0) {
+          hasData = true;
+          cachePatch.products = prodData;
+        }
       }
       if (resProjects?.ok) {
         const projData = await resProjects.json();
         setProjectsRaw(projData);
-        if (Array.isArray(projData) && projData.length > 0) hasData = true;
+        if (Array.isArray(projData) && projData.length > 0) {
+          hasData = true;
+          cachePatch.projects = projData;
+        }
       }
       if (resNews?.ok) {
         const newsData = await resNews.json();
         setNewsRaw(newsData);
-        if (Array.isArray(newsData) && newsData.length > 0) hasData = true;
+        if (Array.isArray(newsData) && newsData.length > 0) {
+          hasData = true;
+          cachePatch.news = newsData;
+        }
       }
-      if (resPartners?.ok) setPartnersRaw(await resPartners.json());
+      if (resPartners?.ok) {
+        const partnerData = await resPartners.json();
+        setPartnersRaw(partnerData);
+        cachePatch.partners = partnerData;
+      }
+
+      if (Object.keys(cachePatch).length > 0) {
+        updateStoredCache(cachePatch);
+      }
 
       await refreshContactRequests(false);
       return hasData;
@@ -284,14 +350,32 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     };
   }, [refreshAll, refreshContactRequests]);
 
-  const setProducts = useCallback((v: Product[]) => setProductsRaw(v), []);
+  const setProducts = useCallback((v: Product[]) => {
+    setProductsRaw(v);
+    updateStoredCache({ products: v });
+  }, []);
   const setCategories = useCallback((v: Category[]) => setCategoriesRaw(v), []);
   const setProcess = useCallback((v: ProcessStep[]) => setProcessRaw(v), []);
-  const setProjects = useCallback((v: ProjectItem[]) => setProjectsRaw(v), []);
-  const setNews = useCallback((v: NewsItem[]) => setNewsRaw(v), []);
-  const setAbout = useCallback((v: AboutData) => setAboutRaw(v), []);
-  const setContact = useCallback((v: ContactInfo) => setContactRaw(v), []);
-  const setPartners = useCallback((v: Partner[]) => setPartnersRaw(v), []);
+  const setProjects = useCallback((v: ProjectItem[]) => {
+    setProjectsRaw(v);
+    updateStoredCache({ projects: v });
+  }, []);
+  const setNews = useCallback((v: NewsItem[]) => {
+    setNewsRaw(v);
+    updateStoredCache({ news: v });
+  }, []);
+  const setAbout = useCallback((v: AboutData) => {
+    setAboutRaw(v);
+    updateStoredCache({ about: v });
+  }, []);
+  const setContact = useCallback((v: ContactInfo) => {
+    setContactRaw(v);
+    updateStoredCache({ contact: v });
+  }, []);
+  const setPartners = useCallback((v: Partner[]) => {
+    setPartnersRaw(v);
+    updateStoredCache({ partners: v });
+  }, []);
   const setContactRequests = useCallback((v: ContactRequest[]) => setContactRequestsRaw(v), []);
 
   return (

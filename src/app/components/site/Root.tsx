@@ -1,5 +1,4 @@
 import { useLocation, useOutlet } from "react-router";
-import { AnimatePresence } from "motion/react";
 import { motion } from "../../lib/motion";
 import { usePageTitle } from "../../lib/usePageTitle";
 import { QuoteProvider } from "./QuoteContext";
@@ -9,8 +8,6 @@ import { Footer } from "./Footer";
 import { QuoteDialog } from "./QuoteDialog";
 import { ScrollToTop } from "./ScrollToTop";
 import { FloatingWidget } from "./FloatingWidget";
-import { Suspense } from "react";
-import { InlineSpinner } from "../ui/LoadingState";
 
 export function Root() {
   usePageTitle();
@@ -24,19 +21,14 @@ export function Root() {
         <CursorSpotlight />
         <Navbar />
         <main>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={location.pathname}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Suspense fallback={<InlineSpinner text="Đang tải trang..." />}>
-                {outlet}
-              </Suspense>
-            </motion.div>
-          </AnimatePresence>
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.15 }}
+          >
+            {outlet}
+          </motion.div>
         </main>
         <Footer />
         <QuoteDialog />
