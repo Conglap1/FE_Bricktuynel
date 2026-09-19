@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef, useLayoutEffect } from "react";
 import { 
   Search, 
   MapPin, 
@@ -33,25 +33,52 @@ function formatDateShort(iso?: string) {
   return iso;
 }
 
-function autoLinkify(text: string) {
+function autoLinkify(text: string): string {
   if (!text) return "";
-  return text.replace(
-    /(https?:\/\/[^\s<]+)/g,
-    (url) => {
-      let label = "Xem liên kết";
-      if (url.includes("youtube.com") || url.includes("youtu.be")) label = "Xem trên YouTube";
-      else if (url.includes("facebook.com") || url.includes("fb.watch")) label = "Xem trên Facebook";
-      else if (url.includes("tiktok.com")) label = "Xem trên TikTok";
-      else if (url.includes("zalo.me")) label = "Liên hệ Zalo";
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="font-bold text-primary underline hover:text-[#560213] inline-flex items-center gap-1">${label}</a>`;
-    }
-  );
+  const parts = text.split(/(<a\s+[^>]*>[\s\S]*?<\/a>|<[^>]+>)/gi);
+  return parts
+    .map((part) => {
+      if (part.startsWith("<")) return part;
+      const urlRegex = /(https?:\/\/[^\s<)]+)/gi;
+      return part.replace(urlRegex, (url) => {
+        let cleanUrl = url;
+        let trailing = "";
+        if (/[.,!?)]$/.test(cleanUrl)) {
+          trailing = cleanUrl.slice(-1);
+          cleanUrl = cleanUrl.slice(0, -1);
+        }
+
+        let label = "Xem liên kết";
+        try {
+          const parsed = new URL(cleanUrl);
+          const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
+          if (host.includes("youtube.com") || host.includes("youtu.be")) {
+            label = "Xem trên YouTube";
+          } else if (host.includes("facebook.com") || host.includes("fb.watch")) {
+            label = "Xem trên Facebook";
+          } else if (host.includes("tiktok.com")) {
+            label = "Xem trên TikTok";
+          } else if (host.includes("zalo.me")) {
+            label = "Liên hệ Zalo";
+          } else {
+            label = "Xem liên kết";
+          }
+        } catch {
+          label = "Xem liên kết";
+        }
+
+        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="font-bold text-primary underline hover:text-[#560213] inline-flex items-center gap-1">${label}</a>${trailing}`;
+      });
+    })
+    .join("");
 }
 
 function ProjectCard({ project }: { project: ProjectItem }) {
   const [selectedIdx, setSelectedIdx] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isClamped, setIsClamped] = useState(false);
+  const descRef = useRef<HTMLDivElement>(null);
 
   const allImages = useMemo(() => {
     if (project.images && project.images.length > 0) {
@@ -77,11 +104,40 @@ function ProjectCard({ project }: { project: ProjectItem }) {
     setSelectedIdx((prev) => (prev - 1 + allImages.length) % allImages.length);
   }, [allImages.length]);
 
-  // Kiểm tra mô tả dài để hiện nút Xem thêm / Thu gọn
-  const hasLongDescription = Boolean(
-    (project.description && project.description.trim().length > 180) ||
-    (project.description && project.shortDescription && project.description.trim().length > 100)
-  );
+  // Reset trạng thái mở rộng khi đổi project
+  useEffect(() => {
+    setIsExpanded(false);
+  }, [project.id]);
+
+  // Tự động đo lường xem nội dung mô tả có thực sự bị tràn (overflow) quá số dòng cho phép hay không.
+  // Nếu nội dung vừa đủ (không bị clamp / cắt bớt), tuyệt đối không hiển thị nút "Xem thêm chi tiết".
+  useLayoutEffect(() => {
+    const el = descRef.current;
+    if (!el) return;
+
+    const checkOverflow = () => {
+      if (!isExpanded) {
+        // scrollHeight > clientHeight với ngưỡng chênh lệch 4px (tránh sai số sub-pixel)
+        const hasOverflow = el.scrollHeight - el.clientHeight > 4;
+        setIsClamped((prev) => (prev !== hasOverflow ? hasOverflow : prev));
+      }
+    };
+
+    checkOverflow();
+
+    const ro = new ResizeObserver(() => {
+      checkOverflow();
+    });
+    ro.observe(el);
+
+    if (document.fonts) {
+      document.fonts.ready.then(checkOverflow);
+    }
+
+    return () => {
+      ro.disconnect();
+    };
+  }, [project.description, isExpanded]);
 
   return (
     <div
@@ -197,7 +253,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
 
             {/* Mô tả ngắn nếu có */}
             {project.shortDescription && (
-              <p className="mt-4 text-[14.5px] sm:text-[15px] font-semibold leading-relaxed text-slate-800">
+              <p className="mt-4 text-[14.5px] sm:text-[15px] font-semibold leading-relaxed text-slate-800 whitespace-pre-line">
                 {project.shortDescription}
               </p>
             )}
@@ -206,12 +262,14 @@ function ProjectCard({ project }: { project: ProjectItem }) {
             {project.description ? (
               <div className="mt-3">
                 <div
-                  className={`prose-article text-[14px] sm:text-[14.5px] leading-relaxed text-slate-600 transition-all duration-300 ${
-                    !isExpanded && hasLongDescription ? "line-clamp-3 sm:line-clamp-4" : ""
+                  ref={descRef}
+                  className={`prose-article text-[14px] sm:text-[14.5px] leading-relaxed text-slate-600 transition-all duration-300 [&_p:last-child]:mb-0 [&>*:last-child]:mb-0 ${
+                    !isExpanded ? "line-clamp-3 sm:line-clamp-4" : ""
                   }`}
                 >
                   {project.description.includes("<") ? (
                     <div
+                      className="whitespace-pre-line"
                       dangerouslySetInnerHTML={{
                         __html: autoLinkify(project.description)
                       }}
@@ -220,18 +278,31 @@ function ProjectCard({ project }: { project: ProjectItem }) {
                     project.description.split(/\n\s*\n/).map((para, pIdx) => (
                       <p
                         key={pIdx}
-                        className="mb-2.5 text-justify"
+                        className="mb-2.5 last:mb-0 text-justify whitespace-pre-line"
                         dangerouslySetInnerHTML={{ __html: autoLinkify(para) }}
                       />
                     ))
                   )}
                 </div>
 
-                {/* Nút Xem thêm / Thu gọn */}
-                {hasLongDescription && (
+                {/* Nút Xem thêm / Thu gọn: Chỉ hiển thị khi nội dung thực sự bị tràn */}
+                {isClamped && (
                   <button
                     type="button"
-                    onClick={() => setIsExpanded(!isExpanded)}
+                    onClick={() => {
+                      if (isExpanded) {
+                        setIsExpanded(false);
+                        const cardEl = document.getElementById(project.slug);
+                        if (cardEl) {
+                          const rect = cardEl.getBoundingClientRect();
+                          if (rect.top < 80) {
+                            cardEl.scrollIntoView({ behavior: "smooth", block: "start" });
+                          }
+                        }
+                      } else {
+                        setIsExpanded(true);
+                      }
+                    }}
                     className="mt-2.5 inline-flex items-center gap-1.5 text-[13px] font-bold text-primary hover:text-[#560213] cursor-pointer transition-colors"
                   >
                     {isExpanded ? (
@@ -248,7 +319,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
               </div>
             ) : (
               !project.shortDescription && (
-                <p className="mt-3 text-[14px] sm:text-[14.5px] leading-relaxed text-slate-600 line-clamp-3">
+                <p className="mt-3 text-[14px] sm:text-[14.5px] leading-relaxed text-slate-600">
                   Dự án {project.name} tại {project.location} tin dùng các dòng gạch Tuynel nung lò chất lượng cao từ Thuận Lợi, đáp ứng các tiêu chuẩn kỹ thuật về độ chịu lực và độ bền vững.
                 </p>
               )

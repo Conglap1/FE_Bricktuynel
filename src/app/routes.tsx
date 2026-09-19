@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { createBrowserRouter, Navigate } from "react-router";
+import { createBrowserRouter, Navigate, useParams } from "react-router";
 import { Root } from "./components/site/Root";
 import { HomePage } from "./pages/HomePage";
 import { InlineSpinner } from "./components/ui/LoadingState";
@@ -43,6 +43,11 @@ function LoginWrapper() {
   );
 }
 
+function RedirectToProjectCard() {
+  const { slug } = useParams<{ slug: string }>();
+  return <Navigate to={slug ? `/du-an#${slug}` : "/du-an"} replace />;
+}
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -55,7 +60,7 @@ export const router = createBrowserRouter([
       { path: "san-pham/:slug", Component: ProductDetailPage },
       { path: "quy-trinh", Component: ProcessPage },
       { path: "du-an", Component: ProjectsPage },
-      { path: "du-an/:slug", Component: () => <Navigate to="/du-an" replace /> },
+      { path: "du-an/:slug", Component: RedirectToProjectCard },
       { path: "tin-tuc", Component: NewsPage },
       { path: "tin-tuc/:slug", Component: NewsDetailPage },
       { path: "lien-he", Component: ContactPage },
