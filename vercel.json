@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/sitemap.xml",
-      "destination": "https://gach-thuanloi-api-aqesccf9cjgde9ep.eastasia-01.azurewebsites.net/api/sitemap.xml"
+      "destination": "https://gach-thuanloi-api-aqesccf9cjgde9ep.eastasia-01.azurewebsites.net/api/sitemap"
     },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
