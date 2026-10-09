@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams, Link } from "react-router";
 import { ArrowLeft, Phone, CheckCircle2, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { useStore } from "../lib/store";
+import { useStore, getImageUrl } from "../lib/store";
 import { PageHeader } from "../components/site/PageHeader";
 import { LogoMarquee } from "../components/site/LogoMarquee";
 import { CTABand } from "../components/site/CTABand";
@@ -28,20 +28,33 @@ const HIGHLIGHTS = [
 ];
 
 import { DetailSkeleton } from "../components/ui/LoadingState";
-import { formatPageTitle } from "../lib/usePageTitle";
+import { applySeoMetadata } from "../lib/usePageTitle";
 
 export function ProductDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const { products, isLoading } = useStore();
 
-  const product = products.find((p) => p.slug === slug && p.isActive);
+  const product = products.find(
+    (p) =>
+      p.isActive &&
+      (p.slug === slug ||
+        p.slug.replace(/^gach-ong-/, "tuynel-") === slug ||
+        p.slug.replace(/^gach-/, "tuynel-") === slug ||
+        p.slug.replace(/^tuynel-/, "gach-ong-") === slug ||
+        p.slug.replace(/^tuynel-/, "gach-") === slug)
+  );
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
 
   useEffect(() => {
-    if (product?.name) {
-      document.title = formatPageTitle(product.name);
+    if (product) {
+      applySeoMetadata({
+        title: `${product.name} — Gạch Tuynel Thuận Lợi`,
+        description: product.shortDescription || product.description || `Sản phẩm ${product.name} sản xuất tại Nhà máy Gạch Tuynel Thuận Lợi Kiến Tường, Long An. Đạt chuẩn QCVN 16:2023.`,
+        keywords: `${product.name}, gạch tuynel, gạch xây dựng, gạch kiến tường, gạch tây ninh, giá ${product.name}, gạch thuận lợi`,
+        pathname: `/san-pham/${product.slug}`,
+      });
     }
-  }, [product?.name]);
+  }, [product]);
 
   // Consolidate images
   const allImages = product
@@ -92,8 +105,45 @@ export function ProductDetailPage() {
   const otherProducts = products.filter((p) => p.isActive && p.id !== product.id).slice(0, 4);
   const currentImg = allImages[selectedIdx] || product.image;
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.name,
+    "description": product.shortDescription || product.description || product.name,
+    "image": allImages.map((img) => getImageUrl(img)),
+    "sku": `BRICK-${product.id}`,
+    "brand": {
+      "@type": "Brand",
+      "name": "Gạch Tuynel Thuận Lợi",
+    },
+    "manufacturer": {
+      "@type": "Organization",
+      "name": "Công ty TNHH Một Thành Viên Thuận Lợi Mộc Hóa",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Thị xã Kiến Tường",
+        "addressRegion": "Long An",
+        "addressCountry": "VN",
+      },
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "VND",
+      "availability": "https://schema.org/InStock",
+      "url": `https://www.gachtuynelthuanloi.com/san-pham/${product.slug}`,
+      "seller": {
+        "@type": "Organization",
+        "name": "Nhà Máy Gạch Tuynel Thuận Lợi",
+      },
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       <PageHeader
         crumb="Chi tiết sản phẩm"
         parentCrumb="Sản phẩm"
@@ -175,9 +225,9 @@ export function ProductDetailPage() {
             {/* Info */}
             <div>
               <Reveal>
-                <h1 className="text-foreground" style={{ fontSize: "clamp(1.8rem, 3vw, 2.4rem)", fontWeight: 800, lineHeight: 1.1, fontFamily: "var(--font-display)" }}>
+                <h2 className="text-foreground" style={{ fontSize: "clamp(1.8rem, 3vw, 2.4rem)", fontWeight: 800, lineHeight: 1.1, fontFamily: "var(--font-display)" }}>
                   {product.name}
-                </h1>
+                </h2>
                 {product.description ? (
                   <div className="mt-4 text-[16px] leading-relaxed text-muted-foreground space-y-3">
                     {product.description.split(/\n\s*\n/).map((para, pIdx) => (

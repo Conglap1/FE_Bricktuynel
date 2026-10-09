@@ -125,10 +125,10 @@ type StoreActions = {
 
 export const DEFAULT_ABOUT: AboutData = {
   title: "Gần bốn thập kỷ dựng xây niềm tin từ từng viên gạch",
-  desc: "Thành lập năm 1988, Công ty TNHH Một Thành Viên Thuận Lợi Mộc Hóa là một trong những đơn vị sản xuất gạch đất sét nung Tuynel hàng đầu khu vực phía Nam. Chúng tôi kết hợp dây chuyền công nghệ hiện đại với quy trình chuyên nghiệp để tạo ra những sản phẩm bền vững, an toàn — giao hàng toàn quốc với giá cạnh tranh trực tiếp từ nhà máy.",
+  desc: "Thành lập năm 1988, Công ty TNHH Một Thành Viên Thuận Lợi Mộc Hóa là đơn vị sản xuất gạch Tuynel uy tín với nhà máy đặt tại Thị xã Kiến Tường, chuyên cung ứng gạch ống, gạch thẻ, gạch đơmi chất lượng cao cho thị trường Kiến Tường, Tây Ninh và các tỉnh miền Nam. Chúng tôi kết hợp dây chuyền công nghệ hiện đại với quy trình khép kín, giao hàng tận nơi với giá cạnh tranh trực tiếp từ xưởng.",
   points: [
     "Thành lập năm 1988 — hơn 30 năm kinh nghiệm sản xuất gạch Tuynel",
-    "Năng lực sản xuất lớn, đáp ứng bất kỳ quy mô công trình nào",
+    "Xưởng sản xuất tại Kiến Tường, cung ứng nhanh chóng tới Tây Ninh & Miền Tây",
     "Giao hàng đúng hạn — giá cạnh tranh trực tiếp từ nhà máy",
     "Sản phẩm đạt hợp quy QCVN 16:2023/BXD — đáp ứng tiêu chuẩn chất lượng cao",
   ],

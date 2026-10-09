@@ -78,8 +78,33 @@ function GoogleMap() {
 }
 
 export function ContactPage() {
+  const contactJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Liên Hệ Báo Giá — Nhà Máy Gạch Tuynel Thuận Lợi",
+    "description": "Thông tin liên hệ, địa chỉ nhà máy và hỗ trợ báo giá sỉ gạch tuynel Thuận Lợi tại Kiến Tường, Long An và Tây Ninh.",
+    "url": "https://www.gachtuynelthuanloi.com/lien-he",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Công ty TNHH Một Thành Viên Thuận Lợi Mộc Hóa",
+      "telephone": "+84-918-701-472",
+      "email": "kinhdoanh@gachthuanloi.vn",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Ấp Mới, Xã Bình Tân",
+        "addressLocality": "Thị xã Kiến Tường",
+        "addressRegion": "Long An",
+        "addressCountry": "VN"
+      }
+    }
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactJsonLd) }}
+      />
       <PageHeader
         crumb="Liên hệ"
         eyebrow="Liên hệ & Báo giá"

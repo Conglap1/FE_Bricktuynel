@@ -116,7 +116,7 @@ const MOCK_SIDEBAR_PRODUCTS = [
 ];
 
 import { DetailSkeleton } from "../components/ui/LoadingState";
-import { formatPageTitle } from "../lib/usePageTitle";
+import { applySeoMetadata } from "../lib/usePageTitle";
 
 export function NewsDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -132,7 +132,12 @@ export function NewsDetailPage() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     if (article) {
-      document.title = formatPageTitle(article.title);
+      applySeoMetadata({
+        title: `${article.title} — Gạch Tuynel Thuận Lợi`,
+        description: article.summary || stripHtml(article.content || "").slice(0, 160) || article.title,
+        keywords: `${article.title}, tin tức xây dựng, gạch tuynel, gạch kiến tường, gạch tây ninh, gạch thuận lợi`,
+        pathname: `/tin-tuc/${article.slug}`,
+      });
     }
   }, [slug, article]);
 

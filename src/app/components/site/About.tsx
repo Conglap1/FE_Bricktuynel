@@ -16,7 +16,7 @@ export function About() {
             <div className="overflow-hidden rounded-2xl bg-secondary">
               <ImageWithFallback
                 src={IMAGES.aboutFactory}
-                alt="Công nhân sản xuất gạch tại nhà máy Thuận Lợi"
+                alt="Dây chuyền sản xuất gạch tuynel tại nhà máy Thuận Lợi Kiến Tường, phục vụ thị trường Tây Ninh & Long An"
                 className="aspect-[4/5] w-full object-cover transition-transform duration-[1.2s] hover:scale-105"
               />
             </div>
@@ -25,7 +25,7 @@ export function About() {
             <div className="absolute -bottom-8 -right-4 w-44 overflow-hidden rounded-xl border-4 border-white bg-secondary shadow-2xl sm:w-56">
               <ImageWithFallback
                 src={IMAGES.aboutStack}
-                alt="Pallet gạch thành phẩm"
+                alt="Pallet gạch tuynel thành phẩm xuất xưởng từ Kiến Tường giao đến công trình Tây Ninh"
                 className="aspect-square w-full object-cover"
               />
             </div>

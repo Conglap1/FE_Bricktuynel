@@ -52,10 +52,10 @@ export function BrandStory() {
                 <span className="font-bold text-primary">1988 — Khởi nguồn khát vọng từ đất Tây Ninh:</span> Hành trình bắt đầu từ năm 1988 với ngọn lửa nhiệt huyết của những người thợ làm gạch tại Tây Ninh. Những bước chân đầu tiên đi tìm đất, gieo mầm khát vọng đặt nền móng chắc chắn cho các công trình Việt.
               </p>
               <p className="rounded-2xl border border-border/80 bg-white p-5 shadow-sm">
-                <span className="font-bold text-primary">Biến cố Tân Thạnh — Hồi sinh từ tàn tro bão lũ:</span> Để mở rộng quy mô, xưởng chuyển sang thuê lò nung liên thanh tại Tân Thạnh. Nhưng trận lũ lịch sử càn quét đã làm sụp đổ hoàn toàn hệ thống lò, cuốn trôi mọi thành quả tích góp. Đứng trước đống đổ nát trắng tay, bản lĩnh người làm gạch lên tiếng: <em className="text-primary/90">&ldquo;Nước lũ có thể cuốn trôi gạch nung, nhưng không thể dập tắt lửa nghề trong tim.&rdquo;</em> Quyết định dời xưởng về địa điểm hiện tại là bước ngoặt sinh tử để làm lại từ đầu.
+                <span className="font-bold text-primary">Biến cố Tân Thạnh — Hồi sinh từ tàn tro bão lũ:</span> Để mở rộng quy mô, xưởng chuyển sang thuê lò nung liên thanh tại Tân Thạnh. Nhưng trận lũ lịch sử càn quét đã làm sụp đổ hoàn toàn hệ thống lò, cuốn trôi mọi thành quả tích góp. Đứng trước đống đổ nát trắng tay, bản lĩnh người làm gạch lên tiếng: <em className="text-primary/90">&ldquo;Nước lũ có thể cuốn trôi gạch nung, nhưng không thể dập tắt lửa nghề trong tim.&rdquo;</em> Quyết định tái thiết và dời xưởng về Thị xã Kiến Tường là bước ngoặt sinh tử để làm lại từ đầu, đồng thời giữ vững huyết mạch cung ứng gạch Tuynel cho khách hàng truyền thống tại Tây Ninh.
               </p>
               <p className="rounded-2xl border border-border/80 bg-white p-5 shadow-sm">
-                <span className="font-bold text-primary">Chuyển mình hiện đại — Đổi mới & Xanh hóa:</span> Đặt chân đến vùng đất mới, Thuận Lợi liên tục cải tiến và nâng cấp toàn diện quy trình sản xuất. Từ lò nung truyền thống, chúng tôi nâng cấp lên công nghệ lò Tuynel khép kín 1.050°C, ứng dụng tự động hóa cánh tay robot và tích hợp hệ thống điện mặt trời xanh — bảo chứng cho chất lượng đanh chắc và sự phát triển bền vững vượt thời gian.
+                <span className="font-bold text-primary">Chuyển mình hiện đại — Đổi mới & Xanh hóa:</span> Đặt nền móng vững chắc tại xưởng Kiến Tường, Thuận Lợi liên tục cải tiến và nâng cấp toàn diện quy trình sản xuất. Từ lò nung truyền thống, chúng tôi nâng cấp lên công nghệ lò Tuynel khép kín 1.050°C, ứng dụng tự động hóa cánh tay robot và tích hợp hệ thống điện mặt trời xanh — bảo chứng cho chất lượng đanh chắc, sẵn sàng cung cấp nguồn gạch chất lượng cao ổn định cho thị trường Kiến Tường, Tây Ninh và toàn khu vực phía Nam.
               </p>
             </div>
           </div>
@@ -65,7 +65,7 @@ export function BrandStory() {
             <div className="relative overflow-hidden rounded-2xl bg-secondary shadow-lg border border-border">
               <ImageWithFallback
                 src={IMAGES.brandStoryImage}
-                alt="Hành trình phát triển Gạch Thuận Lợi"
+                alt="Nhà máy sản xuất gạch Tuynel Thuận Lợi tại Kiến Tường - Đối tác cung ứng gạch Tây Ninh"
                 className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-105"
               />
             </div>
