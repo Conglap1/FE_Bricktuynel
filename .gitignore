@@ -13,6 +13,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Environment files
+.env
+.env.*
+!.env.example
+
 # IDE / Editor files
 .vscode/*
 !.vscode/extensions.json
