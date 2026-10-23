@@ -106,7 +106,13 @@ function cleanWordHtml(html: string): string {
 
 function autoLinkify(text: string): string {
   if (!text) return "";
-  const parts = text.split(/(<a\s+[^>]*>[\s\S]*?<\/a>|<[^>]+>)/gi);
+  // Sanitize script tags and inline event handlers to prevent XSS
+  const safeText = text
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/\son\w+\s*=\s*(['"]).*?\1/gi, "")
+    .replace(/href=["']javascript:[^"']*["']/gi, 'href="#"');
+
+  const parts = safeText.split(/(<a\s+[^>]*>[\s\S]*?<\/a>|<[^>]+>)/gi);
   return parts
     .map((part) => {
       if (part.startsWith("<")) return part;
