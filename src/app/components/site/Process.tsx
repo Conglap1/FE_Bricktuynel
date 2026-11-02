@@ -10,7 +10,7 @@ function ProcessStepItemDesktop({ s, i }: { s: ProcessStep; i: number }) {
   // Ultra-fluid 0.4s single-pass motion with Material Ease-Out [0.2, 0, 0, 1] (No CSS conflict, zero pause-and-nudge)
   const baseDelay = i === 0 ? 0.08 : 0;
   const duration = 0.4;
-  const ease = [0.2, 0, 0, 1];
+  const ease = [0.2, 0, 0, 1] as const;
 
   // 1. Red Pattern Graphic Runner: Pure smooth glide
   const patternRunnerVariants = {

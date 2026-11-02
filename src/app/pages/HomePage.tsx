@@ -244,7 +244,17 @@ function ProjectsTeaser() {
 /* ─── 6. Contact preview ─── */
 function ContactTeaser() {
   const { contact, isLoading } = useStore();
-  const INFO = [
+  type HomeContactInfo = {
+    icon: typeof Phone;
+    label: string;
+    value: string;
+    actionText: string;
+    href?: string;
+    isEmail?: boolean;
+    onClick?: (e: React.MouseEvent) => void;
+    subText?: string;
+  };
+  const INFO: HomeContactInfo[] = [
     {
       icon: Phone,
       label: "Điện thoại liên hệ",

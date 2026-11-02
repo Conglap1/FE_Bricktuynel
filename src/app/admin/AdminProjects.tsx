@@ -70,7 +70,7 @@ export function AdminProjects() {
     setOpen(true);
   }
 
-  async function handleDelete(p: Project, e?: React.MouseEvent) {
+  async function handleDelete(p: ProjectItem, e?: React.MouseEvent) {
     e?.stopPropagation();
     if (!window.confirm(`Bạn có chắc chắn muốn xoá dự án "${p.name}" không?`)) {
       return;

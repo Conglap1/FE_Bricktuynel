@@ -19,14 +19,13 @@ export function Contact() {
   // Derive available product list: prioritize active dynamic products, fallback to categories/default if empty
   const activeProducts = products.filter((p) => p.isActive);
 
-  // Filter products by category or name if user types
-  const availableProductNames =
+  const productOptions =
     activeProducts.length > 0
-      ? activeProducts.map((p) => p.name)
-      : CATEGORIES.map((c) => c.name);
+      ? activeProducts.map((p) => ({ id: String(p.id), name: p.name }))
+      : CATEGORIES.map((c) => ({ id: c.id, name: c.name }));
 
-  const filteredOptions = availableProductNames.filter((name) =>
-    name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredOptions = productOptions.filter((opt) =>
+    opt.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Close dropdown on outside click
@@ -51,7 +50,19 @@ export function Contact() {
     setSelectedProducts((prev) => prev.filter((item) => item !== name));
   };
 
-  const INFO_CARDS = [
+  type InfoCard = {
+    icon: typeof Phone;
+    label: string;
+    value: string;
+    actionText?: string;
+    actionHref?: string;
+    onClick?: (e: React.MouseEvent) => void;
+    gradient: string;
+    badge?: React.ReactNode;
+    subText?: string;
+  };
+
+  const INFO_CARDS: InfoCard[] = [
     {
       icon: Phone,
       label: "SỐ ĐIỆN THOẠI TƯ VẤN",

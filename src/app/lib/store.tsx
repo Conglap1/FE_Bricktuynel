@@ -14,13 +14,20 @@ import {
   type Product,
   type ProjectItem,
   type NewsItem,
+  type NewsSectionItem,
+  type NewsImageItem,
   type Partner,
   type ContactRequest,
 } from "./data";
 
 export type Category = (typeof CATEGORIES)[number];
-export type ProcessStep = (typeof PROCESS)[number];
-export type { Product, ProjectItem, NewsItem, Partner, ContactRequest };
+export type ProcessStep = {
+  step: string;
+  title: string;
+  desc: string;
+  image: string;
+};
+export type { Product, ProjectItem, NewsItem, NewsSectionItem, NewsImageItem, Partner, ContactRequest };
 
 const envApiUrl = import.meta.env.VITE_API_BASE_URL;
 export const API_BASE_URL = envApiUrl
@@ -120,7 +127,7 @@ type StoreActions = {
   setPartners: (v: Partner[]) => void;
   setContactRequests: (v: ContactRequest[]) => void;
   refreshContactRequests: (notifyIfNew?: boolean) => Promise<void>;
-  refreshAll: () => Promise<void>;
+  refreshAll: () => Promise<boolean>;
 };
 
 export const DEFAULT_ABOUT: AboutData = {
